@@ -1,0 +1,977 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Joy's Portfolio | 個人作品集</title>
+    <!-- Tailwind CSS via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#007bff',
+                        'primary-hover': '#0056b3',
+                        'primary-soft': '#66b2ff',
+                        canvas: '#ffffff',
+                        'canvas-soft': '#f8f9fa',
+                        ink: '#212529',
+                        'ink-secondary': '#495057',
+                        'ink-mute': '#6c757d',
+                        hairline: '#dee2e6',
+                        'semantic-success': '#28a745',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'SF Pro Display', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Helvetica', 'Arial', 'sans-serif'],
+                    },
+                    letterSpacing: {
+                        tightest: '-.05em',
+                        tighter: '-.02em',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+        body {
+            background-color: #ffffff;
+            color: #212529;
+            font-family: 'Inter', sans-serif;
+            font-weight: 400;
+            scroll-behavior: smooth;
+        }
+
+        .glass-nav {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid #dee2e6;
+        }
+
+        .card-shadow {
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05), 0 1px 3px rgba(0, 0, 0, 0.08);
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid #dee2e6;
+        }
+
+        .card-shadow:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            border-color: #007bff;
+        }
+
+        .search-input {
+            background: #ffffff;
+            border: 1px solid #dee2e6;
+            transition: all 0.2s ease;
+            color: #212529;
+        }
+
+        .search-input:focus {
+            border-color: #007bff;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 100;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(8px);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: #ffffff;
+            margin: auto;
+            padding: 2.5rem;
+            border-radius: 1.5rem;
+            width: 90%;
+            max-width: 900px;
+            position: relative;
+            max-height: 85vh;
+            overflow-y: auto;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+
+        .close-button {
+            color: #6c757d;
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .close-button:hover {
+            color: #212529;
+        }
+
+        .pill-button {
+            border-radius: 9999px;
+            padding: 0.5rem 1.25rem;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+
+        .tech-tag {
+            background-color: #f1f3f5;
+            color: #007bff;
+            font-size: 0.7rem;
+            font-weight: 600;
+            padding: 0.2rem 0.6rem;
+            border-radius: 6px;
+            border: 1px solid #e9ecef;
+        }
+
+        /* Lightbox */
+        .lightbox {
+            display: none;
+            position: fixed;
+            z-index: 101;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .lightbox-content {
+            max-width: 90%;
+            max-height: 90%;
+        }
+
+        .lightbox-close {
+            color: #ffffff;
+            position: absolute;
+            top: 1.5rem;
+            right: 2rem;
+            font-size: 2.5rem;
+            cursor: pointer;
+            z-index: 10;
+        }
+
+        .lightbox-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.15);
+            border: none;
+            color: #fff;
+            font-size: 2rem;
+            width: 3rem;
+            height: 3rem;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s;
+            z-index: 10;
+            user-select: none;
+        }
+
+        .lightbox-nav:hover {
+            background: rgba(255, 255, 255, 0.35);
+        }
+
+        .lightbox-nav:disabled {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        #lightbox-prev {
+            left: 1.25rem;
+        }
+
+        #lightbox-next {
+            right: 1.25rem;
+        }
+
+        .lightbox-caption {
+            position: absolute;
+            bottom: 1.5rem;
+            left: 50%;
+            transform: translateX(-50%);
+            color: rgba(255, 255, 255, 0.85);
+            font-size: 0.9rem;
+            background: rgba(0, 0, 0, 0.45);
+            padding: 0.3rem 1rem;
+            border-radius: 999px;
+            white-space: nowrap;
+            max-width: 80%;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .lightbox-counter {
+            position: absolute;
+            top: 1.5rem;
+            left: 50%;
+            transform: translateX(-50%);
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.85rem;
+        }
+
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</head>
+
+<body class="antialiased">
+
+    <!-- 導覽列 -->
+    <nav class="fixed top-0 w-full z-50 glass-nav">
+        <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+            <div class="text-xl font-bold tracking-tighter text-primary">JOY'S PORTFOLIO</div>
+            <div class="hidden md:flex space-x-8 text-sm font-medium text-ink-mute">
+                <a href="#about" class="hover:text-primary transition-colors">關於我</a>
+                <a href="#portfolio" class="hover:text-primary transition-colors">作品集</a>
+                <a href="#contact" class="hover:text-primary transition-colors">聯絡我</a>
+            </div>
+            <div class="flex items-center">
+                <a href="https://github.com/Joy0130" target="_blank"
+                    class="bg-primary hover:bg-primary-hover text-white text-xs font-semibold px-5 py-2.5 rounded-full transition-all shadow-sm">
+                    GitHub Profile
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 個人簡介區塊 -->
+    <section id="about" class="pt-32 pb-20 px-6 bg-canvas">
+        <div class="max-w-4xl mx-auto flex flex-col md:flex-row items-center gap-12">
+            <div class="w-48 h-48 rounded-full overflow-hidden shadow-xl flex-shrink-0 border-4 border-white">
+                <img src="./assets/images/avatar.png" alt="Joy's Avatar" class="w-full h-full object-cover"
+                    onerror="this.onerror=null;this.src='https://avatars.githubusercontent.com/u/64908025?v=4'">
+            </div>
+            <div class="text-center md:text-left">
+                <h1 class="text-4xl md:text-5xl font-bold tracking-tightest mb-4 text-ink">
+                    你好，我是 <span class="text-primary">Joy</span>
+                </h1>
+                <p class="text-lg md:text-xl text-ink-secondary leading-relaxed mb-8 font-light">
+                    一位熱衷於 AI 整合、自動化流程與系統開發的工程師。我喜歡透過程式解決生活中的繁瑣問題，並持續探索 Agentic Workflow 與 AI 應用的無限可能。
+                </p>
+                <div class="flex flex-wrap justify-center md:justify-start gap-4">
+                    <a href="#portfolio"
+                        class="bg-primary hover:bg-primary-hover text-white px-8 py-3 rounded-full font-semibold shadow-md transition-all">精選作品集</a>
+                    <a href="#contact"
+                        class="bg-white hover:bg-canvas-soft text-ink-secondary border border-hairline px-8 py-3 rounded-full font-semibold shadow-sm transition-all">聯絡我</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 篩選與搜尋區塊 -->
+    <section class="py-12 px-6 bg-canvas-soft border-y border-hairline">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row md:items-center justify-between gap-8">
+            <div class="flex items-center space-x-3 overflow-x-auto no-scrollbar pb-2 md:pb-0" id="filter-buttons">
+                <button class="pill-button bg-primary text-white shadow-md" data-filter="all"
+                    title="顯示所有專案">全部專案</button>
+                <button class="pill-button bg-white text-ink-mute hover:text-primary border border-hairline shadow-sm"
+                    data-filter="web" title="提供對外服務的完整網站/應用，具備後端資料庫或使用者互動流程">網頁開發</button>
+                <button class="pill-button bg-white text-ink-mute hover:text-primary border border-hairline shadow-sm"
+                    data-filter="backend" title="自動化腳本、通知系統、DevOps 工具">後端與自動化</button>
+                <button class="pill-button bg-white text-ink-mute hover:text-primary border border-hairline shadow-sm"
+                    data-filter="uiux" title="瀏覽器擴充功能、單機版工具">UI/UX 與工具</button>
+            </div>
+            <div class="relative w-full md:w-80">
+                <input type="text" placeholder="搜尋專案、技術或關鍵字..."
+                    class="search-input w-full px-5 py-3 rounded-full text-sm text-ink shadow-sm" id="search-input">
+                <svg class="absolute right-4 top-3.5 w-4 h-4 text-ink-mute" fill="none" stroke="currentColor"
+                    viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                </svg>
+            </div>
+        </div>
+    </section>
+
+    <!-- 作品集網格區塊 -->
+    <section id="portfolio" class="py-24 px-6 bg-canvas">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold tracking-tight mb-4 text-ink">精選作品集</h2>
+                <p class="text-ink-mute font-light">來自 Joy GitHub 的公開 Repository</p>
+                <div class="h-1 w-16 bg-primary mx-auto mt-4 rounded-full"></div>
+            </div>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8" id="portfolio-grid">
+                <!-- 由 JavaScript 動態生成 -->
+            </div>
+        </div>
+    </section>
+
+    <!-- 聯絡我區塊 -->
+    <section id="contact" class="py-24 px-6 bg-canvas-soft border-t border-hairline">
+        <div class="max-w-3xl mx-auto text-center">
+            <h2 class="text-3xl md:text-4xl font-bold mb-8 text-ink">對我的專案感興趣或是想和我一起合作嗎？</h2>
+            <p class="text-lg text-ink-secondary mb-12 font-light">
+                歡迎透過電子郵件或 LinkedIn 與我聯繫，討論合作機會或交流。
+            </p>
+            <a href="mailto:[EMAIL_ADDRESS]"
+                class="bg-primary hover:bg-primary-hover text-white px-10 py-4 rounded-full text-lg font-bold shadow-md transition-all inline-block">
+                立即發送郵件
+            </a>
+        </div>
+    </section>
+
+    <!-- 頁尾 -->
+    <footer class="py-12 px-6 bg-canvas border-t border-hairline">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
+            <div class="text-ink-mute text-sm font-medium">
+                &copy; 2026 Joy's Portfolio
+            </div>
+            <div class="flex space-x-6">
+                <a href="https://github.com/Joy0130" target="_blank"
+                    class="text-ink-mute hover:text-primary transition-colors font-semibold">GitHub</a>
+                <a href="#" class="text-ink-mute hover:text-primary transition-colors font-semibold">LinkedIn</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- 專案詳細資訊彈跳視窗 -->
+    <div id="project-modal" class="modal">
+        <div class="modal-content no-scrollbar">
+            <span class="close-button" id="close-modal">&times;</span>
+            <div class="mb-10">
+                <h2 class="text-3xl md:text-4xl font-bold tracking-tight text-ink mb-4" id="modal-title"></h2>
+                <div class="flex flex-wrap gap-2 mb-6" id="modal-tech-tags"></div>
+                <p class="text-lg text-ink-secondary leading-relaxed font-light" id="modal-long-description"></p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-8 mb-10">
+                <div class="bg-canvas-soft p-6 rounded-xl border border-hairline">
+                    <h3 class="text-primary font-bold mb-3 uppercase tracking-widest text-xs">開發背景</h3>
+                    <p class="text-ink-secondary leading-relaxed text-sm" id="modal-reason"></p>
+                </div>
+                <div class="bg-canvas-soft p-6 rounded-xl border border-hairline">
+                    <h3 class="text-primary font-bold mb-3 uppercase tracking-widest text-xs">解決痛點</h3>
+                    <p class="text-ink-secondary leading-relaxed text-sm" id="modal-problem"></p>
+                </div>
+                <div class="md:col-span-2 bg-canvas-soft p-6 rounded-xl border border-hairline">
+                    <h3 class="text-primary font-bold mb-3 uppercase tracking-widest text-xs">核心成果</h3>
+                    <ul class="space-y-3 text-ink-secondary text-sm" id="modal-results"></ul>
+                </div>
+            </div>
+
+            <div id="modal-video-container" class="mb-10" style="display: none;">
+                <h3 class="text-xl font-bold mb-5 text-ink">實機演示</h3>
+                <div class="rounded-xl overflow-hidden border border-hairline shadow-md aspect-video">
+                    <video controls class="w-full h-full object-cover" id="modal-video"></video>
+                </div>
+            </div>
+
+            <div id="modal-gallery-container" style="display: none;">
+                <h3 class="text-xl font-bold mb-5 text-ink">專案畫廊</h3>
+                <div class="grid grid-cols-2 md:grid-cols-3 gap-4" id="modal-gallery"></div>
+            </div>
+
+            <div class="mt-8 text-center">
+                <a id="modal-github-link" href="#" target="_blank"
+                    class="inline-flex items-center text-primary font-semibold hover:underline">
+                    在 GitHub 上查看原始碼 →
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Lightbox -->
+    <div id="lightbox" class="lightbox">
+        <span class="lightbox-close" id="lightbox-close">&times;</span>
+        <button class="lightbox-nav" id="lightbox-prev" aria-label="上一張">&#8249;</button>
+        <img class="lightbox-content rounded-lg shadow-lg" id="lightbox-img" style="display: none;">
+        <video class="lightbox-content rounded-lg shadow-lg" id="lightbox-video" controls
+            style="display: none;"></video>
+        <button class="lightbox-nav" id="lightbox-next" aria-label="下一張">&#8250;</button>
+        <div class="lightbox-caption" id="lightbox-caption" style="display:none;"></div>
+        <div class="lightbox-counter" id="lightbox-counter" style="display:none;"></div>
+    </div>
+
+    <script>
+        function imgFallback(el, title) {
+            el.onerror = null;
+            const svg = '<svg xmlns="http://www.w3.org/2000/svg" width="400" height="250">'
+                + '<rect width="400" height="250" fill="#f8f9fa"/>'
+                + '<text x="50%" y="50%" font-family="sans-serif" font-size="16" fill="#007bff" text-anchor="middle" dy=".3em">' + title + '</text></svg>';
+            el.src = 'data:image/svg+xml;utf8,' + encodeURIComponent(svg);
+        }
+
+        const projects = [
+            {
+                id: 'my-chatbot',
+                title: 'ChatBot',
+                description: '支援多模型切換（Gemini／Ollama）的多對話聊天機器人。',
+                longDescription: '以 React 前端、Flask 後端打造的聊天機器人，同時支援雲端 Google Gemini 與本機 Ollama 模型即時切換，具備多對話管理、localStorage 對話紀錄保存、TXT/PDF/DOCX 文件上傳分析，以及淺色/深色主題。',
+                reason: '可自由切換雲端與本機模型、且能保存對話紀錄的聊天介面。',
+                problem: '此專案為個人專案，主要為練習前後端串接API以及本地端模型與保存對話紀錄的聊天介面。',
+                results: [
+                    '可自由切換雲端(gemini API)與本機模型(Ollama)、且能保存對話紀錄。',
+                    '文件上傳採 tempfile 隨機命名與 magic bytes 內容驗證，杜絕路徑遍歷風險。',
+                    'PDF 優先以 PyMuPDF 擷取中文內容，失敗自動退回 PyPDF2。',
+                    'localStorage 容量不足時提供刪除舊對話提示，避免資料遺失或崩潰。'
+                ],
+                image: './assets/images/chatbot.png', //主畫面圖片
+                galleryImages: [
+                    { src: "./assets/images/chatbot3.png", caption: "聊天機器人可切換模式（暗黑模式）" },
+                    { src: "./assets/images/chatbot1.png", caption: "聊天機器人預設模型為 gemini-3.1-flash-lite" },
+                    { src: "./assets/images/chatbot2.png", caption: "可自由切換雲端或地端模型" }
+                ],
+                demoVideo: '',
+                categories: ['web'],
+                technologies: ['Gemini API', 'Ollama', 'Python', 'FastAPI', 'JavaScript', 'React', 'TailwindCSS'],
+                github: 'https://github.com/Joy0130/My-ChatBot'
+            },
+            {
+                id: 'python-fpns',
+                title: '推播系統',
+                description: '福委會推播系統。',
+                longDescription: '專為企業福委會設計的推播系統，即時發送福利資訊。',
+                reason: '福委會資訊傳遞效率低，且容易遺漏重要通知，串接公司開發的Portal App 推播API製作此系統，可以批次大量發送推播給公司同仁。',
+                problem: '手動發送通知耗時且難以追蹤。',
+                results: [
+                    '自動化推播流程，節省大量行政作業時間。',
+                    'Portal App 推播通知。',
+                    '員工可以即時獲取福利資訊。'
+                ],
+                image: './assets/images/ewc1.png',
+                galleryImages: [
+                    { src: "./assets/images/ewc.png", caption: "推播系統串接公司Keycloak，採用OAuth2認證方式登入，透過Keycloak設定group管理登入權限" },
+                    { src: "./assets/images/ewc1.png", caption: "推播系統首頁，可以在此上傳Excel檔案、進行批次發送推播或是排程推播" },
+                    { src: "./assets/images/ewc2.png", caption: "開啟排程推播功能，可以設定預計發送的日期與時間，等到設定的日期與時間後會自動發送推播" },
+                    { src: "./assets/images/ewc3.png", caption: "推播系統歷史紀錄，可以看到使用者曾經發送與預訂排程推播的紀錄(有顯示排程時間為排程推播發送的紀錄)" },
+                    { src: "./assets/images/ewc4.png", caption: "點其中一筆歷史紀錄後會顯示該則推播的詳細內容與發送狀態" },
+                    { src: "./assets/images/ewc5.jpeg", caption: "手機Potal App收到推播通知" }
+                ],
+                demoVideo: '',
+                categories: ['backend'],
+                technologies: ['Python', 'HTML', 'Flask'],
+                github: 'https://github.com/Joy0130/Python_FPNS'
+            },
+            {
+                id: 'python-bank-linebot',
+                title: '台灣銀行查詢黃金價格與匯率 Line Bot',
+                description: '爬取台灣銀行的即時匯率資訊與黃金牌價。',
+                longDescription: '爬取台灣銀行官網即時匯率資訊與黃金牌價，透過 Line 介面讓使用者能隨時隨地查詢。',
+                reason: '頻繁開啟銀行網頁查詢匯率非常不便，需要更直觀的工具。',
+                problem: '可以快速使用line查詢台銀的匯率與黃金價格。',
+                results: [
+                    '實現即時爬取台銀官網數據。',
+                    'Line Bot 介面操作直觀，可快速查詢。',
+                    '支援多國貨幣匯率與黃金牌價。',
+                    '透過 Render 部署 linebot 應用程式。'
+                ],
+                image: './assets/images/bank.jpeg',
+                galleryImages: [
+                    { src: "./assets/images/bank.jpeg", caption: "LineBot 介面，使用圖卡方式讓使用者點擊，左圖為各國匯率查詢，右圖為黃金牌價查詢" },
+                    { src: "./assets/images/bank2.jpeg", caption: "點選各國匯率查詢後出現選單，功能：各國匯率、牌告匯率、匯率換算、歷史走勢查詢" },
+                    { src: "./assets/images/bank3.png", caption: "各國匯率資料，共顯示19國匯率資訊" },
+                    { src: "./assets/images/bank4.jpeg", caption: "牌告匯率，直接開啟台灣銀行網站" },
+                    { src: "./assets/images/bank5.jpeg", caption: "匯率換算，顯示台灣銀行換率換算網址" },
+                    { src: "./assets/images/bank6.jpeg", caption: "歷史走勢查詢(下拉選單)，顯示各國匯率清單" },
+                    { src: "./assets/images/bank7.jpeg", caption: "歷史走勢查詢(點選國家後)，會自動開啟該國在台灣銀行網站的歷史牌告匯率頁面" },
+                    { src: "./assets/images/bank1.png", caption: "Render部署畫面" },
+                ],
+                demoVideo: '',
+                categories: ['backend'],
+                technologies: ['Python', 'Line Messaging API'],
+                github: 'https://github.com/Joy0130/Python_Bank_LineBot'
+            },
+            {
+                id: 'argo-cd-notifications',
+                title: 'Argo-CD-Notifications',
+                description: 'Argo CD Notifications 串接 Microsoft Teams 通知系統。',
+                longDescription: '這是一個 DevOps 工具專案，將 Argo CD 的部署狀態即時推送到 Teams 頻道中。',
+                reason: '開發團隊難以即時掌握 Kubernetes 的部署成功或失敗狀態。',
+                problem: '部署失敗時通知不明顯，導致修復時間延遲。',
+                results: [
+                    '實現部署狀態的即時可視化通知。',
+                    '提升了團隊的響應速度與部署透明度。',
+                    '減少了人工檢查部署狀態的頻率。'
+                ],
+                image: './assets/images/argo-cd.png',
+                galleryImages: [],
+                demoVideo: '',
+                categories: ['backend'],
+                technologies: ['Kubernetes', 'Argo CD', 'Teams Webhook', 'Shell'],
+                github: 'https://github.com/Joy0130/Argo-CD-Notifications'
+            },
+            {
+                id: 'smart-commit',
+                title: 'SmartCommit',
+                description: '串接 Gemini API 自動生成符合 Conventional Commits 規範的 Git commit 訊息。',
+                longDescription: '利用 AI 自動分析程式碼變動，並生成結構化的 Commit 訊息，提升團隊協作效率。',
+                reason: '開發者撰寫的 Commit 訊息往往模糊不清，難以追蹤變動歷史。',
+                problem: '手動遵循規範耗時，且訊息品質參差不齊。',
+                results: [
+                    '自動化生成高品質 Commit 訊息。',
+                    '完全符合 Conventional Commits 標準。',
+                    '提升了 Git 歷史記錄的可讀性。'
+                ],
+                image: './assets/images/smart-commit.png',
+                galleryImages: [],
+                demoVideo: '',
+                categories: ['backend'],
+                technologies: ['Python', 'Gemini API', 'Git'],
+                github: 'https://github.com/Joy0130/SmartCommit'
+            },
+            {
+                id: 'pdf-compressor',
+                title: 'PDF_Compressor',
+                description: '高效能 PDF 檔案壓縮工具。',
+                longDescription: '一個簡單易用的 PDF 壓縮工具，能在保持清晰度的同時極大減小檔案體積。',
+                reason: '許多平台上傳檔案有體積限制，PDF 往往過大。',
+                problem: '現有工具操作複雜或需要付費。',
+                results: [
+                    '平均壓縮率達 60% 以上。',
+                    '支援批量處理，提升工作效率。'
+                ],
+                image: './assets/images/pdf-compressor.png',
+                galleryImages: [],
+                demoVideo: '',
+                categories: ['uiux'],
+                technologies: ['Python', 'PyPDF2'],
+                github: 'https://github.com/Joy0130/PDF_Compressor'
+            },
+            {
+                id: 'ai-prompt',
+                title: 'AI-Prompt 小幫手',
+                description: '瀏覽器擴充工具，提供常用 AI 提示詞快速複製功能。',
+                longDescription: '在 AI 網頁右下方顯示小幫手，點擊即可複製精選提示詞，優化 AI 使用體驗。',
+                reason: '使用者往往不知道如何撰寫高品質的 Prompt。',
+                problem: '重複輸入相同的提示詞非常麻煩。',
+                results: [
+                    '大幅提升 AI 使用效率。',
+                    '介面輕量化，不影響網頁瀏覽。'
+                ],
+                image: './assets/images/ai-prompt.png',
+                galleryImages: [],
+                demoVideo: '',
+                categories: ['uiux'],
+                technologies: ['JavaScript', 'Chrome Extension'],
+                github: 'https://github.com/Joy0130/AI-Prompt'
+            },
+            {
+                id: 'aireview',
+                title: 'aireview',
+                description: 'Git Commit 前置 AI 分析工具，檢查程式碼安全性。',
+                longDescription: '在 Commit 前自動分析變動，找出潛在的安全漏洞或邏輯錯誤。',
+                reason: '人為審查容易疏漏，需要自動化工具輔助。',
+                problem: '不安全的程式碼流入生產環境。',
+                results: [
+                    '有效攔截潛在的安全風險。',
+                    '提升了程式碼審核的自動化程度。'
+                ],
+                image: './assets/images/aireview.png',
+                galleryImages: [],
+                demoVideo: '',
+                categories: ['backend'],
+                technologies: ['Python', 'AI Analysis', 'Git Hooks'],
+                github: 'https://github.com/Joy0130/aireview'
+            },
+            {
+                id: 'ai-line-2-hackmd',
+                title: 'AI-LINE-2-HACKMD',
+                description: '將 Line 訊息透過 AI 整理並同步至 HackMD 的自動化工具。',
+                longDescription: '自動擷取 Line 群組中的重要資訊，經由 AI 摘要後同步到 HackMD 筆記中。',
+                reason: 'Line 訊息過多且雜亂，重要資訊容易被洗掉。',
+                problem: '手動整理會議紀錄或重要資訊非常耗時。',
+                results: [
+                    '實現資訊的自動化彙整與同步。',
+                    '大幅提升知識管理的效率。'
+                ],
+                image: './assets/images/line-hackmd.png',
+                galleryImages: [],
+                demoVideo: '',
+                categories: ['backend'],
+                technologies: ['Python', 'Line API', 'HackMD API', 'AI'],
+                github: 'https://github.com/Joy0130/AI-LINE-2-HACKMD'
+            },
+            {
+                id: 'argocd-backup',
+                title: 'ArgoCD_backup',
+                description: '透過 GitHub Actions 自動備份 ArgoCD 關鍵資源與 RBAC 設定。',
+                longDescription: '使用自建 Linux Runner 連接 Kubernetes 叢集，每日定時將 ArgoCD 的 Application、AppProject、RBAC、通知設定等資源自動 commit 回 GitHub，機敏 Secret 則僅保留於 Runner 本機。',
+                reason: 'ArgoCD 叢集設定一旦誤刪或損毀，缺乏版本化備份難以還原。',
+                problem: '手動匯出設定容易遺漏，且無法追蹤變更歷史。',
+                results: [
+                    '每日自動備份 15 種以上關鍵資源與 CRD 定義。',
+                    '公開設定與機敏 Secret 分離存放，兼顧版本控管與安全性。',
+                    '支援依時間戳記快照還原至任意歷史備份點。'
+                ],
+                image: './assets/images/argocd-backup.png',
+                galleryImages: [],
+                demoVideo: '',
+                categories: ['backend'],
+                technologies: ['Shell', 'GitHub Actions', 'Kubernetes', 'ArgoCD'],
+                github: 'https://github.com/Joy0130/ArgoCD_backup'
+            },
+            {
+                id: 'tftcoin',
+                title: 'tFTCoin (Cyber Points)',
+                description: '賽博龐克風格的員工點數累積與獎品兌換系統。',
+                longDescription: '以 Django 開發的員工點數平台，支援 Keycloak SSO 與本地帳密雙重登入，員工可透過任務代碼兌換點數並於商城兌換獎品，具備排行榜、年度重置與帳號鎖定防暴力破解機制。',
+                reason: '企業內部活動與福利獎勵缺乏統一、有趣的點數管理平台。',
+                problem: '人工登記點數與獎品兌換效率低，且難以防止帳號被暴力破解。',
+                results: [
+                    '整合 Keycloak OAuth 與本地帳密雙重登入機制。',
+                    '實現代碼兌換、獎品商城、排行榜與年度自動重置。',
+                    '內建連續 5 次登入失敗鎖定 15 分鐘的防護機制。'
+                ],
+                image: './assets/images/tftcoin.png',
+                galleryImages: [],
+                demoVideo: '',
+                categories: ['web'],
+                technologies: ['Python', 'Django', 'Keycloak OAuth', 'PostgreSQL'],
+                github: 'https://github.com/Joy0130/tFTCoin'
+            },
+            {
+                id: 'pdf-spiltter',
+                title: 'PDF_Spiltter',
+                description: '純前端、免安裝的 PDF 批次分割工具。',
+                longDescription: '直接在瀏覽器中運行的 PDF 分割工具，使用 pdf-lib 處理，支援拖曳上傳與多組頁碼範圍批次輸出，檔案全程不上傳伺服器，保障隱私安全。',
+                reason: '線上 PDF 分割服務多需上傳檔案至伺服器，有隱私疑慮。',
+                problem: '需要快速分割多份 PDF，但不想安裝軟體或洩漏檔案內容。',
+                results: [
+                    '所有處理皆在本地瀏覽器完成，無需上傳伺服器。',
+                    '支援一次輸入多組範圍，批次自動下載多份 PDF。',
+                    '單一 HTML 檔案即可執行，無需安裝或部署。'
+                ],
+                image: './assets/images/pdf-spiltter.png',
+                galleryImages: [],
+                demoVideo: '',
+                categories: ['uiux'],
+                technologies: ['JavaScript', 'HTML', 'pdf-lib'],
+                github: 'https://github.com/Joy0130/PDF_Spiltter'
+            },
+            {
+                id: 'web-ai-assistant',
+                title: 'Web AI Assistant',
+                description: '瀏覽器擴充工具，選取網頁文字即可獲得 AI 即時解釋。',
+                longDescription: '透過右鍵選單呼叫 AI 解釋選取的技術文字或程式碼，同時支援 Gemini、OpenAI、Claude 三種模型，並以 FastAPI 後端統一管理 API Key，回應內容以 Markdown 渲染並支援程式碼語法高亮。',
+                reason: '閱讀技術文件時常遇到不熟悉的專有名詞，切換頁面查詢很打斷思路。',
+                problem: '現有翻譯或字典擴充工具缺乏深度技術解釋能力。',
+                results: [
+                    '整合三大主流 AI 模型，可依需求切換。',
+                    '支援 Markdown 渲染與程式碼語法高亮，閱讀體驗佳。',
+                    'API Key 僅存於瀏覽器本地，不會上傳第三方伺服器。'
+                ],
+                image: './assets/images/web-ai-assistant.png',
+                galleryImages: [],
+                demoVideo: '',
+                categories: ['uiux'],
+                technologies: ['Python', 'FastAPI', 'JavaScript', 'Chrome Extension',],
+                github: 'https://github.com/Joy0130/web-AI-Assistant'
+            },
+            {
+                id: 'line-notify',
+                title: 'LineNotify 提醒記事本',
+                description: '雲端全自動的 LINE 提醒記事本，免掛機即可定時通知。',
+                longDescription: '前端網頁負責記事的新增與管理，資料同步至 GitHub Gist；後端以 Google Apps Script 定時觸發器每隔數分鐘檢查到期提醒，並透過 LINE API 主動推播通知，支援每日/每週/每月重複提醒。',
+                reason: '一般提醒工具需要裝置保持開啟，手機關螢幕或電腦關機就無法運作。',
+                problem: '需要穩定、免費、24 小時運作的提醒通知方案。',
+                results: [
+                    '利用 GAS 免費額度達成 24/7 全自動監控，無需掛機。',
+                    '以 GitHub Gist 作為輕量資料庫，前後端與多裝置資料同步。',
+                    '支援每日、每週、每月的智慧重複提醒邏輯。'
+                ],
+                image: './assets/images/line-notify.png',
+                galleryImages: [],
+                demoVideo: '',
+                categories: ['backend'],
+                technologies: ['JavaScript', 'Google Apps Script', 'LINE API', 'GitHub Gist'],
+                github: 'https://github.com/Joy0130/LineNotify'
+            },
+            {
+                id: 'registration-website',
+                title: 'Registration Website',
+                description: '以 Flask 開發的活動報名網站。',
+                longDescription: '提供活動課程報名、報名狀態管理與後台維護功能的 Web 應用，整合 Firebase 作為輔助服務並支援檔案上傳。',
+                reason: '需要一套可自行部署、彈性調整報名流程的活動報名系統。',
+                problem: '通用報名表單工具難以客製化課程狀態與後台管理邏輯。',
+                results: [
+                    '完成課程報名、狀態追蹤與後台管理功能。',
+                    '支援檔案上傳與 Firebase 整合。',
+                    '可透過 Procfile 直接部署至雲端平台。'
+                ],
+                image: './assets/images/registration-website.png',
+                galleryImages: [],
+                demoVideo: '',
+                categories: ['web'],
+                technologies: ['Python', 'Flask', 'JavaScript', 'Firebase'],
+                github: 'https://github.com/Joy0130/Registration-website'
+            },
+            {
+                id: 'pay-notify',
+                title: 'pay_notify',
+                description: '付款/繳費期限自動提醒腳本。',
+                longDescription: '以 Python 撰寫的自動化通知腳本，搭配 GitHub Actions 排程定期執行，用於監控並提醒繳費或付款期限，避免人工追蹤疏漏。',
+                reason: '繳費期限容易遺忘，人工追蹤耗時且不可靠。',
+                problem: '缺乏自動化機制，逾期繳費可能造成額外費用或服務中斷。',
+                results: [
+                    '透過 GitHub Actions 排程自動定期執行檢查。',
+                    '降低人工追蹤繳費期限的疏漏風險。'
+                ],
+                image: './assets/images/pay-notify.png',
+                galleryImages: [],
+                demoVideo: '',
+                categories: ['backend'],
+                technologies: ['Python', 'GitHub Actions'],
+                github: 'https://github.com/Joy0130/pay_notify'
+            }
+        ];
+
+        // 剩餘的 Repository 可以依此類推加入...
+
+        const portfolioGrid = document.getElementById('portfolio-grid');
+        const searchInput = document.getElementById('search-input');
+        const filterButtons = document.getElementById('filter-buttons');
+        const projectModal = document.getElementById('project-modal');
+        const closeModal = document.getElementById('close-modal');
+
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightbox-img');
+        const lightboxVideo = document.getElementById('lightbox-video');
+        const lightboxClose = document.getElementById('lightbox-close');
+        const lightboxPrev = document.getElementById('lightbox-prev');
+        const lightboxNext = document.getElementById('lightbox-next');
+        const lightboxCaption = document.getElementById('lightbox-caption');
+        const lightboxCounter = document.getElementById('lightbox-counter');
+
+        let currentGallery = [];  // [{ src, caption }]
+        let currentGalleryIndex = -1;
+
+        function renderProjects(filteredProjects) {
+            portfolioGrid.innerHTML = '';
+            filteredProjects.forEach(project => {
+                const card = `
+                    <div class="bg-white rounded-xl card-shadow overflow-hidden group cursor-pointer" data-project-id="${project.id}">
+                        <div class="h-48 overflow-hidden relative bg-canvas-soft flex items-center justify-center">
+                            <img src="${project.image}" alt="${project.title}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" onerror="imgFallback(this, '${project.title.replace(/'/g, "")}')">
+                            <div class="absolute inset-0 bg-primary opacity-0 group-hover:opacity-5 transition-opacity"></div>
+                        </div>
+                        <hr class="border-t border-hairline">
+                        <div class="p-6">
+                            <h3 class="text-lg font-bold mb-2 text-ink group-hover:text-primary transition-colors">${project.title}</h3>
+                            <p class="text-ink-mute text-xs leading-relaxed mb-4 font-light line-clamp-2">${project.description}</p>
+                            <div class="flex flex-wrap gap-2">
+                                ${project.technologies.slice(0, 3).map(tech => `<span class="tech-tag">${tech}</span>`).join('')}
+                                ${project.technologies.length > 3 ? `<span class="tech-tag">+${project.technologies.length - 3}</span>` : ''}
+                            </div>
+                        </div>
+                    </div>
+                `;
+                portfolioGrid.innerHTML += card;
+            });
+
+            document.querySelectorAll('[data-project-id]').forEach(card => {
+                card.addEventListener('click', () => {
+                    const project = projects.find(p => p.id === card.dataset.projectId);
+                    openModal(project);
+                });
+            });
+        }
+
+        function openModal(project) {
+            document.getElementById('modal-title').textContent = project.title;
+            document.getElementById('modal-long-description').textContent = project.longDescription;
+            document.getElementById('modal-reason').textContent = project.reason;
+            document.getElementById('modal-problem').textContent = project.problem;
+            document.getElementById('modal-tech-tags').innerHTML = project.technologies.map(tech => `<span class="tech-tag">${tech}</span>`).join('');
+            document.getElementById('modal-github-link').href = project.github;
+
+            document.getElementById('modal-results').innerHTML = project.results.map(res => `
+                <li class="flex items-start">
+                    <span class="text-primary mr-2 font-bold">✓</span>
+                    <span>${res}</span>
+                </li>
+            `).join('');
+
+            const videoContainer = document.getElementById('modal-video-container');
+            const videoElement = document.getElementById('modal-video');
+            if (project.demoVideo) {
+                videoElement.src = project.demoVideo;
+                videoContainer.style.display = 'block';
+                videoElement.onclick = () => openLightbox(project.demoVideo, 'video');
+            } else {
+                videoContainer.style.display = 'none';
+            }
+
+            const galleryContainer = document.getElementById('modal-gallery-container');
+            const galleryElement = document.getElementById('modal-gallery');
+            if (project.galleryImages && project.galleryImages.length > 0) {
+                const gallery = project.galleryImages.map(item =>
+                    typeof item === 'string' ? { src: item, caption: '' } : { src: item.src, caption: item.caption || '' }
+                );
+                galleryElement.innerHTML = gallery.map((item, idx) => `
+                    <div class="flex flex-col gap-2">
+                        <div class="rounded-lg overflow-hidden border border-hairline cursor-pointer hover:shadow-sm transition-shadow aspect-video">
+                            <img src="${item.src}" class="w-full h-full object-cover"
+                                onclick="openLightbox(${idx}, ${JSON.stringify(gallery).replace(/"/g, '&quot;')})"
+                                onerror="imgFallback(this, 'Gallery Image')">
+                        </div>
+                        ${item.caption ? `<p class="text-sm text-center text-gray-500 px-1">${item.caption}</p>` : ''}
+                    </div>`
+                ).join('');
+                galleryContainer.style.display = 'block';
+            } else {
+                galleryContainer.style.display = 'none';
+            }
+
+            projectModal.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function openLightbox(indexOrSrc, galleryOrType) {
+            // Called from gallery: openLightbox(index, galleryArray)
+            // Called from video:   openLightbox(src, 'video')
+            if (galleryOrType === 'video') {
+                currentGallery = [];
+                currentGalleryIndex = -1;
+                lightboxImg.style.display = 'none';
+                lightboxVideo.src = indexOrSrc;
+                lightboxVideo.style.display = 'block';
+                lightboxVideo.play();
+                lightboxPrev.style.display = 'none';
+                lightboxNext.style.display = 'none';
+                lightboxCaption.style.display = 'none';
+                lightboxCounter.style.display = 'none';
+                lightbox.style.display = 'flex';
+                return;
+            }
+
+            // Gallery image navigation
+            const gallery = typeof galleryOrType === 'string' ? JSON.parse(galleryOrType) : galleryOrType;
+            currentGallery = gallery;
+            currentGalleryIndex = indexOrSrc;
+            showLightboxImage(currentGalleryIndex);
+            lightbox.style.display = 'flex';
+        }
+
+        function showLightboxImage(idx) {
+            const item = currentGallery[idx];
+            lightboxVideo.style.display = 'none';
+            lightboxImg.src = item.src;
+            lightboxImg.style.display = 'block';
+
+            const total = currentGallery.length;
+            lightboxPrev.disabled = (idx === 0);
+            lightboxNext.disabled = (idx === total - 1);
+            lightboxPrev.style.display = total > 1 ? 'flex' : 'none';
+            lightboxNext.style.display = total > 1 ? 'flex' : 'none';
+
+            if (item.caption) {
+                lightboxCaption.textContent = item.caption;
+                lightboxCaption.style.display = 'block';
+            } else {
+                lightboxCaption.style.display = 'none';
+            }
+
+            if (total > 1) {
+                lightboxCounter.textContent = `${idx + 1} / ${total}`;
+                lightboxCounter.style.display = 'block';
+            } else {
+                lightboxCounter.style.display = 'none';
+            }
+        }
+
+        lightboxPrev.onclick = () => {
+            if (currentGalleryIndex > 0) {
+                currentGalleryIndex--;
+                showLightboxImage(currentGalleryIndex);
+            }
+        };
+
+        lightboxNext.onclick = () => {
+            if (currentGalleryIndex < currentGallery.length - 1) {
+                currentGalleryIndex++;
+                showLightboxImage(currentGalleryIndex);
+            }
+        };
+
+        document.addEventListener('keydown', (e) => {
+            if (lightbox.style.display !== 'flex') return;
+            if (e.key === 'ArrowLeft') lightboxPrev.click();
+            if (e.key === 'ArrowRight') lightboxNext.click();
+            if (e.key === 'Escape') lightboxClose.click();
+        });
+
+        closeModal.onclick = () => {
+            projectModal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+            document.getElementById('modal-video').pause();
+        };
+
+        lightboxClose.onclick = () => {
+            lightbox.style.display = 'none';
+            lightboxVideo.pause();
+        };
+
+        window.onclick = (e) => {
+            if (e.target == projectModal) {
+                projectModal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+                document.getElementById('modal-video').pause();
+            }
+            if (e.target == lightbox) {
+                lightbox.style.display = 'none';
+                lightboxVideo.pause();
+            }
+        };
+
+        searchInput.addEventListener('input', () => {
+            const term = searchInput.value.toLowerCase();
+            const activeFilter = filterButtons.querySelector('.bg-primary').dataset.filter;
+            const filtered = projects.filter(p => {
+                const matchesSearch = p.title.toLowerCase().includes(term) || p.description.toLowerCase().includes(term) || p.technologies.some(t => t.toLowerCase().includes(term));
+                const matchesFilter = activeFilter === 'all' || p.categories.includes(activeFilter);
+                return matchesSearch && matchesFilter;
+            });
+            renderProjects(filtered);
+        });
+
+        filterButtons.addEventListener('click', (e) => {
+            if (e.target.tagName === 'BUTTON') {
+                filterButtons.querySelectorAll('button').forEach(btn => {
+                    btn.classList.remove('bg-primary', 'text-white', 'shadow-md');
+                    btn.classList.add('bg-white', 'text-ink-mute', 'hover:text-primary', 'border', 'border-hairline', 'shadow-sm');
+                });
+                e.target.classList.add('bg-primary', 'text-white', 'shadow-md');
+                e.target.classList.remove('bg-white', 'text-ink-mute', 'hover:text-primary', 'border', 'border-hairline', 'shadow-sm');
+                searchInput.dispatchEvent(new Event('input'));
+            }
+        });
+
+        renderProjects(projects);
+
+        // 導覽列平滑滾動
+        document.querySelectorAll('nav a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>
