@@ -43,6 +43,16 @@
             font-family: 'Inter', sans-serif;
             font-weight: 400;
             scroll-behavior: smooth;
+            /* 基礎字型大小附加健庄回應 */
+            font-size: 16px;
+        }
+
+        @media (min-width: 768px) and (max-width: 1199px) {
+
+            /* iPad 全基礎放大到 18px */
+            body {
+                font-size: 18px;
+            }
         }
 
         .glass-nav {
@@ -122,6 +132,9 @@
             border-radius: 9999px;
             padding: 0.5rem 1.25rem;
             font-weight: 500;
+            font-size: 0.875rem;
+            white-space: nowrap;
+            flex-shrink: 0;
             transition: all 0.2s;
         }
 
@@ -144,26 +157,44 @@
             top: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.9);
+            background-color: rgba(0, 0, 0, 0.92);
+            flex-direction: column;
             justify-content: center;
             align-items: center;
+            padding: 3.5rem 3.5rem 1.5rem;
+            box-sizing: border-box;
+        }
+
+        /* 圖片 + 說明文字的垂直容器，寬度跟圖片一致 */
+        .lightbox-inner {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            max-width: 100%;
+            max-height: 100%;
+            gap: 0.75rem;
         }
 
         .lightbox-content {
-            max-width: 90%;
-            max-height: 90%;
+            max-width: 100%;
+            max-height: calc(100vh - 10rem);
+            object-fit: contain;
+            border-radius: 0.5rem;
+            display: block;
         }
 
         .lightbox-close {
             color: #ffffff;
             position: absolute;
-            top: 1.5rem;
-            right: 2rem;
+            top: 1rem;
+            right: 1.5rem;
             font-size: 2.5rem;
             cursor: pointer;
             z-index: 10;
+            line-height: 1;
         }
 
+        /* 左右箭頭：固定在畫面左右中央，不隨圖片走 */
         .lightbox-nav {
             position: absolute;
             top: 50%;
@@ -194,32 +225,30 @@
         }
 
         #lightbox-prev {
-            left: 1.25rem;
+            left: 0.75rem;
         }
 
         #lightbox-next {
-            right: 1.25rem;
+            right: 0.75rem;
         }
 
+        /* 說明文字：與圖片同寬，自動換行 */
         .lightbox-caption {
-            position: absolute;
-            bottom: 1.5rem;
-            left: 50%;
-            transform: translateX(-50%);
-            color: rgba(255, 255, 255, 0.85);
-            font-size: 0.9rem;
-            background: rgba(0, 0, 0, 0.45);
-            padding: 0.3rem 1rem;
-            border-radius: 999px;
-            white-space: nowrap;
-            max-width: 80%;
-            overflow: hidden;
-            text-overflow: ellipsis;
+            width: 100%;
+            color: rgba(255, 255, 255, 0.88);
+            font-size: 0.85rem;
+            line-height: 1.6;
+            text-align: center;
+            white-space: normal;
+            word-break: break-word;
+            padding: 0.4rem 0.75rem;
+            background: rgba(0, 0, 0, 0.35);
+            border-radius: 0.5rem;
         }
 
         .lightbox-counter {
             position: absolute;
-            top: 1.5rem;
+            top: 1rem;
             left: 50%;
             transform: translateX(-50%);
             color: rgba(255, 255, 255, 0.7);
@@ -234,6 +263,262 @@
             -ms-overflow-style: none;
             scrollbar-width: none;
         }
+
+        /* 築選列右側「更多」漸层提示 */
+        .filter-scroll-wrapper {
+            position: relative;
+            min-width: 0;
+            flex: 1 1 auto;
+        }
+
+        /* 漸層過渡 + 箭頭容器 */
+        .filter-scroll-hint {
+            position: absolute;
+            right: 0;
+            top: 0;
+            /* 手機版 filter-buttons 有 pb-3（0.75rem），bottom 扣掉讓箭頭對齊按鈕中心 */
+            bottom: 0.75rem;
+            width: 4rem;
+            background: linear-gradient(to right, transparent, #f8f9fa 70%);
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: 0.25rem;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+            z-index: 5;
+        }
+
+        /* md 以上 pb-0，bottom 回歸 0 */
+        @media (min-width: 768px) {
+            .filter-scroll-hint {
+                bottom: 0;
+            }
+        }
+
+        .filter-scroll-hint.hidden-hint {
+            opacity: 0;
+        }
+
+        /* 箭頭圖示 */
+        .scroll-arrow {
+            width: 1.75rem;
+            height: 1.75rem;
+            background: white;
+            border-radius: 50%;
+            border: 1.5px solid #dee2e6;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.10);
+            animation: arrowBounce 1.2s ease-in-out infinite;
+            /* 箭頭可點擊 */
+            pointer-events: auto;
+            cursor: pointer;
+        }
+
+        .scroll-arrow:active {
+            background: #f0f7ff;
+            border-color: #007bff;
+        }
+
+        @keyframes arrowBounce {
+            0%, 100% { transform: translateX(0); }
+            50%       { transform: translateX(5px); }
+        }
+
+        /* 桌機不顯示 */
+        @media (min-width: 1200px) {
+            .filter-scroll-hint { display: none; }
+        }
+
+        /* 漢堡選單滑入動畫 */
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-6px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        #mobile-menu:not(.hidden) {
+            animation: slideDown 0.2s ease;
+        }
+
+        /* iPad Pro 專用放大字型（768px ~ 1199px） */
+        @media (min-width: 768px) and (max-width: 1199px) {
+
+            /* 導覽列 */
+            .glass-nav .text-sm {
+                font-size: 1rem;
+            }
+
+            /* Hero 區塊 */
+            #about h1 {
+                font-size: 3.5rem;
+            }
+
+            #about p {
+                font-size: 1.25rem;
+            }
+
+            #about a {
+                font-size: 1.05rem;
+                padding: 0.85rem 2.25rem;
+            }
+
+            /* 築選按鈕 */
+            .pill-button {
+                font-size: 1rem;
+                padding: 0.6rem 1.5rem;
+            }
+
+            /* 搜尋框 */
+            .search-input {
+                font-size: 1rem;
+                padding: 0.85rem 1.25rem;
+            }
+
+            /* 作品集標題區 */
+            #portfolio h2 {
+                font-size: 2.5rem;
+            }
+
+            #portfolio>div>div>p {
+                font-size: 1.1rem;
+            }
+
+            /* 卡片內文 */
+            .card-shadow h3 {
+                font-size: 1.2rem;
+            }
+
+            .card-shadow p {
+                font-size: 0.95rem;
+            }
+
+            .tech-tag {
+                font-size: 0.85rem;
+                padding: 0.3rem 0.8rem;
+                border-radius: 8px;
+            }
+
+            /* Modal */
+            .modal-content {
+                padding: 2.75rem;
+            }
+
+            #modal-title {
+                font-size: 2.25rem;
+            }
+
+            #modal-long-description {
+                font-size: 1.1rem;
+            }
+
+            #modal-reason,
+            #modal-problem,
+            #modal-results {
+                font-size: 1rem;
+            }
+
+            .modal-content h3.text-primary {
+                font-size: 0.9rem;
+            }
+
+            .modal-content .text-xl {
+                font-size: 1.35rem;
+            }
+
+            #modal-github-link {
+                font-size: 1.1rem;
+            }
+
+            /* 聕絡我區塊 */
+            #contact h2 {
+                font-size: 2.25rem;
+            }
+
+            #contact p {
+                font-size: 1.15rem;
+            }
+
+            #contact a {
+                font-size: 1.1rem;
+                padding: 1.1rem 2.5rem;
+            }
+
+            /* 頁尾 */
+            footer .text-sm {
+                font-size: 0.95rem;
+            }
+
+            footer a {
+                font-size: 1rem;
+            }
+
+            /* Lightbox 說明文字 */
+            .lightbox-caption {
+                font-size: 1rem;
+            }
+
+            .lightbox-counter {
+                font-size: 1rem;
+            }
+        }
+
+        /* 手機版 Modal：底部全屏滑出 */
+        @media (max-width: 767px) {
+            .modal {
+                align-items: flex-end;
+            }
+
+            .modal-content {
+                width: 100%;
+                max-width: 100%;
+                margin: 0;
+                padding: 1.25rem 1.25rem 2rem;
+                border-radius: 1.25rem 1.25rem 0 0;
+                max-height: 92vh;
+            }
+
+            /* 手機版 Lightbox：收窄側邊 padding，讓圖片更大 */
+            .lightbox {
+                padding: 3rem 2.5rem 1rem;
+            }
+
+            /* 手機版 Lightbox：導覽按鈕更清晰 */
+            .lightbox-nav {
+                background: rgba(0, 0, 0, 0.45);
+                border: 1.5px solid rgba(255, 255, 255, 0.55);
+                width: 2.25rem;
+                height: 2.25rem;
+                font-size: 1.3rem;
+            }
+
+            #lightbox-prev {
+                left: 0.25rem;
+            }
+
+            #lightbox-next {
+                right: 0.25rem;
+            }
+
+            /* 手機版說明文字：字型稍小 */
+            .lightbox-caption {
+                font-size: 0.75rem;
+                line-height: 1.5;
+                padding: 0.35rem 0.6rem;
+            }
+
+            .lightbox-content {
+                max-height: calc(100vh - 9rem);
+            }
+        }
     </style>
 </head>
 
@@ -242,17 +527,44 @@
     <!-- 導覽列 -->
     <nav class="fixed top-0 w-full z-50 glass-nav">
         <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
-            <div class="text-xl font-bold tracking-tighter text-primary">JOY'S PORTFOLIO</div>
+            <div class="text-base md:text-xl font-bold tracking-tighter text-primary whitespace-nowrap">JOY'S PORTFOLIO
+            </div>
             <div class="hidden md:flex space-x-8 text-sm font-medium text-ink-mute">
                 <a href="#about" class="hover:text-primary transition-colors">關於我</a>
                 <a href="#portfolio" class="hover:text-primary transition-colors">作品集</a>
                 <a href="#contact" class="hover:text-primary transition-colors">聯絡我</a>
             </div>
-            <div class="flex items-center">
+            <div class="flex items-center gap-3">
+                <!-- 漢堡選單按鈕（手機版） -->
+                <button id="hamburger-btn"
+                    class="md:hidden flex items-center justify-center p-2 rounded-lg hover:bg-canvas-soft transition-colors"
+                    aria-label="開啟選單">
+                    <!-- 漢堡 icon -->
+                    <svg id="icon-hamburger" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-ink-secondary"
+                        fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+                    <!-- 關閉 icon -->
+                    <svg id="icon-close" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-ink-secondary hidden"
+                        fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
                 <a href="https://github.com/Joy0130" target="_blank"
-                    class="bg-primary hover:bg-primary-hover text-white text-xs font-semibold px-5 py-2.5 rounded-full transition-all shadow-sm">
+                    class="bg-primary hover:bg-primary-hover text-white text-xs font-semibold px-4 py-2.5 rounded-full transition-all shadow-sm whitespace-nowrap">
                     GitHub Profile
                 </a>
+            </div>
+        </div>
+        <!-- 行動版展開選單 -->
+        <div id="mobile-menu" class="md:hidden hidden border-t border-hairline bg-white/95 backdrop-blur-sm">
+            <div class="flex flex-col py-3 px-6">
+                <a href="#about"
+                    class="mobile-nav-link py-3 text-sm font-medium text-ink-secondary hover:text-primary transition-colors border-b border-hairline">關於我</a>
+                <a href="#portfolio"
+                    class="mobile-nav-link py-3 text-sm font-medium text-ink-secondary hover:text-primary transition-colors border-b border-hairline">作品集</a>
+                <a href="#contact"
+                    class="mobile-nav-link py-3 text-sm font-medium text-ink-secondary hover:text-primary transition-colors">聯絡我</a>
             </div>
         </div>
     </nav>
@@ -260,7 +572,8 @@
     <!-- 個人簡介區塊 -->
     <section id="about" class="pt-32 pb-20 px-6 bg-canvas">
         <div class="max-w-4xl mx-auto flex flex-col md:flex-row items-center gap-12">
-            <div class="w-48 h-48 rounded-full overflow-hidden shadow-xl flex-shrink-0 border-4 border-white">
+            <div
+                class="w-40 h-40 md:w-48 md:h-48 rounded-full overflow-hidden shadow-xl flex-shrink-0 border-4 border-white">
                 <img src="./assets/images/avatar.png" alt="Joy's Avatar" class="w-full h-full object-cover"
                     onerror="this.onerror=null;this.src='https://avatars.githubusercontent.com/u/64908025?v=4'">
             </div>
@@ -269,7 +582,7 @@
                     你好，我是 <span class="text-primary">Joy</span>
                 </h1>
                 <p class="text-lg md:text-xl text-ink-secondary leading-relaxed mb-8 font-light">
-                    一位熱衷於 AI 整合、自動化流程與系統開發的工程師。我喜歡透過程式解決生活中的繁瑣問題，並持續探索 Agentic Workflow 與 AI 應用的無限可能。
+                    專注於網頁開發與 AI 整合的工程師。擅長運用自動化流程與 AI 技術解決複雜問題，並致力於探索 Agentic Workflow，打造具高實用性的創新應用。
                 </p>
                 <div class="flex flex-wrap justify-center md:justify-start gap-4">
                     <a href="#portfolio"
@@ -282,20 +595,40 @@
     </section>
 
     <!-- 篩選與搜尋區塊 -->
-    <section class="py-12 px-6 bg-canvas-soft border-y border-hairline">
+    <section class="py-6 md:py-12 px-6 bg-canvas-soft border-y border-hairline">
         <div class="max-w-7xl mx-auto flex flex-col md:flex-row md:items-center justify-between gap-8">
-            <div class="flex items-center space-x-3 overflow-x-auto no-scrollbar pb-2 md:pb-0" id="filter-buttons">
-                <button class="pill-button bg-primary text-white shadow-md" data-filter="all"
-                    title="顯示所有專案">全部專案</button>
-                <button class="pill-button bg-white text-ink-mute hover:text-primary border border-hairline shadow-sm"
-                    data-filter="web" title="提供對外服務的完整網站/應用，具備後端資料庫或使用者互動流程">網頁開發</button>
-                <button class="pill-button bg-white text-ink-mute hover:text-primary border border-hairline shadow-sm"
-                    data-filter="backend" title="自動化腳本、通知系統、DevOps 工具">後端與自動化</button>
-                <button class="pill-button bg-white text-ink-mute hover:text-primary border border-hairline shadow-sm"
-                    data-filter="uiux" title="瀏覽器擴充功能、單機版工具">UI/UX 與工具</button>
+            <!-- 篩選列 + 右側箭頭提示 -->
+            <div class="filter-scroll-wrapper">
+                <div class="flex items-center space-x-4 overflow-x-auto no-scrollbar pb-3 md:pb-0" id="filter-buttons">
+                    <button class="pill-button bg-primary text-white shadow-md" data-filter="all"
+                        title="顯示所有專案">全部專案</button>
+                    <button class="pill-button bg-white text-ink-mute hover:text-primary border border-hairline shadow-sm"
+                        data-filter="AI" title="與AI模型串接或是AI相關的應用">AI應用</button>
+                    <button class="pill-button bg-white text-ink-mute hover:text-primary border border-hairline shadow-sm"
+                        data-filter="Bot" title="串接Line Bot或是相關的應用">LINE Bot</button>
+                    <button class="pill-button bg-white text-ink-mute hover:text-primary border border-hairline shadow-sm"
+                        data-filter="web" title="提供對外服務的完整網站/應用，具備後端資料庫或使用者互動流程">網站開發</button>
+                    <button class="pill-button bg-white text-ink-mute hover:text-primary border border-hairline shadow-sm"
+                        data-filter="DevOps" title="DevOps 工具與自動化部署">DevOps</button>
+                    <button class="pill-button bg-white text-ink-mute hover:text-primary border border-hairline shadow-sm"
+                        data-filter="API" title="串接API或是API相關的應用程式">API</button>
+                    <button class="pill-button bg-white text-ink-mute hover:text-primary border border-hairline shadow-sm"
+                        data-filter="Automate" title="自動化腳本、通知系統">自動化</button>
+                    <button class="pill-button bg-white text-ink-mute hover:text-primary border border-hairline shadow-sm"
+                        data-filter="Extension" title="擴充功能或單機版工具">擴充功能與單機版工具</button>
+                </div>
+                <!-- 右側漸層 + 箭頭提示 -->
+                <div class="filter-scroll-hint" id="filter-scroll-hint">
+                    <div class="scroll-arrow">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none"
+                            viewBox="0 0 24 24" stroke="#007bff" stroke-width="2.5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
+                        </svg>
+                    </div>
+                </div>
             </div>
             <div class="relative w-full md:w-80">
-                <input type="text" placeholder="搜尋專案、技術或關鍵字..."
+                <input type="text" placeholder="搜尋"
                     class="search-input w-full px-5 py-3 rounded-full text-sm text-ink shadow-sm" id="search-input">
                 <svg class="absolute right-4 top-3.5 w-4 h-4 text-ink-mute" fill="none" stroke="currentColor"
                     viewBox="0 0 24 24">
@@ -314,7 +647,7 @@
                 <p class="text-ink-mute font-light">來自 Joy GitHub 的公開 Repository</p>
                 <div class="h-1 w-16 bg-primary mx-auto mt-4 rounded-full"></div>
             </div>
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8" id="portfolio-grid">
+            <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-8" id="portfolio-grid">
                 <!-- 由 JavaScript 動態生成 -->
             </div>
         </div>
@@ -323,8 +656,8 @@
     <!-- 聯絡我區塊 -->
     <section id="contact" class="py-24 px-6 bg-canvas-soft border-t border-hairline">
         <div class="max-w-3xl mx-auto text-center">
-            <h2 class="text-3xl md:text-4xl font-bold mb-8 text-ink">對我的專案感興趣或是想和我一起合作嗎？</h2>
-            <p class="text-lg text-ink-secondary mb-12 font-light">
+            <h2 class="text-xl sm:text-2xl md:text-4xl font-bold mb-5 md:mb-8 text-ink">對我的專案感興趣或是想和我一起合作嗎？</h2>
+            <p class="text-base md:text-lg text-ink-secondary mb-8 md:mb-12 font-light">
                 歡迎透過電子郵件或 LinkedIn 與我聯繫，討論合作機會或交流。
             </p>
             <a href="mailto:[EMAIL_ADDRESS]"
@@ -335,7 +668,7 @@
     </section>
 
     <!-- 頁尾 -->
-    <footer class="py-12 px-6 bg-canvas border-t border-hairline">
+    <footer class="py-8 md:py-12 px-6 bg-canvas border-t border-hairline">
         <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
             <div class="text-ink-mute text-sm font-medium">
                 &copy; 2026 Joy's Portfolio
@@ -358,7 +691,7 @@
                 <p class="text-lg text-ink-secondary leading-relaxed font-light" id="modal-long-description"></p>
             </div>
 
-            <div class="grid md:grid-cols-2 gap-8 mb-10">
+            <div class="grid md:grid-cols-2 gap-4 md:gap-8 mb-8 md:mb-10">
                 <div class="bg-canvas-soft p-6 rounded-xl border border-hairline">
                     <h3 class="text-primary font-bold mb-3 uppercase tracking-widest text-xs">開發背景</h3>
                     <p class="text-ink-secondary leading-relaxed text-sm" id="modal-reason"></p>
@@ -397,13 +730,15 @@
     <!-- Lightbox -->
     <div id="lightbox" class="lightbox">
         <span class="lightbox-close" id="lightbox-close">&times;</span>
-        <button class="lightbox-nav" id="lightbox-prev" aria-label="上一張">&#8249;</button>
-        <img class="lightbox-content rounded-lg shadow-lg" id="lightbox-img" style="display: none;">
-        <video class="lightbox-content rounded-lg shadow-lg" id="lightbox-video" controls
-            style="display: none;"></video>
-        <button class="lightbox-nav" id="lightbox-next" aria-label="下一張">&#8250;</button>
-        <div class="lightbox-caption" id="lightbox-caption" style="display:none;"></div>
         <div class="lightbox-counter" id="lightbox-counter" style="display:none;"></div>
+        <button class="lightbox-nav" id="lightbox-prev" aria-label="上一張">&#8249;</button>
+        <!-- 圖片/影片與說明文字同寬容器 -->
+        <div class="lightbox-inner">
+            <img class="lightbox-content" id="lightbox-img" style="display: none;">
+            <video class="lightbox-content" id="lightbox-video" controls style="display: none;"></video>
+            <div class="lightbox-caption" id="lightbox-caption" style="display:none;"></div>
+        </div>
+        <button class="lightbox-nav" id="lightbox-next" aria-label="下一張">&#8250;</button>
     </div>
 
     <script>
@@ -431,12 +766,13 @@
                 ],
                 image: './assets/images/chatbot.png', //主畫面圖片
                 galleryImages: [
+                    { src: "./assets/images/chatbot.png", caption: "聊天機器人主畫面（明亮模式）" },
                     { src: "./assets/images/chatbot3.png", caption: "聊天機器人可切換模式（暗黑模式）" },
                     { src: "./assets/images/chatbot1.png", caption: "聊天機器人預設模型為 gemini-3.1-flash-lite" },
                     { src: "./assets/images/chatbot2.png", caption: "可自由切換雲端或地端模型" }
                 ],
                 demoVideo: '',
-                categories: ['web'],
+                categories: ['web', 'AI', 'Bot', 'API'],
                 technologies: ['Gemini API', 'Ollama', 'Python', 'FastAPI', 'JavaScript', 'React', 'TailwindCSS'],
                 github: 'https://github.com/Joy0130/My-ChatBot'
             },
@@ -462,7 +798,7 @@
                     { src: "./assets/images/ewc5.jpeg", caption: "手機Potal App收到推播通知" }
                 ],
                 demoVideo: '',
-                categories: ['backend'],
+                categories: ['web', 'Automate', 'API'],
                 technologies: ['Python', 'HTML', 'Flask'],
                 github: 'https://github.com/Joy0130/Python_FPNS'
             },
@@ -491,7 +827,7 @@
                     { src: "./assets/images/bank1.png", caption: "Render部署畫面" },
                 ],
                 demoVideo: '',
-                categories: ['backend'],
+                categories: ['Bot'],
                 technologies: ['Python', 'Line Messaging API'],
                 github: 'https://github.com/Joy0130/Python_Bank_LineBot'
             },
@@ -499,19 +835,20 @@
                 id: 'argo-cd-notifications',
                 title: 'Argo-CD-Notifications',
                 description: 'Argo CD Notifications 串接 Microsoft Teams 通知系統。',
-                longDescription: '這是一個 DevOps 工具專案，將 Argo CD 的部署狀態即時推送到 Teams 頻道中。',
-                reason: '開發團隊難以即時掌握 Kubernetes 的部署成功或失敗狀態。',
-                problem: '部署失敗時通知不明顯，導致修復時間延遲。',
+                longDescription: '這是一個 DevOps 工具專案，將 Argo CD 的部署狀態即時推送到 Teams 頻道中，並自動透過AI分析部署內容是否有異常，讓開發者可以快速知道部署狀態以及是否有異常。',
+                reason: '開發團隊無法即時掌握 Kubernetes 的部署成功或失敗狀態。',
+                problem: '部署失敗時通知不清楚，需查看多個網頁查詢錯誤原因，導致修復時間延遲。',
                 results: [
                     '實現部署狀態的即時可視化通知。',
                     '提升了團隊的響應速度與部署透明度。',
-                    '減少了人工檢查部署狀態的頻率。'
+                    '減少了人工檢查部署狀態的頻率。',
+                    '串接Gemini API，針對此次部署內容進行異常分析，節省查看Log的時間。'
                 ],
                 image: './assets/images/argo-cd.png',
                 galleryImages: [],
                 demoVideo: '',
-                categories: ['backend'],
-                technologies: ['Kubernetes', 'Argo CD', 'Teams Webhook', 'Shell'],
+                categories: ['DevOps', 'AI', 'API'],
+                technologies: ['Kubernetes', 'Argo CD', 'Teams Webhook', 'Shell', 'Gemini API'],
                 github: 'https://github.com/Joy0130/Argo-CD-Notifications'
             },
             {
@@ -529,25 +866,25 @@
                 image: './assets/images/smart-commit.png',
                 galleryImages: [],
                 demoVideo: '',
-                categories: ['backend'],
-                technologies: ['Python', 'Gemini API', 'Git'],
+                categories: ['AI', 'API'],
+                technologies: ['Python', 'Gemini API', 'Git', 'pipy'],
                 github: 'https://github.com/Joy0130/SmartCommit'
             },
             {
                 id: 'pdf-compressor',
                 title: 'PDF_Compressor',
-                description: '高效能 PDF 檔案壓縮工具。',
-                longDescription: '一個簡單易用的 PDF 壓縮工具，能在保持清晰度的同時極大減小檔案體積。',
-                reason: '許多平台上傳檔案有體積限制，PDF 往往過大。',
-                problem: '現有工具操作複雜或需要付費。',
+                description: '高效能 PDF 及圖片 檔案壓縮工具。',
+                longDescription: '單機版 PDF 及圖片壓縮工具，能在保持清晰度的同時極大減小檔案體積。',
+                reason: '工作常有需要將 PDF 或圖片給AI進行分析，但現有的線上 PDF 和 圖片工具常有檔案大小限制，或需要付費訂閱，且無法確保個人資料安全。',
+                problem: '現有工具針對大型檔案需要付費，且有資安疑慮。',
                 results: [
-                    '平均壓縮率達 60% 以上。',
-                    '支援批量處理，提升工作效率。'
+                    '圖檔支援批量處理，提升工作效率。',
+                    '本機端操作，確保個人資料安全。'
                 ],
                 image: './assets/images/pdf-compressor.png',
                 galleryImages: [],
                 demoVideo: '',
-                categories: ['uiux'],
+                categories: ['Extension'],
                 technologies: ['Python', 'PyPDF2'],
                 github: 'https://github.com/Joy0130/PDF_Compressor'
             },
@@ -565,7 +902,7 @@
                 image: './assets/images/ai-prompt.png',
                 galleryImages: [],
                 demoVideo: '',
-                categories: ['uiux'],
+                categories: ['Extension'],
                 technologies: ['JavaScript', 'Chrome Extension'],
                 github: 'https://github.com/Joy0130/AI-Prompt'
             },
@@ -583,44 +920,44 @@
                 image: './assets/images/aireview.png',
                 galleryImages: [],
                 demoVideo: '',
-                categories: ['backend'],
-                technologies: ['Python', 'AI Analysis', 'Git Hooks'],
+                categories: ['AI', 'API'],
+                technologies: ['Python', 'AI Analysis', 'Git Hooks', 'Gemini API', 'Pipy'],
                 github: 'https://github.com/Joy0130/aireview'
             },
-            {
-                id: 'ai-line-2-hackmd',
-                title: 'AI-LINE-2-HACKMD',
-                description: '將 Line 訊息透過 AI 整理並同步至 HackMD 的自動化工具。',
-                longDescription: '自動擷取 Line 群組中的重要資訊，經由 AI 摘要後同步到 HackMD 筆記中。',
-                reason: 'Line 訊息過多且雜亂，重要資訊容易被洗掉。',
-                problem: '手動整理會議紀錄或重要資訊非常耗時。',
-                results: [
-                    '實現資訊的自動化彙整與同步。',
-                    '大幅提升知識管理的效率。'
-                ],
-                image: './assets/images/line-hackmd.png',
-                galleryImages: [],
-                demoVideo: '',
-                categories: ['backend'],
-                technologies: ['Python', 'Line API', 'HackMD API', 'AI'],
-                github: 'https://github.com/Joy0130/AI-LINE-2-HACKMD'
-            },
+            // {
+            //     id: 'ai-line-2-hackmd',
+            //     title: 'AI-LINE-2-HACKMD',
+            //     description: '將 Line 訊息透過 AI 整理並同步至 HackMD 的自動化工具。',
+            //     longDescription: '自動擷取 Line 群組中的重要資訊，經由 AI 摘要後同步到 HackMD 筆記中。',
+            //     reason: 'Line 訊息過多且雜亂，重要資訊容易被洗掉。',
+            //     problem: '手動整理會議紀錄或重要資訊非常耗時。',
+            //     results: [
+            //         '實現資訊的自動化彙整與同步。',
+            //         '大幅提升知識管理的效率。'
+            //     ],
+            //     image: './assets/images/line-hackmd.png',
+            //     galleryImages: [],
+            //     demoVideo: '',
+            //     categories: ['backend'],
+            //     technologies: ['Python', 'Line API', 'HackMD API', 'AI'],
+            //     github: 'https://github.com/Joy0130/AI-LINE-2-HACKMD'
+            // },
             {
                 id: 'argocd-backup',
                 title: 'ArgoCD_backup',
                 description: '透過 GitHub Actions 自動備份 ArgoCD 關鍵資源與 RBAC 設定。',
-                longDescription: '使用自建 Linux Runner 連接 Kubernetes 叢集，每日定時將 ArgoCD 的 Application、AppProject、RBAC、通知設定等資源自動 commit 回 GitHub，機敏 Secret 則僅保留於 Runner 本機。',
+                longDescription: '透過Github Actions中的Runners功能，自建Linux Runner連接Kubernetes 叢集，每日定時將ArgoCD的Application、AppProject、RBAC、通知設定等資源自動備份，如有變更則 commit&Push 回GitHub保存，機敏Secret則僅保留於Kubernetes環境中。',
                 reason: 'ArgoCD 叢集設定一旦誤刪或損毀，缺乏版本化備份難以還原。',
                 problem: '手動匯出設定容易遺漏，且無法追蹤變更歷史。',
                 results: [
-                    '每日自動備份 15 種以上關鍵資源與 CRD 定義。',
+                    '每日自動備份 Application、AppProject、RBAC、通知設定等關鍵資源。',
                     '公開設定與機敏 Secret 分離存放，兼顧版本控管與安全性。',
                     '支援依時間戳記快照還原至任意歷史備份點。'
                 ],
                 image: './assets/images/argocd-backup.png',
                 galleryImages: [],
                 demoVideo: '',
-                categories: ['backend'],
+                categories: ['DevOps'],
                 technologies: ['Shell', 'GitHub Actions', 'Kubernetes', 'ArgoCD'],
                 github: 'https://github.com/Joy0130/ArgoCD_backup'
             },
@@ -629,12 +966,12 @@
                 title: 'tFTCoin (Cyber Points)',
                 description: '賽博龐克風格的員工點數累積與獎品兌換系統。',
                 longDescription: '以 Django 開發的員工點數平台，支援 Keycloak SSO 與本地帳密雙重登入，員工可透過任務代碼兌換點數並於商城兌換獎品，具備排行榜、年度重置與帳號鎖定防暴力破解機制。',
-                reason: '企業內部活動與福利獎勵缺乏統一、有趣的點數管理平台。',
-                problem: '人工登記點數與獎品兌換效率低，且難以防止帳號被暴力破解。',
+                reason: '企業內部活動與福利獎勵缺乏統一、有創意的平台。',
+                problem: '人工登記點數與獎品兌換效率低。',
                 results: [
                     '整合 Keycloak OAuth 與本地帳密雙重登入機制。',
                     '實現代碼兌換、獎品商城、排行榜與年度自動重置。',
-                    '內建連續 5 次登入失敗鎖定 15 分鐘的防護機制。'
+                    '內建連續 5 次登入失敗鎖定帳號的防護機制。'
                 ],
                 image: './assets/images/tftcoin.png',
                 galleryImages: [],
@@ -647,9 +984,9 @@
                 id: 'pdf-spiltter',
                 title: 'PDF_Spiltter',
                 description: '純前端、免安裝的 PDF 批次分割工具。',
-                longDescription: '直接在瀏覽器中運行的 PDF 分割工具，使用 pdf-lib 處理，支援拖曳上傳與多組頁碼範圍批次輸出，檔案全程不上傳伺服器，保障隱私安全。',
+                longDescription: '直接在本機端操作的 PDF 分割工具，使用 pdf-lib 處理，支援拖曳上傳與多組頁碼範圍批次輸出，檔案全程不上傳伺服器，保障隱私安全。',
                 reason: '線上 PDF 分割服務多需上傳檔案至伺服器，有隱私疑慮。',
-                problem: '需要快速分割多份 PDF，但不想安裝軟體或洩漏檔案內容。',
+                problem: '需要快速分割多份 PDF，但不想安裝軟體或有資安隱私疑慮。',
                 results: [
                     '所有處理皆在本地瀏覽器完成，無需上傳伺服器。',
                     '支援一次輸入多組範圍，批次自動下載多份 PDF。',
@@ -658,7 +995,7 @@
                 image: './assets/images/pdf-spiltter.png',
                 galleryImages: [],
                 demoVideo: '',
-                categories: ['uiux'],
+                categories: ['Extension'],
                 technologies: ['JavaScript', 'HTML', 'pdf-lib'],
                 github: 'https://github.com/Joy0130/PDF_Spiltter'
             },
@@ -672,12 +1009,11 @@
                 results: [
                     '整合三大主流 AI 模型，可依需求切換。',
                     '支援 Markdown 渲染與程式碼語法高亮，閱讀體驗佳。',
-                    'API Key 僅存於瀏覽器本地，不會上傳第三方伺服器。'
                 ],
                 image: './assets/images/web-ai-assistant.png',
                 galleryImages: [],
                 demoVideo: '',
-                categories: ['uiux'],
+                categories: ['AI', 'API', 'Extension'],
                 technologies: ['Python', 'FastAPI', 'JavaScript', 'Chrome Extension',],
                 github: 'https://github.com/Joy0130/web-AI-Assistant'
             },
@@ -687,54 +1023,55 @@
                 description: '雲端全自動的 LINE 提醒記事本，免掛機即可定時通知。',
                 longDescription: '前端網頁負責記事的新增與管理，資料同步至 GitHub Gist；後端以 Google Apps Script 定時觸發器每隔數分鐘檢查到期提醒，並透過 LINE API 主動推播通知，支援每日/每週/每月重複提醒。',
                 reason: '一般提醒工具需要裝置保持開啟，手機關螢幕或電腦關機就無法運作。',
-                problem: '需要穩定、免費、24 小時運作的提醒通知方案。',
+                problem: '需要穩定、免費、24 小時運作的提醒通知。',
                 results: [
                     '利用 GAS 免費額度達成 24/7 全自動監控，無需掛機。',
-                    '以 GitHub Gist 作為輕量資料庫，前後端與多裝置資料同步。',
-                    '支援每日、每週、每月的智慧重複提醒邏輯。'
+                    '以 GitHub Gist 作為輕量資料庫，前後端與多裝置資料自動同步。',
+                    '支援手動匯出匯入資料與手動同步備份資料上雲端或從雲端下載資料，換新裝置時可快速回復資料。',
+                    '透過GitHub Pages進行網頁部署。',
+                    '支援每日、每週、每月的智慧重複提醒。'
                 ],
                 image: './assets/images/line-notify.png',
                 galleryImages: [],
                 demoVideo: '',
-                categories: ['backend'],
-                technologies: ['JavaScript', 'Google Apps Script', 'LINE API', 'GitHub Gist'],
+                categories: ['API', 'Bot', 'Web'],
+                technologies: ['Google Apps Script', 'LINE Notify API', 'GitHub Gist', 'GitHub Pages', 'JavaScript'],
                 github: 'https://github.com/Joy0130/LineNotify'
             },
             {
                 id: 'registration-website',
                 title: 'Registration Website',
                 description: '以 Flask 開發的活動報名網站。',
-                longDescription: '提供活動課程報名、報名狀態管理與後台維護功能的 Web 應用，整合 Firebase 作為輔助服務並支援檔案上傳。',
-                reason: '需要一套可自行部署、彈性調整報名流程的活動報名系統。',
-                problem: '通用報名表單工具難以客製化課程狀態與後台管理邏輯。',
+                longDescription: '提供活動課程報名、報名狀態管理與後台維護功能的 Web 應用',
+                reason: '個人練習實作 Web 應用系統。',
+                problem: '個人練習實作一個完整的 Web 應用系統來練習前後端技術的串接。',
                 results: [
                     '完成課程報名、狀態追蹤與後台管理功能。',
-                    '支援檔案上傳與 Firebase 整合。',
-                    '可透過 Procfile 直接部署至雲端平台。'
+                    '使用 Flask 框架與 JavaScript 實作前後端技術的串接。'
                 ],
                 image: './assets/images/registration-website.png',
                 galleryImages: [],
                 demoVideo: '',
                 categories: ['web'],
-                technologies: ['Python', 'Flask', 'JavaScript', 'Firebase'],
+                technologies: ['Python', 'Flask', 'JavaScript'],
                 github: 'https://github.com/Joy0130/Registration-website'
             },
             {
                 id: 'pay-notify',
-                title: 'pay_notify',
+                title: 'Pay Notification',
                 description: '付款/繳費期限自動提醒腳本。',
-                longDescription: '以 Python 撰寫的自動化通知腳本，搭配 GitHub Actions 排程定期執行，用於監控並提醒繳費或付款期限，避免人工追蹤疏漏。',
+                longDescription: '以 Python 撰寫的自動化通知腳本，搭配 GitHub Actions 排程定期執行，用於監控 Gmail 郵件並提醒繳費或付款期限，避免人工追蹤疏漏。',
                 reason: '繳費期限容易遺忘，人工追蹤耗時且不可靠。',
                 problem: '缺乏自動化機制，逾期繳費可能造成額外費用或服務中斷。',
                 results: [
                     '透過 GitHub Actions 排程自動定期執行檢查。',
-                    '降低人工追蹤繳費期限的疏漏風險。'
+                    '降低人工追蹤各項費用期限的疏漏風險。'
                 ],
                 image: './assets/images/pay-notify.png',
                 galleryImages: [],
                 demoVideo: '',
-                categories: ['backend'],
-                technologies: ['Python', 'GitHub Actions'],
+                categories: ['Automate', 'Bot'],
+                technologies: ['Python', 'Line Notify', 'Gmail Application', 'GitHub Actions'],
                 github: 'https://github.com/Joy0130/pay_notify'
             }
         ];
@@ -962,6 +1299,37 @@
 
         renderProjects(projects);
 
+        // ── 篩選列右側「更多」箭頭提示 ──────────────────────────
+        (function () {
+            const filterEl  = document.getElementById('filter-buttons');
+            const hintEl    = document.getElementById('filter-scroll-hint');
+            const arrowEl   = hintEl ? hintEl.querySelector('.scroll-arrow') : null;
+            if (!filterEl || !hintEl) return;
+
+            function updateHint() {
+                // 只在非桌機（< 1200px）才需要偵測
+                if (window.innerWidth >= 1200) {
+                    hintEl.classList.add('hidden-hint');
+                    return;
+                }
+                const hasMore = filterEl.scrollLeft + filterEl.clientWidth < filterEl.scrollWidth - 4;
+                hintEl.classList.toggle('hidden-hint', !hasMore);
+            }
+
+            // 點擊箭頭就平滑向右捲動
+            if (arrowEl) {
+                arrowEl.addEventListener('click', () => {
+                    filterEl.scrollBy({ left: 150, behavior: 'smooth' });
+                });
+            }
+
+            filterEl.addEventListener('scroll', updateHint, { passive: true });
+            window.addEventListener('resize', updateHint);
+            // 初始化
+            updateHint();
+        })();
+        // ──────────────────────────────────────────────────────────
+
         // 導覽列平滑滾動
         document.querySelectorAll('nav a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
@@ -970,6 +1338,35 @@
                     behavior: 'smooth'
                 });
             });
+        });
+
+        // 漢堡選單開關
+        const hamburgerBtn = document.getElementById('hamburger-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const iconHamburger = document.getElementById('icon-hamburger');
+        const iconClose = document.getElementById('icon-close');
+        let menuOpen = false;
+
+        function closeMobileMenu() {
+            menuOpen = false;
+            mobileMenu.classList.add('hidden');
+            iconHamburger.classList.remove('hidden');
+            iconClose.classList.add('hidden');
+        }
+
+        hamburgerBtn.addEventListener('click', () => {
+            menuOpen = !menuOpen;
+            mobileMenu.classList.toggle('hidden', !menuOpen);
+            if (menuOpen) {
+                iconHamburger.classList.add('hidden');
+                iconClose.classList.remove('hidden');
+            } else {
+                closeMobileMenu();
+            }
+        });
+
+        document.querySelectorAll('.mobile-nav-link').forEach(link => {
+            link.addEventListener('click', () => closeMobileMenu());
         });
     </script>
 </body>
