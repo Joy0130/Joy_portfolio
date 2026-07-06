@@ -300,7 +300,8 @@
 
         .lightbox-caption {
             width: 100%;
-            color: rgba(255, 255, 255, 0.88);
+            /* color: rgba(255, 255, 255, 0.88); */
+            color: #cce5ff;
             font-size: 0.85rem;
             line-height: 1.6;
             text-align: center;
@@ -750,7 +751,7 @@
         <div class="max-w-7xl mx-auto">
             <div class="text-center mb-16">
                 <h2 class="text-3xl md:text-4xl font-bold tracking-tight mb-4 text-ink">精選作品集</h2>
-                <p class="text-ink-mute font-light">來自 Joy GitHub 的公開 Repository</p>
+                <p class="text-ink-mute font-light">My Projects</p>
                 <div class="h-1 w-16 bg-primary mx-auto mt-4 rounded-full"></div>
             </div>
             <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-8" id="portfolio-grid">
@@ -953,16 +954,24 @@
                 title: 'Argo-CD-Notifications',
                 description: 'Argo CD Notifications 串接 Microsoft Teams 通知系統。',
                 longDescription: '這是一個 DevOps 工具專案，將 Argo CD 的部署狀態即時推送到 Teams 頻道中，並自動透過AI分析部署內容是否有異常，讓開發者可以快速知道部署狀態以及是否有異常。',
-                reason: '開發團隊無法即時掌握 Kubernetes 的部署成功或失敗狀態。',
-                problem: '部署失敗時通知不清楚，需查看多個網頁查詢錯誤原因，導致修復時間延遲。',
+                reason: '開發團隊需開啟Argo CD 才可以即時掌握 Kubernetes 的部署成功或失敗狀態。',
+                problem: '部署失敗時需開啟多個畫面查詢錯誤原因，導致修復時間延遲。',
                 results: [
-                    '實現部署狀態的即時可視化通知。',
+                    '實現部署狀態的即時可視化通知，只需要開啟Teams就可以掌握部署狀態以及異常原因。',
                     '提升了團隊的響應速度與部署透明度。',
                     '減少了人工檢查部署狀態的頻率。',
                     '串接Gemini API，針對此次部署內容進行異常分析，節省查看Log的時間。'
                 ],
-                image: './assets/images/argo-cd.png',
-                galleryImages: [],
+                image: './assets/images/ArgoCD1.png',
+                galleryImages: [
+                    { src: "./assets/images/ArgoCD.png", caption: "ArgoCD部署後Teams通知畫面" },
+                    { src: "./assets/images/ArgoCD2.png", caption: "ArgoCD部署後出現Out of Sync通知" },
+                    { src: "./assets/images/ArgoCD3.png", caption: "ArgoCD部署後出現Degraded錯誤通知" },
+                    { src: "./assets/images/ArgoCD4.png", caption: "承接上圖，點選查看更多，下方有使用Gemini API 分析結果以及快速查看可以使用的指令" },
+                    { src: "./assets/images/ArgoCD5.png", caption: "承接上圖，AI建議修復步驟與指令(自動帶入namespace 和 pod name)" },
+                    { src: "./assets/images/ArgoCD6.png", caption: "承接上圖，快速排查指令以及操作連結，點選連結可以開啟ArgoCD(查看此App的Logs/Events/Resources)和Grafana(查看Log)" },
+
+                ],
                 demoVideo: '',
                 categories: ['DevOps', 'AI', 'API'],
                 technologies: ['Kubernetes', 'Argo CD', 'Teams Webhook', 'Shell', 'Gemini API'],
