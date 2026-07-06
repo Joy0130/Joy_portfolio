@@ -1062,16 +1062,23 @@
                     '公開設定與機敏 Secret 分離存放，兼顧版本控管與安全性。',
                     '支援依時間戳記快照還原至任意歷史備份點。'
                 ],
-                image: './assets/images/argocd-backup.png',
-                galleryImages: [],
+                image: './assets/images/Argobackup.png',
+                galleryImages: [
+                    { src: "./assets/images/Argobackup.png", caption: "ArgoCD github 畫面" },
+                    { src: "./assets/images/Argobackup1.png", caption: "ArgoCD 備份檔案" },
+                    { src: "./assets/images/Argobackup2.png", caption: "排程時間說明" },
+                    { src: "./assets/images/Argobackup3.png", caption: "備份內容說明" },
+                    { src: "./assets/images/Argobackup4.png", caption: "機敏資料保存方式說明" },
+                    { src: "./assets/images/Argobackup5.png", caption: "前置作業與Workflow 運作流程" },
+                ],
                 demoVideo: '',
                 categories: ['DevOps'],
-                technologies: ['Shell', 'GitHub Actions', 'Kubernetes', 'ArgoCD'],
-                github: 'https://github.com/Joy0130/ArgoCD_backup'
+                technologies: ['GitHub Actions', 'Kubernetes', 'ArgoCD', 'Shell'],
+                github: '因Kubernetes環境與github程式碼皆存放於公司內部環境中無法公開'
             },
             {
                 id: 'tftcoin',
-                title: 'tFTCoin (Cyber Points)',
+                title: 'tFTCoin',
                 description: '賽博龐克風格的員工點數累積與獎品兌換系統。',
                 longDescription: '以 Django 開發的員工點數平台，支援 Keycloak SSO 與本地帳密雙重登入，員工可透過任務代碼兌換點數並於商城兌換獎品，具備排行榜、年度重置與帳號鎖定防暴力破解機制。',
                 reason: '企業內部活動與福利獎勵缺乏統一、有創意的平台。',
@@ -1239,7 +1246,25 @@
             document.getElementById('modal-reason').textContent = project.reason;
             document.getElementById('modal-problem').textContent = project.problem;
             document.getElementById('modal-tech-tags').innerHTML = project.technologies.map(tech => `<span class="tech-tag">${tech}</span>`).join('');
-            document.getElementById('modal-github-link').href = project.github;
+            const githubLink = document.getElementById('modal-github-link');
+            if (project.github) {
+                if (project.github.startsWith('http')) {
+                    githubLink.href = project.github;
+                    githubLink.textContent = '在 GitHub 上查看原始碼 →';
+                    githubLink.className = 'inline-flex items-center text-primary font-semibold hover:underline';
+                    githubLink.removeAttribute('style');
+                    githubLink.target = '_blank';
+                } else {
+                    githubLink.removeAttribute('href');
+                    githubLink.textContent = project.github;
+                    githubLink.className = 'inline-flex items-center text-gray-500 font-medium cursor-not-allowed';
+                    githubLink.style.pointerEvents = 'none';
+                    githubLink.style.textDecoration = 'none';
+                }
+                githubLink.style.display = 'inline-flex';
+            } else {
+                githubLink.style.display = 'none';
+            }
 
             document.getElementById('modal-results').innerHTML = project.results.map(res => `
                 <li class="flex items-start">
