@@ -43,13 +43,10 @@
             font-family: 'Inter', sans-serif;
             font-weight: 400;
             scroll-behavior: smooth;
-            /* 基礎字型大小附加健庄回應 */
             font-size: 16px;
         }
 
         @media (min-width: 768px) and (max-width: 1199px) {
-
-            /* iPad 全基礎放大到 18px */
             body {
                 font-size: 18px;
             }
@@ -165,7 +162,6 @@
             box-sizing: border-box;
         }
 
-        /* 圖片 + 說明文字的垂直容器，寬度跟圖片一致 */
         .lightbox-inner {
             display: flex;
             flex-direction: column;
@@ -181,7 +177,6 @@
             object-fit: contain;
             border-radius: 0.5rem;
             display: block;
-            /* 觸控縮放支潉 */
             touch-action: none;
             transform-origin: center center;
             transition: transform 0.1s ease;
@@ -194,10 +189,9 @@
         .lightbox-content.is-zoomed {
             cursor: move;
             border-radius: 0;
-            transition: none;  /* 拖曳時關閉過渡避免延遲 */
+            transition: none;
         }
 
-        /* 放大時防止 lightbox-inner 裁切內容 */
         .lightbox-inner.zoomed-mode {
             overflow: visible;
         }
@@ -213,7 +207,6 @@
             line-height: 1;
         }
 
-        /* 左右箭頭：固定在畫面左右中央，不隨圖片走 */
         .lightbox-nav {
             position: absolute;
             top: 50%;
@@ -251,7 +244,6 @@
             right: 0.75rem;
         }
 
-        /* 說明文字：與圖片同寬，自動換行 */
         .lightbox-caption {
             width: 100%;
             color: rgba(255, 255, 255, 0.88);
@@ -283,19 +275,16 @@
             scrollbar-width: none;
         }
 
-        /* 築選列右側「更多」漸层提示 */
         .filter-scroll-wrapper {
             position: relative;
             min-width: 0;
             flex: 1 1 auto;
         }
 
-        /* 漸層過渡 + 箭頭容器 */
         .filter-scroll-hint {
             position: absolute;
             right: 0;
             top: 0;
-            /* 手機版 filter-buttons 有 pb-3（0.75rem），bottom 扣掉讓箭頭對齊按鈕中心 */
             bottom: 0.75rem;
             width: 4rem;
             background: linear-gradient(to right, transparent, #f8f9fa 70%);
@@ -308,7 +297,6 @@
             z-index: 5;
         }
 
-        /* md 以上 pb-0，bottom 回歸 0 */
         @media (min-width: 768px) {
             .filter-scroll-hint {
                 bottom: 0;
@@ -319,7 +307,6 @@
             opacity: 0;
         }
 
-        /* 箭頭圖示 */
         .scroll-arrow {
             width: 1.75rem;
             height: 1.75rem;
@@ -329,9 +316,8 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.10);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.10);
             animation: arrowBounce 1.2s ease-in-out infinite;
-            /* 箭頭可點擊 */
             pointer-events: auto;
             cursor: pointer;
         }
@@ -342,16 +328,23 @@
         }
 
         @keyframes arrowBounce {
-            0%, 100% { transform: translateX(0); }
-            50%       { transform: translateX(5px); }
+
+            0%,
+            100% {
+                transform: translateX(0);
+            }
+
+            50% {
+                transform: translateX(5px);
+            }
         }
 
-        /* 桌機不顯示 */
         @media (min-width: 1200px) {
-            .filter-scroll-hint { display: none; }
+            .filter-scroll-hint {
+                display: none;
+            }
         }
 
-        /* 漢堡選單滑入動畫 */
         @keyframes slideDown {
             from {
                 opacity: 0;
@@ -368,15 +361,11 @@
             animation: slideDown 0.2s ease;
         }
 
-        /* iPad Pro 專用放大字型（768px ~ 1199px） */
         @media (min-width: 768px) and (max-width: 1199px) {
-
-            /* 導覽列 */
             .glass-nav .text-sm {
                 font-size: 1rem;
             }
 
-            /* Hero 區塊 */
             #about h1 {
                 font-size: 3.5rem;
             }
@@ -390,19 +379,16 @@
                 padding: 0.85rem 2.25rem;
             }
 
-            /* 築選按鈕 */
             .pill-button {
                 font-size: 1rem;
                 padding: 0.6rem 1.5rem;
             }
 
-            /* 搜尋框 */
             .search-input {
                 font-size: 1rem;
                 padding: 0.85rem 1.25rem;
             }
 
-            /* 作品集標題區 */
             #portfolio h2 {
                 font-size: 2.5rem;
             }
@@ -411,7 +397,6 @@
                 font-size: 1.1rem;
             }
 
-            /* 卡片內文 */
             .card-shadow h3 {
                 font-size: 1.2rem;
             }
@@ -426,7 +411,6 @@
                 border-radius: 8px;
             }
 
-            /* Modal */
             .modal-content {
                 padding: 2.75rem;
             }
@@ -457,7 +441,6 @@
                 font-size: 1.1rem;
             }
 
-            /* 聕絡我區塊 */
             #contact h2 {
                 font-size: 2.25rem;
             }
@@ -471,7 +454,6 @@
                 padding: 1.1rem 2.5rem;
             }
 
-            /* 頁尾 */
             footer .text-sm {
                 font-size: 0.95rem;
             }
@@ -480,7 +462,6 @@
                 font-size: 1rem;
             }
 
-            /* Lightbox 說明文字 */
             .lightbox-caption {
                 font-size: 1rem;
             }
@@ -490,7 +471,6 @@
             }
         }
 
-        /* 手機版 Modal：底部全屏滑出 */
         @media (max-width: 767px) {
             .modal {
                 align-items: flex-end;
@@ -505,12 +485,10 @@
                 max-height: 92vh;
             }
 
-            /* 手機版 Lightbox：收窄側邊 padding，讓圖片更大 */
             .lightbox {
                 padding: 3rem 2.5rem 1rem;
             }
 
-            /* 手機版 Lightbox：導覽按鈕更清晰 */
             .lightbox-nav {
                 background: rgba(0, 0, 0, 0.45);
                 border: 1.5px solid rgba(255, 255, 255, 0.55);
@@ -527,7 +505,6 @@
                 right: 0.25rem;
             }
 
-            /* 手機版說明文字：字型稍小 */
             .lightbox-caption {
                 font-size: 0.75rem;
                 line-height: 1.5;
@@ -543,7 +520,6 @@
 
 <body class="antialiased">
 
-    <!-- 導覽列 -->
     <nav class="fixed top-0 w-full z-50 glass-nav">
         <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
             <div class="text-base md:text-xl font-bold tracking-tighter text-primary whitespace-nowrap">JOY'S PORTFOLIO
@@ -554,28 +530,23 @@
                 <a href="#contact" class="hover:text-primary transition-colors">聯絡我</a>
             </div>
             <div class="flex items-center gap-3">
-                <!-- 漢堡選單按鈕（手機版） -->
                 <button id="hamburger-btn"
                     class="md:hidden flex items-center justify-center p-2 rounded-lg hover:bg-canvas-soft transition-colors"
                     aria-label="開啟選單">
-                    <!-- 漢堡 icon -->
                     <svg id="icon-hamburger" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-ink-secondary"
                         fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
                     </svg>
-                    <!-- 關閉 icon -->
                     <svg id="icon-close" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-ink-secondary hidden"
                         fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
                     </svg>
                 </button>
                 <a href="https://github.com/Joy0130" target="_blank"
-                    class="bg-primary hover:bg-primary-hover text-white text-xs font-semibold px-4 py-2.5 rounded-full transition-all shadow-sm whitespace-nowrap">
-                    GitHub Profile
-                </a>
+                    class="bg-primary hover:bg-primary-hover text-white text-xs font-semibold px-4 py-2.5 rounded-full transition-all shadow-sm whitespace-nowrap">GitHub
+                    Profile</a>
             </div>
         </div>
-        <!-- 行動版展開選單 -->
         <div id="mobile-menu" class="md:hidden hidden border-t border-hairline bg-white/95 backdrop-blur-sm">
             <div class="flex flex-col py-3 px-6">
                 <a href="#about"
@@ -588,7 +559,6 @@
         </div>
     </nav>
 
-    <!-- 個人簡介區塊 -->
     <section id="about" class="pt-32 pb-20 px-6 bg-canvas">
         <div class="max-w-4xl mx-auto flex flex-col md:flex-row items-center gap-12">
             <div
@@ -597,12 +567,10 @@
                     onerror="this.onerror=null;this.src='https://avatars.githubusercontent.com/u/64908025?v=4'">
             </div>
             <div class="text-center md:text-left">
-                <h1 class="text-4xl md:text-5xl font-bold tracking-tightest mb-4 text-ink">
-                    你好，我是 <span class="text-primary">Joy</span>
-                </h1>
-                <p class="text-lg md:text-xl text-ink-secondary leading-relaxed mb-8 font-light">
-                    專注於網頁開發與 AI 整合的工程師。擅長運用自動化流程與 AI 技術解決複雜問題，並致力於探索 Agentic Workflow，打造具高實用性的創新應用。
-                </p>
+                <h1 class="text-4xl md:text-5xl font-bold tracking-tightest mb-4 text-ink">你好，我是 <span
+                        class="text-primary">Joy</span></h1>
+                <p class="text-lg md:text-xl text-ink-secondary leading-relaxed mb-8 font-light">專注於網頁開發與 AI
+                    整合的工程師。擅長運用自動化流程與 AI 技術解決複雜問題，並致力於探索 Agentic Workflow，打造具高實用性的創新應用。</p>
                 <div class="flex flex-wrap justify-center md:justify-start gap-4">
                     <a href="#portfolio"
                         class="bg-primary hover:bg-primary-hover text-white px-8 py-3 rounded-full font-semibold shadow-md transition-all">精選作品集</a>
@@ -613,35 +581,39 @@
         </div>
     </section>
 
-    <!-- 篩選與搜尋區塊 -->
     <section class="py-6 md:py-12 px-6 bg-canvas-soft border-y border-hairline">
         <div class="max-w-7xl mx-auto flex flex-col md:flex-row md:items-center justify-between gap-8">
-            <!-- 篩選列 + 右側箭頭提示 -->
             <div class="filter-scroll-wrapper">
                 <div class="flex items-center space-x-4 overflow-x-auto no-scrollbar pb-3 md:pb-0" id="filter-buttons">
                     <button class="pill-button bg-primary text-white shadow-md" data-filter="all"
                         title="顯示所有專案">全部專案</button>
-                    <button class="pill-button bg-white text-ink-mute hover:text-primary border border-hairline shadow-sm"
+                    <button
+                        class="pill-button bg-white text-ink-mute hover:text-primary border border-hairline shadow-sm"
                         data-filter="AI" title="與AI模型串接或是AI相關的應用">AI應用</button>
-                    <button class="pill-button bg-white text-ink-mute hover:text-primary border border-hairline shadow-sm"
+                    <button
+                        class="pill-button bg-white text-ink-mute hover:text-primary border border-hairline shadow-sm"
                         data-filter="Bot" title="串接Line Bot或是相關的應用">LINE Bot</button>
-                    <button class="pill-button bg-white text-ink-mute hover:text-primary border border-hairline shadow-sm"
+                    <button
+                        class="pill-button bg-white text-ink-mute hover:text-primary border border-hairline shadow-sm"
                         data-filter="web" title="提供對外服務的完整網站/應用，具備後端資料庫或使用者互動流程">網站開發</button>
-                    <button class="pill-button bg-white text-ink-mute hover:text-primary border border-hairline shadow-sm"
+                    <button
+                        class="pill-button bg-white text-ink-mute hover:text-primary border border-hairline shadow-sm"
                         data-filter="DevOps" title="DevOps 工具與自動化部署">DevOps</button>
-                    <button class="pill-button bg-white text-ink-mute hover:text-primary border border-hairline shadow-sm"
+                    <button
+                        class="pill-button bg-white text-ink-mute hover:text-primary border border-hairline shadow-sm"
                         data-filter="API" title="串接API或是API相關的應用程式">API</button>
-                    <button class="pill-button bg-white text-ink-mute hover:text-primary border border-hairline shadow-sm"
+                    <button
+                        class="pill-button bg-white text-ink-mute hover:text-primary border border-hairline shadow-sm"
                         data-filter="Automate" title="自動化腳本、通知系統">自動化</button>
-                    <button class="pill-button bg-white text-ink-mute hover:text-primary border border-hairline shadow-sm"
+                    <button
+                        class="pill-button bg-white text-ink-mute hover:text-primary border border-hairline shadow-sm"
                         data-filter="Extension" title="擴充功能或單機版工具">擴充功能與單機版工具</button>
                 </div>
-                <!-- 右側漸層 + 箭頭提示 -->
                 <div class="filter-scroll-hint" id="filter-scroll-hint">
                     <div class="scroll-arrow">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none"
-                            viewBox="0 0 24 24" stroke="#007bff" stroke-width="2.5">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24"
+                            stroke="#007bff" stroke-width="2.5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
                         </svg>
                     </div>
                 </div>
@@ -658,7 +630,6 @@
         </div>
     </section>
 
-    <!-- 作品集網格區塊 -->
     <section id="portfolio" class="py-24 px-6 bg-canvas">
         <div class="max-w-7xl mx-auto">
             <div class="text-center mb-16">
@@ -666,32 +637,23 @@
                 <p class="text-ink-mute font-light">來自 Joy GitHub 的公開 Repository</p>
                 <div class="h-1 w-16 bg-primary mx-auto mt-4 rounded-full"></div>
             </div>
-            <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-8" id="portfolio-grid">
-                <!-- 由 JavaScript 動態生成 -->
-            </div>
+            <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-8" id="portfolio-grid"></div>
         </div>
     </section>
 
-    <!-- 聯絡我區塊 -->
     <section id="contact" class="py-24 px-6 bg-canvas-soft border-t border-hairline">
         <div class="max-w-3xl mx-auto text-center">
             <h2 class="text-xl sm:text-2xl md:text-4xl font-bold mb-5 md:mb-8 text-ink">對我的專案感興趣或是想和我一起合作嗎？</h2>
-            <p class="text-base md:text-lg text-ink-secondary mb-8 md:mb-12 font-light">
-                歡迎透過電子郵件或 LinkedIn 與我聯繫，討論合作機會或交流。
-            </p>
+            <p class="text-base md:text-lg text-ink-secondary mb-8 md:mb-12 font-light">歡迎透過電子郵件或 LinkedIn
+                與我聯繫，討論合作機會或交流。</p>
             <a href="mailto:[EMAIL_ADDRESS]"
-                class="bg-primary hover:bg-primary-hover text-white px-10 py-4 rounded-full text-lg font-bold shadow-md transition-all inline-block">
-                立即發送郵件
-            </a>
+                class="bg-primary hover:bg-primary-hover text-white px-10 py-4 rounded-full text-lg font-bold shadow-md transition-all inline-block">立即發送郵件</a>
         </div>
     </section>
 
-    <!-- 頁尾 -->
     <footer class="py-8 md:py-12 px-6 bg-canvas border-t border-hairline">
         <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
-            <div class="text-ink-mute text-sm font-medium">
-                &copy; 2026 Joy's Portfolio
-            </div>
+            <div class="text-ink-mute text-sm font-medium">&copy; 2026 Joy's Portfolio</div>
             <div class="flex space-x-6">
                 <a href="https://github.com/Joy0130" target="_blank"
                     class="text-ink-mute hover:text-primary transition-colors font-semibold">GitHub</a>
@@ -700,7 +662,6 @@
         </div>
     </footer>
 
-    <!-- 專案詳細資訊彈跳視窗 -->
     <div id="project-modal" class="modal">
         <div class="modal-content no-scrollbar">
             <span class="close-button" id="close-modal">&times;</span>
@@ -739,9 +700,7 @@
 
             <div class="mt-8 text-center">
                 <a id="modal-github-link" href="#" target="_blank"
-                    class="inline-flex items-center text-primary font-semibold hover:underline">
-                    在 GitHub 上查看原始碼 →
-                </a>
+                    class="inline-flex items-center text-primary font-semibold hover:underline">在 GitHub 上查看原始碼 →</a>
             </div>
         </div>
     </div>
@@ -751,7 +710,6 @@
         <span class="lightbox-close" id="lightbox-close">&times;</span>
         <div class="lightbox-counter" id="lightbox-counter" style="display:none;"></div>
         <button class="lightbox-nav" id="lightbox-prev" aria-label="上一張">&#8249;</button>
-        <!-- 圖片/影片與說明文字同寬容器 -->
         <div class="lightbox-inner">
             <img class="lightbox-content" id="lightbox-img" style="display: none;">
             <video class="lightbox-content" id="lightbox-video" controls style="display: none;"></video>
@@ -783,7 +741,7 @@
                     'PDF 優先以 PyMuPDF 擷取中文內容，失敗自動退回 PyPDF2。',
                     'localStorage 容量不足時提供刪除舊對話提示，避免資料遺失或崩潰。'
                 ],
-                image: './assets/images/chatbot.png', //主畫面圖片
+                image: './assets/images/chatbot.png',
                 galleryImages: [
                     { src: "./assets/images/chatbot.png", caption: "聊天機器人主畫面（明亮模式）" },
                     { src: "./assets/images/chatbot3.png", caption: "聊天機器人可切換模式（暗黑模式）" },
@@ -943,24 +901,6 @@
                 technologies: ['Python', 'AI Analysis', 'Git Hooks', 'Gemini API', 'Pipy'],
                 github: 'https://github.com/Joy0130/aireview'
             },
-            // {
-            //     id: 'ai-line-2-hackmd',
-            //     title: 'AI-LINE-2-HACKMD',
-            //     description: '將 Line 訊息透過 AI 整理並同步至 HackMD 的自動化工具。',
-            //     longDescription: '自動擷取 Line 群組中的重要資訊，經由 AI 摘要後同步到 HackMD 筆記中。',
-            //     reason: 'Line 訊息過多且雜亂，重要資訊容易被洗掉。',
-            //     problem: '手動整理會議紀錄或重要資訊非常耗時。',
-            //     results: [
-            //         '實現資訊的自動化彙整與同步。',
-            //         '大幅提升知識管理的效率。'
-            //     ],
-            //     image: './assets/images/line-hackmd.png',
-            //     galleryImages: [],
-            //     demoVideo: '',
-            //     categories: ['backend'],
-            //     technologies: ['Python', 'Line API', 'HackMD API', 'AI'],
-            //     github: 'https://github.com/Joy0130/AI-LINE-2-HACKMD'
-            // },
             {
                 id: 'argocd-backup',
                 title: 'ArgoCD_backup',
@@ -970,7 +910,7 @@
                 problem: '手動匯出設定容易遺漏，且無法追蹤變更歷史。',
                 results: [
                     '每日自動備份 Application、AppProject、RBAC、通知設定等關鍵資源。',
-                    '公開設定與機敏 Secret 分離存放，兼顧版本控管與安全性。',
+                    '公開設定與機敏 Secret 分分離存放，兼顧版本控管與安全性。',
                     '支援依時間戳記快照還原至任意歷史備份點。'
                 ],
                 image: './assets/images/argocd-backup.png',
@@ -1095,8 +1035,6 @@
             }
         ];
 
-        // 剩餘的 Repository 可以依此類推加入...
-
         const portfolioGrid = document.getElementById('portfolio-grid');
         const searchInput = document.getElementById('search-input');
         const filterButtons = document.getElementById('filter-buttons');
@@ -1112,8 +1050,46 @@
         const lightboxCaption = document.getElementById('lightbox-caption');
         const lightboxCounter = document.getElementById('lightbox-counter');
 
-        let currentGallery = [];  // [{ src, caption }]
+        let currentGallery = [];
         let currentGalleryIndex = -1;
+
+        // ─── 新增：強制進入橫向與全螢幕 ─────────────────────────────
+        async function lockLandscape() {
+            if (window.innerWidth <= 1199) {
+                try {
+                    const el = document.documentElement;
+                    if (el.requestFullscreen) {
+                        await el.requestFullscreen();
+                    } else if (el.webkitRequestFullscreen) {
+                        await el.webkitRequestFullscreen();
+                    }
+
+                    if (screen.orientation && screen.orientation.lock) {
+                        await screen.orientation.lock('landscape');
+                    }
+                } catch (err) {
+                    console.warn('強制轉向受限於瀏覽器支援度或安全機制:', err);
+                }
+            }
+        }
+
+        // ─── 新增：解除橫向與退出全螢幕 ─────────────────────────────
+        async function unlockLandscape() {
+            try {
+                if (screen.orientation && screen.orientation.unlock) {
+                    screen.orientation.unlock();
+                }
+                if (document.fullscreenElement || document.webkitFullscreenElement) {
+                    if (document.exitFullscreen) {
+                        await document.exitFullscreen();
+                    } else if (document.webkitExitFullscreen) {
+                        await document.webkitExitFullscreen();
+                    }
+                }
+            } catch (err) {
+                console.warn('解除轉向失敗:', err);
+            }
+        }
 
         function renderProjects(filteredProjects) {
             portfolioGrid.innerHTML = '';
@@ -1197,8 +1173,8 @@
         }
 
         function openLightbox(indexOrSrc, galleryOrType) {
-            // Called from gallery: openLightbox(index, galleryArray)
-            // Called from video:   openLightbox(src, 'video')
+            lockLandscape(); // 觸發全螢幕與橫向鎖定
+
             if (galleryOrType === 'video') {
                 currentGallery = [];
                 currentGalleryIndex = -1;
@@ -1214,7 +1190,6 @@
                 return;
             }
 
-            // Gallery image navigation
             const gallery = typeof galleryOrType === 'string' ? JSON.parse(galleryOrType) : galleryOrType;
             currentGallery = gallery;
             currentGalleryIndex = indexOrSrc;
@@ -1228,7 +1203,6 @@
             lightboxImg.src = item.src;
             lightboxImg.style.display = 'block';
 
-            // 切換圖片時重置縮放
             if (window._lightboxResetZoom) window._lightboxResetZoom(false);
 
             const total = currentGallery.length;
@@ -1273,20 +1247,19 @@
             if (e.key === 'Escape') lightboxClose.click();
         });
 
-        // ── Lightbox 觸控縮放（Pinch Zoom）、雙擊放大、拖曳平移 ────────────
         (function () {
-            const img   = lightboxImg;
+            const img = lightboxImg;
             const inner = document.querySelector('.lightbox-inner');
 
-            let scale     = 1;
-            let posX      = 0;   // 目前平移量 X
-            let posY      = 0;   // 目前平移量 Y
-            let startDist = 0;   // Pinch 起始指間距
-            let startScale = 1;  // Pinch 開始時的縮放引數
+            let scale = 1;
+            let posX = 0;
+            let posY = 0;
+            let startDist = 0;
+            let startScale = 1;
             let isDragging = false;
             let dragStartX = 0;
             let dragStartY = 0;
-            let lastTap    = 0;  // 雙擊時間戳
+            let lastTap = 0;
 
             const MIN_SCALE = 1;
             const MAX_SCALE = 4;
@@ -1302,7 +1275,6 @@
                 img.style.transform = `translate(${posX}px, ${posY}px) scale(${scale})`;
                 img.classList.toggle('is-zoomed', isZoomed);
                 inner.classList.toggle('zoomed-mode', isZoomed);
-                // 放大時隱藏切換箭頭避免誤擊
                 lightboxPrev.style.opacity = isZoomed ? '0' : '';
                 lightboxNext.style.opacity = isZoomed ? '0' : '';
                 lightboxPrev.style.pointerEvents = isZoomed ? 'none' : '';
@@ -1311,8 +1283,8 @@
 
             function resetZoom(animate) {
                 scale = 1;
-                posX  = 0;
-                posY  = 0;
+                posX = 0;
+                posY = 0;
                 if (animate) {
                     img.style.transition = 'transform 0.25s ease';
                     setTimeout(() => { img.style.transition = 'none'; }, 260);
@@ -1322,21 +1294,16 @@
                 applyTransform();
             }
 
-            // 對外暴露：切換圖片時重置縮放
             window._lightboxResetZoom = resetZoom;
 
-            /* ――――― Touch events ―――――――――――――――――――――――――― */
             img.addEventListener('touchstart', (e) => {
                 if (e.touches.length === 2) {
-                    // 雙指 Pinch 開始
                     e.preventDefault();
-                    startDist  = getTouchDist(e.touches[0], e.touches[1]);
+                    startDist = getTouchDist(e.touches[0], e.touches[1]);
                     startScale = scale;
                 } else if (e.touches.length === 1) {
-                    // 雙擊偵測
                     const now = Date.now();
                     if (now - lastTap < 300) {
-                        // 雙擊：已放大則還原，否則放大到 2.5x
                         if (scale > 1.5) {
                             resetZoom(true);
                         } else {
@@ -1352,7 +1319,6 @@
                     }
                     lastTap = now;
 
-                    // 拖曳平移開始
                     if (scale > 1.01) {
                         isDragging = true;
                         dragStartX = e.touches[0].clientX - posX;
@@ -1364,7 +1330,7 @@
             img.addEventListener('touchmove', (e) => {
                 if (e.touches.length === 2) {
                     e.preventDefault();
-                    const dist    = getTouchDist(e.touches[0], e.touches[1]);
+                    const dist = getTouchDist(e.touches[0], e.touches[1]);
                     const newScale = Math.min(MAX_SCALE, Math.max(MIN_SCALE, startScale * (dist / startDist)));
                     scale = newScale;
                     applyTransform();
@@ -1378,13 +1344,11 @@
 
             img.addEventListener('touchend', (e) => {
                 isDragging = false;
-                // Pinch 結束：如果縮回小於 1 則重置
                 if (scale < MIN_SCALE + 0.05) {
                     resetZoom(true);
                 }
             });
         })();
-        // ──────────────────────────────────────────────────────────────
 
         closeModal.onclick = () => {
             projectModal.style.display = 'none';
@@ -1395,6 +1359,7 @@
         lightboxClose.onclick = () => {
             lightbox.style.display = 'none';
             lightboxVideo.pause();
+            unlockLandscape(); // 觸發解除橫向與全螢幕
         };
 
         window.onclick = (e) => {
@@ -1406,6 +1371,7 @@
             if (e.target == lightbox) {
                 lightbox.style.display = 'none';
                 lightboxVideo.pause();
+                unlockLandscape(); // 觸發解除橫向與全螢幕
             }
         };
 
@@ -1434,15 +1400,13 @@
 
         renderProjects(projects);
 
-        // ── 篩選列右側「更多」箭頭提示 ──────────────────────────
         (function () {
-            const filterEl  = document.getElementById('filter-buttons');
-            const hintEl    = document.getElementById('filter-scroll-hint');
-            const arrowEl   = hintEl ? hintEl.querySelector('.scroll-arrow') : null;
+            const filterEl = document.getElementById('filter-buttons');
+            const hintEl = document.getElementById('filter-scroll-hint');
+            const arrowEl = hintEl ? hintEl.querySelector('.scroll-arrow') : null;
             if (!filterEl || !hintEl) return;
 
             function updateHint() {
-                // 只在非桌機（< 1200px）才需要偵測
                 if (window.innerWidth >= 1200) {
                     hintEl.classList.add('hidden-hint');
                     return;
@@ -1451,7 +1415,6 @@
                 hintEl.classList.toggle('hidden-hint', !hasMore);
             }
 
-            // 點擊箭頭就平滑向右捲動
             if (arrowEl) {
                 arrowEl.addEventListener('click', () => {
                     filterEl.scrollBy({ left: 150, behavior: 'smooth' });
@@ -1460,12 +1423,9 @@
 
             filterEl.addEventListener('scroll', updateHint, { passive: true });
             window.addEventListener('resize', updateHint);
-            // 初始化
             updateHint();
         })();
-        // ──────────────────────────────────────────────────────────
 
-        // 導覽列平滑滾動
         document.querySelectorAll('nav a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
@@ -1475,7 +1435,6 @@
             });
         });
 
-        // 漢堡選單開關
         const hamburgerBtn = document.getElementById('hamburger-btn');
         const mobileMenu = document.getElementById('mobile-menu');
         const iconHamburger = document.getElementById('icon-hamburger');
