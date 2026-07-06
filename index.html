@@ -145,7 +145,7 @@
             border: 1px solid #e9ecef;
         }
 
-        /* Lightbox */
+        /* Lightbox 基礎設定 */
         .lightbox {
             display: none;
             position: fixed;
@@ -155,11 +155,22 @@
             width: 100%;
             height: 100%;
             background-color: rgba(0, 0, 0, 0.92);
+        }
+
+        /* 旋轉容器 */
+        .lightbox-rotator {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             padding: 3.5rem 3.5rem 1.5rem;
             box-sizing: border-box;
+            transition: transform 0.3s ease;
         }
 
         .lightbox-inner {
@@ -485,7 +496,7 @@
                 max-height: 92vh;
             }
 
-            .lightbox {
+            .lightbox-rotator {
                 padding: 3rem 2.5rem 1rem;
             }
 
@@ -515,11 +526,32 @@
                 max-height: calc(100vh - 9rem);
             }
         }
+
+        /* 手機與平板直立模式強制圖片轉為橫向顯示 */
+        @media (max-width: 1024px) and (orientation: portrait) {
+            .lightbox.lightbox-image-mode .lightbox-rotator {
+                top: 50%;
+                left: 50%;
+                width: 100vh;
+                width: 100dvh;
+                height: 100vw;
+                height: 100dvw;
+                transform: translate(-50%, -50%) rotate(90deg);
+                padding: 1.5rem 3.5rem;
+            }
+
+            .lightbox.lightbox-image-mode .lightbox-content {
+                max-height: calc(100vw - 5rem) !important;
+                max-height: calc(100dvw - 5rem) !important;
+                max-width: calc(100vh - 7rem) !important;
+                max-width: calc(100dvh - 7rem) !important;
+            }
+        }
     </style>
 </head>
 
 <body class="antialiased">
-
+    <!-- 導覽列 -->
     <nav class="fixed top-0 w-full z-50 glass-nav">
         <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
             <div class="text-base md:text-xl font-bold tracking-tighter text-primary whitespace-nowrap">JOY'S PORTFOLIO
@@ -543,8 +575,9 @@
                     </svg>
                 </button>
                 <a href="https://github.com/Joy0130" target="_blank"
-                    class="bg-primary hover:bg-primary-hover text-white text-xs font-semibold px-4 py-2.5 rounded-full transition-all shadow-sm whitespace-nowrap">GitHub
-                    Profile</a>
+                    class="bg-primary hover:bg-primary-hover text-white text-xs font-semibold px-4 py-2.5 rounded-full transition-all shadow-sm whitespace-nowrap">
+                    GitHub Profile
+                </a>
             </div>
         </div>
         <div id="mobile-menu" class="md:hidden hidden border-t border-hairline bg-white/95 backdrop-blur-sm">
@@ -559,6 +592,7 @@
         </div>
     </nav>
 
+    <!-- 個人簡介區塊 -->
     <section id="about" class="pt-32 pb-20 px-6 bg-canvas">
         <div class="max-w-4xl mx-auto flex flex-col md:flex-row items-center gap-12">
             <div
@@ -567,10 +601,12 @@
                     onerror="this.onerror=null;this.src='https://avatars.githubusercontent.com/u/64908025?v=4'">
             </div>
             <div class="text-center md:text-left">
-                <h1 class="text-4xl md:text-5xl font-bold tracking-tightest mb-4 text-ink">你好，我是 <span
-                        class="text-primary">Joy</span></h1>
-                <p class="text-lg md:text-xl text-ink-secondary leading-relaxed mb-8 font-light">專注於網頁開發與 AI
-                    整合的工程師。擅長運用自動化流程與 AI 技術解決複雜問題，並致力於探索 Agentic Workflow，打造具高實用性的創新應用。</p>
+                <h1 class="text-4xl md:text-5xl font-bold tracking-tightest mb-4 text-ink">
+                    你好，我是 <span class="text-primary">Joy</span>
+                </h1>
+                <p class="text-lg md:text-xl text-ink-secondary leading-relaxed mb-8 font-light">
+                    專注於網頁開發與 AI 整合的工程師。擅長運用自動化流程與 AI 技術解決複雜問題，並致力於探索 Agentic Workflow，打造具高實用性的創新應用。
+                </p>
                 <div class="flex flex-wrap justify-center md:justify-start gap-4">
                     <a href="#portfolio"
                         class="bg-primary hover:bg-primary-hover text-white px-8 py-3 rounded-full font-semibold shadow-md transition-all">精選作品集</a>
@@ -581,6 +617,7 @@
         </div>
     </section>
 
+    <!-- 篩選與搜尋區塊 -->
     <section class="py-6 md:py-12 px-6 bg-canvas-soft border-y border-hairline">
         <div class="max-w-7xl mx-auto flex flex-col md:flex-row md:items-center justify-between gap-8">
             <div class="filter-scroll-wrapper">
@@ -630,6 +667,7 @@
         </div>
     </section>
 
+    <!-- 作品集網格區塊 -->
     <section id="portfolio" class="py-24 px-6 bg-canvas">
         <div class="max-w-7xl mx-auto">
             <div class="text-center mb-16">
@@ -637,23 +675,32 @@
                 <p class="text-ink-mute font-light">來自 Joy GitHub 的公開 Repository</p>
                 <div class="h-1 w-16 bg-primary mx-auto mt-4 rounded-full"></div>
             </div>
-            <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-8" id="portfolio-grid"></div>
+            <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-8" id="portfolio-grid">
+                <!-- 由 JavaScript 動態生成 -->
+            </div>
         </div>
     </section>
 
+    <!-- 聯絡我區塊 -->
     <section id="contact" class="py-24 px-6 bg-canvas-soft border-t border-hairline">
         <div class="max-w-3xl mx-auto text-center">
             <h2 class="text-xl sm:text-2xl md:text-4xl font-bold mb-5 md:mb-8 text-ink">對我的專案感興趣或是想和我一起合作嗎？</h2>
-            <p class="text-base md:text-lg text-ink-secondary mb-8 md:mb-12 font-light">歡迎透過電子郵件或 LinkedIn
-                與我聯繫，討論合作機會或交流。</p>
+            <p class="text-base md:text-lg text-ink-secondary mb-8 md:mb-12 font-light">
+                歡迎透過電子郵件或 LinkedIn 與我聯繫，討論合作機會或交流。
+            </p>
             <a href="mailto:[EMAIL_ADDRESS]"
-                class="bg-primary hover:bg-primary-hover text-white px-10 py-4 rounded-full text-lg font-bold shadow-md transition-all inline-block">立即發送郵件</a>
+                class="bg-primary hover:bg-primary-hover text-white px-10 py-4 rounded-full text-lg font-bold shadow-md transition-all inline-block">
+                立即發送郵件
+            </a>
         </div>
     </section>
 
+    <!-- 頁尾 -->
     <footer class="py-8 md:py-12 px-6 bg-canvas border-t border-hairline">
         <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
-            <div class="text-ink-mute text-sm font-medium">&copy; 2026 Joy's Portfolio</div>
+            <div class="text-ink-mute text-sm font-medium">
+                &copy; 2026 Joy's Portfolio
+            </div>
             <div class="flex space-x-6">
                 <a href="https://github.com/Joy0130" target="_blank"
                     class="text-ink-mute hover:text-primary transition-colors font-semibold">GitHub</a>
@@ -662,6 +709,7 @@
         </div>
     </footer>
 
+    <!-- 專案詳細資訊彈跳視窗 -->
     <div id="project-modal" class="modal">
         <div class="modal-content no-scrollbar">
             <span class="close-button" id="close-modal">&times;</span>
@@ -700,22 +748,27 @@
 
             <div class="mt-8 text-center">
                 <a id="modal-github-link" href="#" target="_blank"
-                    class="inline-flex items-center text-primary font-semibold hover:underline">在 GitHub 上查看原始碼 →</a>
+                    class="inline-flex items-center text-primary font-semibold hover:underline">
+                    在 GitHub 上查看原始碼 →
+                </a>
             </div>
         </div>
     </div>
 
     <!-- Lightbox -->
     <div id="lightbox" class="lightbox">
-        <span class="lightbox-close" id="lightbox-close">&times;</span>
-        <div class="lightbox-counter" id="lightbox-counter" style="display:none;"></div>
-        <button class="lightbox-nav" id="lightbox-prev" aria-label="上一張">&#8249;</button>
-        <div class="lightbox-inner">
-            <img class="lightbox-content" id="lightbox-img" style="display: none;">
-            <video class="lightbox-content" id="lightbox-video" controls style="display: none;"></video>
-            <div class="lightbox-caption" id="lightbox-caption" style="display:none;"></div>
+        <!-- 旋轉用外層容器 -->
+        <div id="lightbox-rotator" class="lightbox-rotator">
+            <span class="lightbox-close" id="lightbox-close">&times;</span>
+            <div class="lightbox-counter" id="lightbox-counter" style="display:none;"></div>
+            <button class="lightbox-nav" id="lightbox-prev" aria-label="上一張">&#8249;</button>
+            <div class="lightbox-inner">
+                <img class="lightbox-content" id="lightbox-img" style="display: none;">
+                <video class="lightbox-content" id="lightbox-video" controls style="display: none;"></video>
+                <div class="lightbox-caption" id="lightbox-caption" style="display:none;"></div>
+            </div>
+            <button class="lightbox-nav" id="lightbox-next" aria-label="下一張">&#8250;</button>
         </div>
-        <button class="lightbox-nav" id="lightbox-next" aria-label="下一張">&#8250;</button>
     </div>
 
     <script>
@@ -910,7 +963,7 @@
                 problem: '手動匯出設定容易遺漏，且無法追蹤變更歷史。',
                 results: [
                     '每日自動備份 Application、AppProject、RBAC、通知設定等關鍵資源。',
-                    '公開設定與機敏 Secret 分分離存放，兼顧版本控管與安全性。',
+                    '公開設定與機敏 Secret 分離存放，兼顧版本控管與安全性。',
                     '支援依時間戳記快照還原至任意歷史備份點。'
                 ],
                 image: './assets/images/argocd-backup.png',
@@ -1053,44 +1106,6 @@
         let currentGallery = [];
         let currentGalleryIndex = -1;
 
-        // ─── 新增：強制進入橫向與全螢幕 ─────────────────────────────
-        async function lockLandscape() {
-            if (window.innerWidth <= 1199) {
-                try {
-                    const el = document.documentElement;
-                    if (el.requestFullscreen) {
-                        await el.requestFullscreen();
-                    } else if (el.webkitRequestFullscreen) {
-                        await el.webkitRequestFullscreen();
-                    }
-
-                    if (screen.orientation && screen.orientation.lock) {
-                        await screen.orientation.lock('landscape');
-                    }
-                } catch (err) {
-                    console.warn('強制轉向受限於瀏覽器支援度或安全機制:', err);
-                }
-            }
-        }
-
-        // ─── 新增：解除橫向與退出全螢幕 ─────────────────────────────
-        async function unlockLandscape() {
-            try {
-                if (screen.orientation && screen.orientation.unlock) {
-                    screen.orientation.unlock();
-                }
-                if (document.fullscreenElement || document.webkitFullscreenElement) {
-                    if (document.exitFullscreen) {
-                        await document.exitFullscreen();
-                    } else if (document.webkitExitFullscreen) {
-                        await document.webkitExitFullscreen();
-                    }
-                }
-            } catch (err) {
-                console.warn('解除轉向失敗:', err);
-            }
-        }
-
         function renderProjects(filteredProjects) {
             portfolioGrid.innerHTML = '';
             filteredProjects.forEach(project => {
@@ -1173,9 +1188,9 @@
         }
 
         function openLightbox(indexOrSrc, galleryOrType) {
-            lockLandscape(); // 觸發全螢幕與橫向鎖定
-
             if (galleryOrType === 'video') {
+                lightbox.classList.add('lightbox-video-mode');
+                lightbox.classList.remove('lightbox-image-mode');
                 currentGallery = [];
                 currentGalleryIndex = -1;
                 lightboxImg.style.display = 'none';
@@ -1190,6 +1205,8 @@
                 return;
             }
 
+            lightbox.classList.add('lightbox-image-mode');
+            lightbox.classList.remove('lightbox-video-mode');
             const gallery = typeof galleryOrType === 'string' ? JSON.parse(galleryOrType) : galleryOrType;
             currentGallery = gallery;
             currentGalleryIndex = indexOrSrc;
@@ -1247,9 +1264,11 @@
             if (e.key === 'Escape') lightboxClose.click();
         });
 
+        // ── Lightbox 觸控縮放（Pinch Zoom）、雙擊放大、拖曳平移 ────────────
         (function () {
             const img = lightboxImg;
             const inner = document.querySelector('.lightbox-inner');
+            const lightbox = document.getElementById('lightbox');
 
             let scale = 1;
             let posX = 0;
@@ -1321,8 +1340,17 @@
 
                     if (scale > 1.01) {
                         isDragging = true;
-                        dragStartX = e.touches[0].clientX - posX;
-                        dragStartY = e.touches[0].clientY - posY;
+                        const touch = e.touches[0];
+                        // 判斷是否正處於強制橫向旋轉狀態
+                        const isRotated = window.innerWidth <= 1024 && window.innerHeight > window.innerWidth && lightbox.classList.contains('lightbox-image-mode');
+
+                        if (isRotated) {
+                            dragStartX = touch.clientY - posX;
+                            dragStartY = -touch.clientX - posY;
+                        } else {
+                            dragStartX = touch.clientX - posX;
+                            dragStartY = touch.clientY - posY;
+                        }
                     }
                 }
             }, { passive: false });
@@ -1336,8 +1364,16 @@
                     applyTransform();
                 } else if (e.touches.length === 1 && isDragging) {
                     e.preventDefault();
-                    posX = e.touches[0].clientX - dragStartX;
-                    posY = e.touches[0].clientY - dragStartY;
+                    const touch = e.touches[0];
+                    const isRotated = window.innerWidth <= 1024 && window.innerHeight > window.innerWidth && lightbox.classList.contains('lightbox-image-mode');
+
+                    if (isRotated) {
+                        posX = touch.clientY - dragStartX;
+                        posY = -touch.clientX - dragStartY;
+                    } else {
+                        posX = touch.clientX - dragStartX;
+                        posY = touch.clientY - dragStartY;
+                    }
                     applyTransform();
                 }
             }, { passive: false });
@@ -1359,7 +1395,6 @@
         lightboxClose.onclick = () => {
             lightbox.style.display = 'none';
             lightboxVideo.pause();
-            unlockLandscape(); // 觸發解除橫向與全螢幕
         };
 
         window.onclick = (e) => {
@@ -1371,7 +1406,6 @@
             if (e.target == lightbox) {
                 lightbox.style.display = 'none';
                 lightboxVideo.pause();
-                unlockLandscape(); // 觸發解除橫向與全螢幕
             }
         };
 
