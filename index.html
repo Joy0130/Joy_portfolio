@@ -181,6 +181,25 @@
             object-fit: contain;
             border-radius: 0.5rem;
             display: block;
+            /* 觸控縮放支潉 */
+            touch-action: none;
+            transform-origin: center center;
+            transition: transform 0.1s ease;
+            will-change: transform;
+            cursor: grab;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+
+        .lightbox-content.is-zoomed {
+            cursor: move;
+            border-radius: 0;
+            transition: none;  /* 拖曳時關閉過渡避免延遲 */
+        }
+
+        /* 放大時防止 lightbox-inner 裁切內容 */
+        .lightbox-inner.zoomed-mode {
+            overflow: visible;
         }
 
         .lightbox-close {
@@ -1209,6 +1228,9 @@
             lightboxImg.src = item.src;
             lightboxImg.style.display = 'block';
 
+            // 切換圖片時重置縮放
+            if (window._lightboxResetZoom) window._lightboxResetZoom(false);
+
             const total = currentGallery.length;
             lightboxPrev.disabled = (idx === 0);
             lightboxNext.disabled = (idx === total - 1);
@@ -1250,6 +1272,119 @@
             if (e.key === 'ArrowRight') lightboxNext.click();
             if (e.key === 'Escape') lightboxClose.click();
         });
+
+        // ── Lightbox 觸控縮放（Pinch Zoom）、雙擊放大、拖曳平移 ────────────
+        (function () {
+            const img   = lightboxImg;
+            const inner = document.querySelector('.lightbox-inner');
+
+            let scale     = 1;
+            let posX      = 0;   // 目前平移量 X
+            let posY      = 0;   // 目前平移量 Y
+            let startDist = 0;   // Pinch 起始指間距
+            let startScale = 1;  // Pinch 開始時的縮放引數
+            let isDragging = false;
+            let dragStartX = 0;
+            let dragStartY = 0;
+            let lastTap    = 0;  // 雙擊時間戳
+
+            const MIN_SCALE = 1;
+            const MAX_SCALE = 4;
+
+            function getTouchDist(t1, t2) {
+                const dx = t1.clientX - t2.clientX;
+                const dy = t1.clientY - t2.clientY;
+                return Math.sqrt(dx * dx + dy * dy);
+            }
+
+            function applyTransform() {
+                const isZoomed = scale > 1.01;
+                img.style.transform = `translate(${posX}px, ${posY}px) scale(${scale})`;
+                img.classList.toggle('is-zoomed', isZoomed);
+                inner.classList.toggle('zoomed-mode', isZoomed);
+                // 放大時隱藏切換箭頭避免誤擊
+                lightboxPrev.style.opacity = isZoomed ? '0' : '';
+                lightboxNext.style.opacity = isZoomed ? '0' : '';
+                lightboxPrev.style.pointerEvents = isZoomed ? 'none' : '';
+                lightboxNext.style.pointerEvents = isZoomed ? 'none' : '';
+            }
+
+            function resetZoom(animate) {
+                scale = 1;
+                posX  = 0;
+                posY  = 0;
+                if (animate) {
+                    img.style.transition = 'transform 0.25s ease';
+                    setTimeout(() => { img.style.transition = 'none'; }, 260);
+                } else {
+                    img.style.transition = 'none';
+                }
+                applyTransform();
+            }
+
+            // 對外暴露：切換圖片時重置縮放
+            window._lightboxResetZoom = resetZoom;
+
+            /* ――――― Touch events ―――――――――――――――――――――――――― */
+            img.addEventListener('touchstart', (e) => {
+                if (e.touches.length === 2) {
+                    // 雙指 Pinch 開始
+                    e.preventDefault();
+                    startDist  = getTouchDist(e.touches[0], e.touches[1]);
+                    startScale = scale;
+                } else if (e.touches.length === 1) {
+                    // 雙擊偵測
+                    const now = Date.now();
+                    if (now - lastTap < 300) {
+                        // 雙擊：已放大則還原，否則放大到 2.5x
+                        if (scale > 1.5) {
+                            resetZoom(true);
+                        } else {
+                            scale = 2.5;
+                            posX = 0;
+                            posY = 0;
+                            img.style.transition = 'transform 0.25s ease';
+                            setTimeout(() => { img.style.transition = 'none'; }, 260);
+                            applyTransform();
+                        }
+                        lastTap = 0;
+                        return;
+                    }
+                    lastTap = now;
+
+                    // 拖曳平移開始
+                    if (scale > 1.01) {
+                        isDragging = true;
+                        dragStartX = e.touches[0].clientX - posX;
+                        dragStartY = e.touches[0].clientY - posY;
+                    }
+                }
+            }, { passive: false });
+
+            img.addEventListener('touchmove', (e) => {
+                if (e.touches.length === 2) {
+                    e.preventDefault();
+                    const dist    = getTouchDist(e.touches[0], e.touches[1]);
+                    const newScale = Math.min(MAX_SCALE, Math.max(MIN_SCALE, startScale * (dist / startDist)));
+                    scale = newScale;
+                    applyTransform();
+                } else if (e.touches.length === 1 && isDragging) {
+                    e.preventDefault();
+                    posX = e.touches[0].clientX - dragStartX;
+                    posY = e.touches[0].clientY - dragStartY;
+                    applyTransform();
+                }
+            }, { passive: false });
+
+            img.addEventListener('touchend', (e) => {
+                isDragging = false;
+                // Pinch 結束：如果縮回小於 1 則重置
+                if (scale < MIN_SCALE + 0.05) {
+                    resetZoom(true);
+                }
+            });
+        })();
+        // ──────────────────────────────────────────────────────────────
 
         closeModal.onclick = () => {
             projectModal.style.display = 'none';
