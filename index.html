@@ -301,8 +301,8 @@
         .lightbox-caption {
             width: 100%;
             /* color: rgba(255, 255, 255, 0.88); */
-            color: #cce5ff;
-            font-size: 0.85rem;
+            color: #c0dbf9;
+            font-size: 1rem;
             line-height: 1.6;
             text-align: center;
             white-space: normal;
@@ -1088,8 +1088,29 @@
                     '實現代碼兌換、獎品商城、排行榜與年度自動重置。',
                     '內建連續 5 次登入失敗鎖定帳號的防護機制。'
                 ],
-                image: './assets/images/tftcoin.png',
-                galleryImages: [],
+                image: './assets/images/coin.png',
+                galleryImages: [
+                    { src: "./assets/images/coin.png", caption: "登入畫面:OAuth2登入、測試用一般帳號密碼登入" },
+                    { src: "./assets/images/coin1.png", caption: "登入簽到" },
+                    { src: "./assets/images/coin2.png", caption: "成功簽到，取得點數" },
+                    { src: "./assets/images/coin3.png", caption: "Dashboard 首頁：紀錄目前累積的Coins、兌換獎品紀錄、兌換代碼與紀錄、TOP3 榮譽排行榜、任務列表" },
+                    { src: "./assets/images/coin5.png", caption: "兌換代碼：參加特定任務完成後從Portal Apps中獲取代碼，輸入代碼後，可獲得相對應的Coins" },
+                    { src: "./assets/images/coin6.jpg", caption: "Portal Apps 畫面" },
+                    { src: "./assets/images/coin4.png", caption: "同仁將透過Portal App推播領取代碼，進入網頁貼上兌換代碼即可得到相對應的Coins。每組代碼僅限使用一次，使用後自動失效。" },
+                    { src: "./assets/images/coin7.png", caption: "獎品商城：累積Coins後可以到獎品商城中兌換相對應的獎品。" },
+                    { src: "./assets/images/coin8.png", caption: "續頁獎品商城" },
+                    { src: "./assets/images/coin9.png", caption: "歷史紀錄：專屬統計個人在此平台中的所有交易紀錄。" },
+                    { src: "./assets/images/coin10.png", caption: "排行榜：可以得知目前自己的排名，在排行榜中顯示TOP 30 。" },
+                    { src: "./assets/images/coin11.png", caption: "管理後台：只有管理者看得到此畫面，可以管理兌換代碼、獎品設定、查看使用者得到點數、已使用的代碼、已兌換獎品" },
+                    { src: "./assets/images/coin12.png", caption: "管理後台-管理代碼：管理者可以在此複製代碼或批次匯入並自動分配代碼給使用者後，發推播通知使用者" },
+                    { src: "./assets/images/coin13.png", caption: "管理後台-管理代碼：批次匯入" },
+                    { src: "./assets/images/coin14.png", caption: "管理後台-使用代碼紀錄" },
+                    { src: "./assets/images/coin15.png", caption: "管理後台-兌換獎品紀錄：管理者可以在此紀錄使用者兌換獎品後，獎品是否已發送" },
+
+
+
+
+                ],
                 demoVideo: '',
                 categories: ['web'],
                 technologies: ['Python', 'Django', 'Keycloak OAuth', 'PostgreSQL'],
