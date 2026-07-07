@@ -690,7 +690,7 @@
                     <a href="#portfolio"
                         class="bg-primary hover:bg-primary-hover text-white px-8 py-3 rounded-full font-semibold shadow-md transition-all">精選作品集</a>
                     <a href="#contact"
-                        class="bg-white hover:bg-canvas-soft text-ink-secondary border border-hairline px-8 py-3 rounded-full font-semibold shadow-sm transition-all">聯絡我</a>
+                        class="bg-white hover:bg-canvas-soft hover:text-primary text-ink-secondary border border-hairline px-8 py-3 rounded-full font-semibold shadow-sm transition-all">聯絡我</a>
                 </div>
             </div>
         </div>
@@ -1106,15 +1106,47 @@
                     { src: "./assets/images/coin13.png", caption: "管理後台-管理代碼：批次匯入" },
                     { src: "./assets/images/coin14.png", caption: "管理後台-使用代碼紀錄" },
                     { src: "./assets/images/coin15.png", caption: "管理後台-兌換獎品紀錄：管理者可以在此紀錄使用者兌換獎品後，獎品是否已發送" },
-
-
-
-
                 ],
                 demoVideo: '',
                 categories: ['web'],
                 technologies: ['Python', 'Django', 'Keycloak OAuth', 'PostgreSQL'],
                 github: 'https://github.com/Joy0130/tFTCoin'
+            },
+            {
+                id: 'inv',
+                title: '物料管理系統',
+                description: '工務系統-物料管理系統',
+                longDescription: '工地管理物料使用的系統',
+                reason: '原本系統只有單純為管理單位設計，只能讓工地物料管理員以及物管課單位同仁使用，實際工地一般同仁需要領取或使用物料都需要透過工地物料管理員，且物料借出後物料管理員只能靠紙本追蹤，導致管理上較為繁瑣且容易出錯。',
+                problem: '物料領用、歸還、盤點作業繁瑣且容易出錯',
+                results: [
+                    '透過物料管理系統，一般同仁設定權限後可直接進行物料領用操作。',
+                    '物料領用、歸還、庫存盤點作業電子化，減少紙本作業，降低錯誤率。',
+                    '系統可清楚記錄物料的去向與狀態，物料管理員可透過系統掌握物料狀態，即時追蹤物料去向。',
+                    '串接工務系統提供API，打造全新介面，有RWD功能，支援平板與手機使用，提升使用體驗。'
+                ],
+                image: '/assets/images/inv0.png',
+                galleryImages: [
+                    { src: "./assets/images/inv0.png", caption: "登入畫面：串接公司LDAP登入" },
+                    { src: "./assets/images/inv01.png", caption: "RWD：平板畫面" },
+                    { src: "./assets/images/inv02.png", caption: "RWD：手機畫面" },
+                    { src: "./assets/images/inv.png", caption: "庫存總表：顯示各工地庫存狀況，一般工地同仁只看得到自己工地，物管課同仁可看到所有工地" },
+                    { src: "./assets/images/inv1.png", caption: "庫存總表：新增機具或物料" },
+                    { src: "./assets/images/inv2.png", caption: "庫存總表：調整，機具物料如果屬於公司列管，一般工地管理員無法做數量調整，只能由物管課同仁調整" },
+                    { src: "./assets/images/inv3.png", caption: "庫存總表：調整一物一號機具，需選擇機具編號" },
+                    { src: "./assets/images/inv4.png", caption: "庫存總表：調整總量管控機具或物料，直接調整數量" },
+                    { src: "./assets/images/inv5.png", caption: "庫存總表：消耗，非消耗品無法進行此操作" },
+                    { src: "./assets/images/inv6.png", caption: "庫存總表：消耗，消耗品如現場有使用，需到此搜尋此物料後進行扣減" },
+                    { src: "./assets/images/inv7.png", caption: "借出清單：顯示所有借出、歸還或擬借狀態的所有機具或物料清單" },
+                    { src: "./assets/images/inv8.png", caption: "借出清單：新增借出，一般工地人員直接帶入登入者姓名" },
+                    { src: "./assets/images/inv9.png", caption: "借出清單：新增借出，物料管理員可以選擇借用人和保管人" },
+                    { src: "./assets/images/inv10.png", caption: "借出清單：借出物料，借出後會顯示借出了借出的日期" },
+                    { src: "./assets/images/inv11.png", caption: "借出清單：歸還物料" },
+                ],
+                demoVideo: '',
+                categories: ['Web', 'API'],
+                technologies: ['Angular', 'TypeScript', 'SCSS', 'FastAPI', 'LDAP'],
+                github: '此為公司內部系統，無法公開程式碼。'
             },
             {
                 id: 'pdf-spiltter',
