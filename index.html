@@ -1045,6 +1045,33 @@
                 github: '因Kubernetes環境與github程式碼皆存放於公司內部環境中無法公開'
             },
             {
+                id: 'helm',
+                title: 'helm chart repository',
+                description: '透過 Helm 自動化部署 。',
+                longDescription: 'Helm Chart 倉庫（Chart Repository），集中管理 公司主要系統與周邊服務的 Kubernetes 部署定義。所有 chart 打包後透過 GitHub Actions 自動發佈到 GitHub Pages（gh-pages 分支），對外以 Helm repo 形式提供安裝。',
+                reason: '隨這公司開發微服務（Microservices）系統，單一大型專案轉變為多個小型專案，各專案陸續容器化，團隊在 Kubernetes 上要維運的服務數量快速成長，因此本專案將所有服務收斂為 標準化的 Helm Chart 倉庫，並搭配 GitHub Actions 建立 自動打包 → 發佈到 GitHub Pages 的 Chart Repository，讓部署從「改 YAML」變成「調 values + helm install」。',
+                problem: [
+                    '消除重複的 YAML — 模板化取代複製貼上',
+                    '參數化配置 — 一份 Chart 適應多情境、image、副本數、時區、runtime 環境變數、Ingress host 全部收進 values.yaml，改設定不再動模板，版本升級只需 bump Chart.yaml 版本。',
+                    '標準化部署流程 — 使用 GitHub Actions 自動執行打包、發佈 Chart 與更新 Index，完全整合 GitOps 流程，ArgoCD 只需拉對應 chart 版本即可部署，減少人工下指令失誤。',
+                    '所有服務集中一個 repo、以版本化的 chart 交付；並整合 ArgoCD 通知（異常時自動發通知至 Teams），讓部署狀態從「事後才發現」變成「異常即時通知」。'
+                ],
+                results: [
+                    '把「多個相似服務、散落且硬編碼的 K8s manifest、人工部署」收斂為「模板化、參數化、版本化、自動發佈的 Helm Chart 倉庫」，讓部署可重複、可維護、可自助安裝。',
+                    'Helm + ArgoCD 交付模式已全面取代基礎 kubectl apply部署，成為公司資源部署標準流程。'
+                ],
+                image: './assets/images/helm.png',
+                galleryImages: [
+                    { src: "./assets/images/helm.png", caption: "helm github 畫面" },
+                    { src: "./assets/images/helm1.png", caption: "helm 部署workflows" },
+                    { src: "./assets/images/helm2.png", caption: "helm gh-pages 分支：產生安裝檔並自動更新index.yaml" },
+                ],
+                demoVideo: '',
+                categories: ['DevOps'],
+                technologies: ['GitHub Actions', 'Kubernetes', 'ArgoCD', 'Shell'],
+                github: '因Kubernetes環境與github程式碼皆存放於公司內部環境所以無法公開'
+            },
+            {
                 id: 'pdf-compressor',
                 title: 'PDF_Compressor',
                 description: '高效能 PDF 及圖片 檔案壓縮工具。',
