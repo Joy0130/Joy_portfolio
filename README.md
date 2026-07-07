@@ -1,24 +1,23 @@
-# Joy's Portfolio (GitHub 整合版)
+# Joy's Portfolio
 
-這是一個為 **Joy** 量身打造的專業網頁作品集，已自動整合 GitHub (`Joy0130`) 的公開 Repository。
+這是一個為 **Joy** 量身打造的專業網頁作品集。
 
 ## 特色
-- **GitHub 自動整合**：已將 Joy0130 的公開專案（如 My-ChatBot, SmartCommit, Argo-CD-Notifications 等）整合進作品集中。
-- **自動分類與描述**：根據專案內容自動進行分類（網頁開發、後端與自動化、UI/UX 與工具），並撰寫了標題、描述與技術標籤。
-- **活力天藍設計**：採用清爽的淺色模式搭配活力天藍色調。
+- **自動分類與描述**：根據專案內容自動進行分類，並撰寫了標題、描述與技術標籤。
+- **活力天藍設計**：採用清爽的淺色模式搭配活力天藍色調以及輔助金黃色。
 - **彈跳視窗詳情**：每個專案點擊後皆可查看開發背景、解決痛點與核心成果，並附有 GitHub 原始碼連結。
 - **多媒體預留**：已預留圖片畫廊與 DEMO 影片的欄位，方便後續手動添加。
-- **完整 RWD 支援**：針對手機、iPad Pro、桌機三種裝置完成介面優化。
+- **完整 RWD 支援**：針對手機、iPad、桌機三種裝置完成介面優化。
 
 ## 檔案結構
 - `index.html`: 網頁主程式。
 - `assets/`: 靜態資源目錄。
-  - `images/`: 請放入您的專案截圖。
+  - `images/`: 請放入您的專案圖片。
   - `videos/`: 請放入您的專案演示影片。
-- `design_spec.md`: 參考的設計規範文件。
+- `design_spec.md`: 設計參考規範文件。
 
 ## 使用說明
-1. **添加素材**：將您的專案截圖放入 `assets/images/`，影片放入 `assets/videos/`。
+1. **添加素材**：將您的專案圖片放入 `assets/images/`，影片放入 `assets/videos/`。
 2. **更新路徑**：編輯 `index.html` 中的 `projects` 陣列，將 `image`, `galleryImages` 與 `demoVideo` 的路徑更新為您實際的檔案路徑。
 3. **查看效果**：雙擊 `index.html` 即可在瀏覽器中開啟。
 
@@ -110,3 +109,16 @@
   - `resetZoom(animate)`：重置 scale/posX/posY，可選是否附帶 0.25s CSS 動畫。
   - `window._lightboxResetZoom` 對外暴露，供 `showLightboxImage()` 在切換圖片時呼叫，確保每張圖片初始都是未縮放狀態。
   - 放大時自動隱藏左右翻頁箭頭（`opacity: 0` + `pointer-events: none`），還原後重新出現。
+
+---
+
+### 5. 手機與平板畫廊自動轉橫向
+
+**需求**：在手機或平板裝置上進入畫廊並點擊圖片時，自動將螢幕轉為橫向，以最大化圖片顯示範圍，提供更好的觀看體驗。
+
+**實作方式**：
+
+- **JavaScript**：
+  - 透過 `screen.orientation.lock('landscape')` API，在使用者點擊圖片開啟 Lightbox 時觸發螢幕鎖定為橫向。
+  - 當使用者關閉 Lightbox 時，呼叫 `screen.orientation.unlock()` 解除鎖定，恢復原本的螢幕方向。
+  - 增加瀏覽器相容性檢查（如 iOS Safari 可能不完全支援 API），確保在不支援的裝置上提供 fallback 方案或維持正常運作，不影響主要功能。
