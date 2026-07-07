@@ -13,7 +13,9 @@
                 extend: {
                     colors: {
                         primary: '#007bff',
+                        secondary: '#F6C445',
                         'primary-hover': '#0056b3',
+                        'secondary-hover': '#F7D84A',
                         'primary-soft': '#66b2ff',
                         canvas: '#ffffff',
                         'canvas-soft': '#f8f9fa',
@@ -301,7 +303,7 @@
         .lightbox-caption {
             width: 100%;
             /* color: rgba(255, 255, 255, 0.88); */
-            color: #c0dbf9;
+            color: #F6C445;
             font-size: 1rem;
             line-height: 1.6;
             text-align: center;
@@ -636,9 +638,9 @@
             <div class="text-base md:text-xl font-bold tracking-tighter text-primary whitespace-nowrap">JOY'S PORTFOLIO
             </div>
             <div class="hidden md:flex space-x-8 text-sm font-medium text-ink-mute">
-                <a href="#about" class="hover:text-primary transition-colors">關於我</a>
+                <a href="#about" class="hover:text-secondary transition-colors">關於我</a>
                 <a href="#portfolio" class="hover:text-primary transition-colors">作品集</a>
-                <a href="#contact" class="hover:text-primary transition-colors">聯絡我</a>
+                <a href="#contact" class="hover:text-secondary transition-colors">聯絡我</a>
             </div>
             <div class="flex items-center gap-3">
                 <button id="hamburger-btn"
@@ -662,11 +664,11 @@
         <div id="mobile-menu" class="md:hidden hidden border-t border-hairline bg-white/95 backdrop-blur-sm">
             <div class="flex flex-col py-3 px-6">
                 <a href="#about"
-                    class="mobile-nav-link py-3 text-sm font-medium text-ink-secondary hover:text-primary transition-colors border-b border-hairline">關於我</a>
+                    class="mobile-nav-link py-3 text-sm font-medium text-ink-secondary hover:text-secondary transition-colors border-b border-hairline">關於我</a>
                 <a href="#portfolio"
                     class="mobile-nav-link py-3 text-sm font-medium text-ink-secondary hover:text-primary transition-colors border-b border-hairline">作品集</a>
                 <a href="#contact"
-                    class="mobile-nav-link py-3 text-sm font-medium text-ink-secondary hover:text-primary transition-colors">聯絡我</a>
+                    class="mobile-nav-link py-3 text-sm font-medium text-ink-secondary hover:text-secondary transition-colors">聯絡我</a>
             </div>
         </div>
     </nav>
@@ -681,7 +683,7 @@
             </div>
             <div class="text-center md:text-left">
                 <h1 class="text-4xl md:text-5xl font-bold tracking-tightest mb-4 text-ink">
-                    你好，我是 <span class="text-primary">Joy</span>
+                    你好，我是 <span class="text-secondary">Joy</span>
                 </h1>
                 <p class="text-lg md:text-xl text-ink-secondary leading-relaxed mb-8 font-light">
                     專注於網頁開發與 AI 整合的工程師。擅長運用自動化流程與 AI 技術解決複雜問題，並致力於探索 Agentic Workflow，打造具高實用性的創新應用。
@@ -690,7 +692,7 @@
                     <a href="#portfolio"
                         class="bg-primary hover:bg-primary-hover text-white px-8 py-3 rounded-full font-semibold shadow-md transition-all">精選作品集</a>
                     <a href="#contact"
-                        class="bg-white hover:bg-canvas-soft hover:text-primary text-ink-secondary border border-hairline px-8 py-3 rounded-full font-semibold shadow-sm transition-all">聯絡我</a>
+                        class="bg-white hover:bg-canvas-soft hover:text-secondary text-ink-secondary border border-hairline px-8 py-3 rounded-full font-semibold shadow-sm transition-all">聯絡我</a>
                 </div>
             </div>
         </div>
@@ -765,10 +767,10 @@
         <div class="max-w-3xl mx-auto text-center">
             <h2 class="text-xl sm:text-2xl md:text-4xl font-bold mb-5 md:mb-8 text-ink">對我的專案感興趣或是想和我一起合作嗎？</h2>
             <p class="text-base md:text-lg text-ink-secondary mb-8 md:mb-12 font-light">
-                歡迎透過電子郵件或 LinkedIn 與我聯繫，討論合作機會或交流。
+                歡迎透過電子郵件與我聯繫，討論合作機會或交流。
             </p>
-            <a href="mailto:[EMAIL_ADDRESS]"
-                class="bg-primary hover:bg-primary-hover text-white px-10 py-4 rounded-full text-lg font-bold shadow-md transition-all inline-block">
+            <a href="https://mail.google.com/mail/?view=cm&fs=1&to=joy10290014@gmail.com" target="_blank"
+                class="bg-secondary hover:bg-secondary-hover text-white px-10 py-4 rounded-full text-lg font-bold shadow-md transition-all inline-block">
                 立即發送郵件
             </a>
         </div>
@@ -783,7 +785,7 @@
             <div class="flex space-x-6">
                 <a href="https://github.com/Joy0130" target="_blank"
                     class="text-ink-mute hover:text-primary transition-colors font-semibold">GitHub</a>
-                <a href="#" class="text-ink-mute hover:text-primary transition-colors font-semibold">LinkedIn</a>
+                <!-- <a href="#" class="text-ink-mute hover:text-primary transition-colors font-semibold">LinkedIn</a> -->
             </div>
         </div>
     </footer>
@@ -808,15 +810,17 @@
 
                 <div class="grid md:grid-cols-2 gap-4 md:gap-8 mb-8 md:mb-10">
                     <div class="bg-canvas-soft p-6 rounded-xl border border-hairline">
-                        <h3 class="text-primary font-bold mb-3 uppercase tracking-widest text-xs">開發背景</h3>
+                        <h3 class="text-primary font-bold mb-3 uppercase tracking-widest text-sm">開發背景</h3>
                         <p class="text-ink-secondary leading-relaxed text-sm" id="modal-reason"></p>
                     </div>
                     <div class="bg-canvas-soft p-6 rounded-xl border border-hairline">
-                        <h3 class="text-primary font-bold mb-3 uppercase tracking-widest text-xs">解決痛點</h3>
+                        <h3 class="text-primary font-bold mb-3 uppercase tracking-widest text-sm">解決痛點</h3>
                         <p class="text-ink-secondary leading-relaxed text-sm" id="modal-problem"></p>
                     </div>
-                    <div class="md:col-span-2 bg-canvas-soft p-6 rounded-xl border border-hairline">
-                        <h3 class="text-primary font-bold mb-3 uppercase tracking-widest text-xs">核心成果</h3>
+                    <div
+                        class="md:col-span-2 bg-canvas-soft p-6 rounded-xl border border-hairline hover:border-secondary-hover">
+                        <h3 class="text-secondary font-bold mb-3 uppercase tracking-widest text-sm ">
+                            核心成果</h3>
                         <ul class="space-y-3 text-ink-secondary text-sm" id="modal-results"></ul>
                     </div>
                 </div>
@@ -1321,7 +1325,7 @@
 
             document.getElementById('modal-results').innerHTML = project.results.map(res => `
                 <li class="flex items-start">
-                    <span class="text-primary mr-2 font-bold">✓</span>
+                    <span class="text-secondary mr-2 font-bold">✓</span>
                     <span>${res}</span>
                 </li>
             `).join('');
