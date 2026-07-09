@@ -722,7 +722,10 @@
                         data-filter="API" title="串接API或是API相關的應用程式">API</button>
                     <button
                         class="pill-button bg-white text-ink-mute hover:text-primary border border-hairline shadow-sm"
-                        data-filter="Automate" title="自動化腳本、通知系統">自動化</button>
+                        data-filter="Automate" title="自動化腳本、通知系統、Power Automate">自動化</button>
+                    <button
+                        class="pill-button bg-white text-ink-mute hover:text-primary border border-hairline shadow-sm"
+                        data-filter="LowCode" title="Low Code 平台應用">Low Code</button>
                     <button
                         class="pill-button bg-white text-ink-mute hover:text-primary border border-hairline shadow-sm"
                         data-filter="Extension" title="擴充功能或單機版工具">擴充功能與單機版工具</button>
@@ -841,6 +844,11 @@
                     <a id="modal-github-link" href="#" target="_blank"
                         class="inline-flex items-center text-primary font-semibold hover:underline">
                         在 GitHub 上查看原始碼 →
+                    </a>
+                    <a id="modal-automate-link" href="#" target="_blank"
+                        class="inline-flex items-center text-primary font-semibold hover:underline"
+                        style="display: none;">
+                        看簡報說明 →
                     </a>
                 </div>
             </div>
@@ -1305,7 +1313,25 @@
                 categories: ['Automate', 'Bot'],
                 technologies: ['Python', 'Line Notify', 'Gmail Application', 'GitHub Actions'],
                 github: 'https://github.com/Joy0130/pay_notify'
-            }
+            },
+            {
+                id: 'power-automate',
+                title: 'Power Automate-水電費帳單自動化輸入流程',
+                description: '運用 Power Automate 與 AI OCR 辨識帳單，自動拋轉財務系統建立傳票。',
+                longDescription: '本流程透過 Power Automate 結合 AI Hub 建立水電費帳單範本。系統會自動執行 OCR 影像辨識，精準擷取帳單關鍵數據，並將資訊無縫串接至財務系統自動開立傳票。此方案能免除人工登打作業，大幅提升帳務處理效率與正確性。',
+                reason: '傳統水電帳單仰賴人工登打，每月繁瑣的重複性作業不僅耗費有限的會計人力，更降低了整體財務處理效能。',
+                problem: '以 AI 自動化取代人工登打，徹底解決耗時、易錯且過度消耗會計人力的重複性作業。',
+                results: [
+                    '透過 Power Automate 結合 AI Hub 建立水電費帳單範本。',
+                    '透過 AI Hub 進行 OCR 影像辨識，精準擷取帳單關鍵數據，並將資訊無縫串接至財務系統自動開立傳票。',
+                ],
+                image: './assets/images/automate.png',
+                galleryImages: [],
+                demoVideo: '/assets/videos/automate.mp4',
+                categories: ['Automate', 'LowCode'],
+                technologies: ['Microsoft Power Automate', 'Microsoft AI Hub'],
+                automate: 'https://drive.google.com/file/d/1XqJNdJ80nm6lgUCW3M_wD0EzJxUpESCi/view?usp=sharing'
+            },
         ];
 
         const portfolioGrid = document.getElementById('portfolio-grid');
@@ -1364,6 +1390,7 @@
             document.getElementById('modal-problem').textContent = project.problem;
             document.getElementById('modal-tech-tags').innerHTML = project.technologies.map(tech => `<span class="tech-tag">${tech}</span>`).join('');
             const githubLink = document.getElementById('modal-github-link');
+            const automateLink = document.getElementById('modal-automate-link');
             if (project.github) {
                 if (project.github.startsWith('http')) {
                     githubLink.href = project.github;
@@ -1381,6 +1408,27 @@
                 githubLink.style.display = 'inline-flex';
             } else {
                 githubLink.style.display = 'none';
+            }
+
+            if (automateLink) {
+                if (project.automate) {
+                    if (project.automate.startsWith('http')) {
+                        automateLink.href = project.automate;
+                        automateLink.textContent = '看簡報說明 →';
+                        automateLink.className = 'inline-flex items-center text-primary font-semibold hover:underline';
+                        automateLink.removeAttribute('style');
+                        automateLink.target = '_blank';
+                    } else {
+                        automateLink.removeAttribute('href');
+                        automateLink.textContent = project.automate;
+                        automateLink.className = 'inline-flex items-center text-gray-500 font-medium cursor-not-allowed';
+                        automateLink.style.pointerEvents = 'none';
+                        automateLink.style.textDecoration = 'none';
+                    }
+                    automateLink.style.display = 'inline-flex';
+                } else {
+                    automateLink.style.display = 'none';
+                }
             }
 
             document.getElementById('modal-results').innerHTML = project.results.map(res => `
