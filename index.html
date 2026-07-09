@@ -1088,13 +1088,25 @@
                 problem: '現有工具針對大型檔案需要付費，且有資安疑慮。',
                 results: [
                     '圖檔支援批量處理，提升工作效率。',
-                    '本機端操作，確保個人資料安全。'
+                    '本機端操作，確保個人資料安全。',
+                    'GitHub Actions 自動建置打包Windows EXE。',
+                    'Mac端撰寫腳本使用Nuitka，最後變成macOS App，可在Mac電腦中直接使用。'
                 ],
-                image: './assets/images/pdf-compressor.png',
-                galleryImages: [],
+                image: './assets/images/compressor.png',
+                galleryImages: [
+                    { src: "./assets/images/compressor1.png", caption: "Mac打包程式" },
+                    { src: "./assets/images/compressor.png", caption: "本機端執行" },
+                    { src: "./assets/images/compressor2.png", caption: "PDF壓縮:上傳檔案" },
+                    { src: "./assets/images/compressor3.png", caption: "PDF壓縮：輸入壓縮後預期檔案大小" },
+                    { src: "./assets/images/compressor4.png", caption: "PDF壓縮：開始壓縮，速度依檔案大小而定" },
+                    { src: "./assets/images/compressor5.png", caption: "PDF壓縮：完成，顯示壓縮後檔案資訊" },
+                    { src: "./assets/images/compressor6.png", caption: "下載壓縮後的檔案" },
+                    { src: "./assets/images/compressor7.png", caption: "對比壓縮前與壓縮後成果" },
+                    { src: "./assets/images/compressor8.png", caption: "對比壓縮前與壓縮後檔案大小" },
+                ],
                 demoVideo: '',
                 categories: ['Extension'],
-                technologies: ['Python', 'PyPDF2'],
+                technologies: ['Python', 'Flask', 'PyPDF2', 'Pillow', 'HTML5 + Bootstrap 5 '],
                 github: 'https://github.com/Joy0130/PDF_Compressor'
             },
             {
