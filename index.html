@@ -902,7 +902,7 @@
                     { src: "./assets/images/chatbot2.png", caption: "可自由切換雲端或地端模型" }
                 ],
                 demoVideo: '',
-                categories: ['web', 'AI', 'Bot', 'API'],
+                categories: ['AI', 'web', 'API'],
                 technologies: ['Gemini API', 'Ollama', 'Python', 'FastAPI', 'JavaScript', 'React', 'TailwindCSS'],
                 github: 'https://github.com/Joy0130/My-ChatBot'
             },
@@ -928,7 +928,7 @@
                     { src: "./assets/images/ewc5.jpeg", caption: "手機Potal App收到推播通知" }
                 ],
                 demoVideo: '',
-                categories: ['web', 'Automate', 'API'],
+                categories: ['web', 'API', 'Automate'],
                 technologies: ['Python', 'HTML', 'Flask'],
                 github: 'https://github.com/Joy0130/Python_FPNS'
             },
@@ -985,7 +985,7 @@
 
                 ],
                 demoVideo: '',
-                categories: ['DevOps', 'AI', 'API'],
+                categories: ['AI', 'DevOps', 'API'],
                 technologies: ['Kubernetes', 'Argo CD', 'Teams Webhook', 'Shell', 'Gemini API'],
                 github: 'https://github.com/Joy0130/Argo-CD-Notifications'
             },
@@ -1023,7 +1023,7 @@
                 galleryImages: [],
                 demoVideo: '',
                 categories: ['AI', 'API'],
-                technologies: ['Python', 'AI Analysis', 'Git Hooks', 'Gemini API', 'Pipy'],
+                technologies: ['Python','Git', 'Gemini API', 'Pipy'],
                 github: 'https://github.com/Joy0130/aireview'
             },
             {
@@ -1328,7 +1328,7 @@
             },
             {
                 id: 'power-automate',
-                title: 'Power Automate-水電費帳單自動化輸入流程',
+                title: 'Power Automate-水電費帳單RPA流程',
                 description: '運用 Power Automate 與 AI OCR 辨識帳單，自動拋轉財務系統建立傳票。',
                 longDescription: '本流程透過 Power Automate 結合 AI Hub 建立水電費帳單範本。系統會自動執行 OCR 影像辨識，精準擷取帳單關鍵數據，並將資訊無縫串接至財務系統自動開立傳票。此方案能免除人工登打作業，大幅提升帳務處理效率與正確性。',
                 reason: '傳統水電帳單仰賴人工登打，每月繁瑣的重複性作業不僅耗費有限的會計人力，更降低了整體財務處理效能。',
@@ -1337,11 +1337,38 @@
                     '透過 Power Automate 結合 AI Hub 建立水電費帳單範本。',
                     '透過 AI Hub 進行 OCR 影像辨識，精準擷取帳單關鍵數據，並將資訊無縫串接至財務系統自動開立傳票。',
                 ],
-                image: './assets/images/automate.png',
+                image: './assets/images/automate0.png',
                 galleryImages: [],
                 demoVideo: './assets/videos/automate_compressed.mp4',
                 categories: ['Automate', 'LowCode'],
-                technologies: ['Microsoft Power Automate', 'Microsoft AI Hub'],
+                technologies: ['Microsoft Power Automate', 'Microsoft AI Hub','RPA'],
+                automate: 'https://drive.google.com/file/d/1XqJNdJ80nm6lgUCW3M_wD0EzJxUpESCi/view?usp=sharing'
+            },
+            {
+                id: 'power-apps',
+                title: 'Power apps-手機打卡',
+                description: '運用 Power apps Low Code 打造手機打卡APP。',
+                longDescription: '本專案透過 Power apps 快速開發手機打卡應用程式。使用者可透過手機打卡，並將資料自動同步至 SharePoint 清單。此方案能免除人工記錄打卡資料的作業，大幅提升打卡效率與正確性。',
+                reason: '傳統打卡方式必須一定要到公司特定樓層打卡。',
+                problem: 'Power apps 可以在特定距離內進行打卡，此功能為試用版本。',
+                results: [
+                    '透過 Power apps 建立手機打卡APP。',
+                    '透過手機定位功能，可以即時顯示打卡位置。',
+                    '透過 SharePoint 清單，可以記錄打卡資料，此清單只有HR同仁可以查看(無編輯權限)。',
+                    '另外製作HR同仁可以查看全公司同人的打卡紀錄畫面。'
+                ],
+                image: './assets/images/app.png',
+                galleryImages: [
+                    { src: './assets/images/app.png', caption: 'Power apps手機打卡畫面' },
+                    { src: './assets/images/app2.png', caption: '一天針對同一上班時間只能打一次' },
+                    { src: './assets/images/app3.png', caption: '下班打卡畫面' },
+                    { src: './assets/images/app1.png', caption: '查看自己的打卡紀錄' },
+                    { src: './assets/images/app4.png', caption: 'sharepoint打卡紀錄清單' },
+                    { src: './assets/images/app5.png', caption: 'HR同仁查看全公司打卡紀錄' },
+                ],
+                demoVideo: '',
+                categories: ['LowCode'],
+                technologies: ['Microsoft Power Apps','SharePoint'],
                 automate: 'https://drive.google.com/file/d/1XqJNdJ80nm6lgUCW3M_wD0EzJxUpESCi/view?usp=sharing'
             },
         ];
@@ -1372,6 +1399,9 @@
                         <div class="h-48 overflow-hidden relative bg-canvas-soft flex items-center justify-center">
                             <img src="${project.image}" alt="${project.title}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" onerror="imgFallback(this, '${project.title.replace(/'/g, "")}')">
                             <div class="absolute inset-0 bg-primary opacity-0 group-hover:opacity-5 transition-opacity"></div>
+                            <div class="absolute bottom-3 left-3 flex flex-wrap gap-2 z-10">
+                                ${project.categories.map(cat => `<span class="bg-black/60 text-white text-xs px-2.5 py-1 rounded-full backdrop-blur-sm font-medium">${cat}</span>`).join('')}
+                            </div>
                         </div>
                         <hr class="border-t border-hairline">
                         <div class="p-6">
@@ -1498,6 +1528,12 @@
                 currentGallery = [];
                 currentGalleryIndex = -1;
                 lightboxImg.style.display = 'none';
+                
+                const modalVideo = document.getElementById('modal-video');
+                if (modalVideo) {
+                    modalVideo.pause();
+                }
+
                 lightboxVideo.src = indexOrSrc;
                 lightboxVideo.style.display = 'block';
                 lightboxVideo.play();
