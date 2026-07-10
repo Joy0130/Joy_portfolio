@@ -1817,15 +1817,33 @@
         });
 
         filterButtons.addEventListener('click', (e) => {
-            if (e.target.tagName === 'BUTTON') {
+            const btnTarget = e.target.closest('button');
+            if (btnTarget && filterButtons.contains(btnTarget)) {
                 filterButtons.querySelectorAll('button').forEach(btn => {
                     btn.classList.remove('bg-primary', 'text-white', 'shadow-md');
                     btn.classList.add('bg-white', 'text-ink-mute', 'hover:text-primary', 'border', 'border-hairline', 'shadow-sm');
                 });
-                e.target.classList.add('bg-primary', 'text-white', 'shadow-md');
-                e.target.classList.remove('bg-white', 'text-ink-mute', 'hover:text-primary', 'border', 'border-hairline', 'shadow-sm');
+                btnTarget.classList.add('bg-primary', 'text-white', 'shadow-md');
+                btnTarget.classList.remove('bg-white', 'text-ink-mute', 'hover:text-primary', 'border', 'border-hairline', 'shadow-sm');
+                
+                // Scroll the clicked button into view to ensure it's not hidden by container overflow
+                btnTarget.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+                
                 searchInput.dispatchEvent(new Event('input'));
             }
+        });
+
+        // Automatically scroll partially hidden buttons into view on hover
+        filterButtons.querySelectorAll('button').forEach(btn => {
+            btn.addEventListener('mouseenter', () => {
+                const containerRect = filterButtons.getBoundingClientRect();
+                const btnRect = btn.getBoundingClientRect();
+                if (btnRect.right > containerRect.right) {
+                    filterButtons.scrollBy({ left: btnRect.right - containerRect.right + 20, behavior: 'smooth' });
+                } else if (btnRect.left < containerRect.left) {
+                    filterButtons.scrollBy({ left: btnRect.left - containerRect.left - 20, behavior: 'smooth' });
+                }
+            });
         });
 
         renderProjects(projects);
