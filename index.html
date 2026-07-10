@@ -840,7 +840,7 @@
                     <div class="grid grid-cols-2 md:grid-cols-3 gap-4" id="modal-gallery"></div>
                 </div>
 
-                <div class="mt-8 text-center pb-4">
+                <div class="mt-8 flex flex-col items-center gap-3 pb-4">
                     <a id="modal-github-link" href="#" target="_blank"
                         class="inline-flex items-center text-primary font-semibold hover:underline">
                         在 GitHub 上查看原始碼 →
@@ -882,57 +882,6 @@
 
         const projects = [
             {
-                id: 'my-chatbot',
-                title: 'ChatBot',
-                description: '支援多模型切換（Gemini／Ollama）的多對話聊天機器人。',
-                longDescription: '以 React 前端、Flask 後端打造的聊天機器人，同時支援雲端 Google Gemini 與本機 Ollama 模型即時切換，具備多對話管理、localStorage 對話紀錄保存、TXT/PDF/DOCX 文件上傳分析，以及淺色/深色主題。',
-                reason: '可自由切換雲端與本機模型、且能保存對話紀錄的聊天介面。',
-                problem: '此專案為個人專案，主要為練習前後端串接API以及本地端模型與保存對話紀錄的聊天介面。',
-                results: [
-                    '可自由切換雲端(gemini API)與本機模型(Ollama)、且能保存對話紀錄。',
-                    '文件上傳採 tempfile 隨機命名與 magic bytes 內容驗證，杜絕路徑遍歷風險。',
-                    'PDF 優先以 PyMuPDF 擷取中文內容，失敗自動退回 PyPDF2。',
-                    'localStorage 容量不足時提供刪除舊對話提示，避免資料遺失或崩潰。'
-                ],
-                image: './assets/images/chatbot.png',
-                galleryImages: [
-                    { src: "./assets/images/chatbot.png", caption: "聊天機器人主畫面（明亮模式）" },
-                    { src: "./assets/images/chatbot3.png", caption: "聊天機器人可切換模式（暗黑模式）" },
-                    { src: "./assets/images/chatbot1.png", caption: "聊天機器人預設模型為 gemini-3.1-flash-lite" },
-                    { src: "./assets/images/chatbot2.png", caption: "可自由切換雲端或地端模型" }
-                ],
-                demoVideo: '',
-                categories: ['AI', 'web', 'API'],
-                technologies: ['Gemini API', 'Ollama', 'Python', 'FastAPI', 'JavaScript', 'React', 'TailwindCSS'],
-                github: 'https://github.com/Joy0130/My-ChatBot'
-            },
-            {
-                id: 'python-fpns',
-                title: '推播系統',
-                description: '福委會推播系統。',
-                longDescription: '專為企業福委會設計的推播系統，即時發送福利資訊。',
-                reason: '福委會資訊傳遞效率低，且容易遺漏重要通知，串接公司開發的Portal App 推播API製作此系統，可以批次大量發送推播給公司同仁。',
-                problem: '手動發送通知耗時且難以追蹤。',
-                results: [
-                    '自動化推播流程，節省大量行政作業時間。',
-                    'Portal App 推播通知。',
-                    '員工可以即時獲取福利資訊。'
-                ],
-                image: './assets/images/ewc1.png',
-                galleryImages: [
-                    { src: "./assets/images/ewc.png", caption: "推播系統串接公司Keycloak，採用OAuth2認證方式登入，透過Keycloak設定group管理登入權限" },
-                    { src: "./assets/images/ewc1.png", caption: "推播系統首頁，可以在此上傳Excel檔案、進行批次發送推播或是排程推播" },
-                    { src: "./assets/images/ewc2.png", caption: "開啟排程推播功能，可以設定預計發送的日期與時間，等到設定的日期與時間後會自動發送推播" },
-                    { src: "./assets/images/ewc3.png", caption: "推播系統歷史紀錄，可以看到使用者曾經發送與預訂排程推播的紀錄(有顯示排程時間為排程推播發送的紀錄)" },
-                    { src: "./assets/images/ewc4.png", caption: "點其中一筆歷史紀錄後會顯示該則推播的詳細內容與發送狀態" },
-                    { src: "./assets/images/ewc5.jpeg", caption: "手機Potal App收到推播通知" }
-                ],
-                demoVideo: '',
-                categories: ['web', 'API', 'Automate'],
-                technologies: ['Python', 'HTML', 'Flask'],
-                github: 'https://github.com/Joy0130/Python_FPNS'
-            },
-            {
                 id: 'python-bank-linebot',
                 title: '台灣銀行查詢黃金價格與匯率 Line Bot',
                 description: '爬取台灣銀行的即時匯率資訊與黃金牌價。',
@@ -962,6 +911,101 @@
                 github: 'https://github.com/Joy0130/Python_Bank_LineBot'
             },
             {
+                id: 'line-notify',
+                title: 'LineNotify 提醒記事本',
+                description: '雲端全自動的 LINE 提醒記事本，免掛機即可定時通知。',
+                longDescription: '網頁負責記事的新增與管理(CRUD)，資料同步至 GitHub Gist；後端以 Google Apps Script 定時觸發器每分鐘檢查到期提醒，並透過 LINE API 主動推播通知，支援每日/每週/每月重複提醒。',
+                reason: '一般提醒工具需要裝置保持開啟，手機關螢幕或電腦關機就無法運作，或是需要另外找付費軟體來設定。',
+                problem: '穩定、免費、24 小時運作的提醒通知。',
+                results: [
+                    '利用 Google Apps Script (GAS) 達成 24/7 全自動監控，無需掛機。',
+                    '將敏感資料儲存在Google Apps Script 專案設定中，避免機敏資料外洩。',
+                    '以 GitHub Gist 作為輕量資料庫，前後端與多裝置資料自動同步。',
+                    '支援手動匯出匯入資料與手動同步備份資料上傳或從雲端下載，換新裝置時可快速回復資料。',
+                    '透過GitHub Pages進行網頁部署。',
+                    '支援每日、每週、每月的智慧重複提醒。'
+                ],
+                image: './assets/images/Notify.png',
+                galleryImages: [
+                    { src: "./assets/images/Notify.png", caption: "記事本首頁：新增及查看記事列表" },
+                    { src: "./assets/images/Notify1.png", caption: "記事本設定：在此設定LINE User ID、Channel Access Token以及gist雲端同步相關設定" },
+                    { src: "./assets/images/Notify2.png", caption: "儲存記事後會自動儲存到Gist雲端，可以手動同步上傳或下載雲端資料" },
+                    { src: "./assets/images/Notify3.png", caption: "也可以匯出JSON檔，在新裝置中上傳檔案還原資料" },
+                    { src: "./assets/images/Notify4.png", caption: "下載JSON備份檔" },
+                    { src: "./assets/images/Notify6.png", caption: "新增記事，可以設定分類、發送提醒日期與設定重複提醒" },
+                    { src: "./assets/images/Notify7.png", caption: "設定重複提醒，可設定開始日期(自動帶入發送提醒時間)、重複頻率、結束日期(最後一天通知的日期與時間)" },
+                    { src:"./assets/images/Notify5.png", caption: "記事列表，依照顏色區分待發送、已發送，有分類可以快速篩選"},
+                    { src: "./assets/images/Notify9.png", caption: "滑鼠移入記事列表中的卡片後會顯示編輯與刪除的icon。" },
+                    { src:"./assets/images/Notify8.png", caption: "編輯記事，可以修改分類、記事內容、發送提醒日期與重複提醒設定。"},
+                    { src: "./assets/images/Notify10.png", caption: "呈上，編輯記事" },
+                    { src: "./assets/images/Notify11.png", caption: "Google Apps Script 寫js設定排程與通知流程和發送Line通知。" },
+                    { src: "./assets/images/Notify12.png", caption: "Google Apps Script 設定觸發條件，每分鐘檢查是否需要通知，如有則觸發流程。" },
+                ],
+                demoVideo: '',
+                categories: ['API', 'Bot', 'Web','Automate'],
+                technologies: ['Google Apps Script(GAS)', 'LINE Notify API', 'GitHub Gist', 'GitHub Pages', 'JavaScript'],
+                github: 'https://github.com/Joy0130/LineNotify'
+            },
+            {
+                id: 'pay-notify',
+                title: 'Pay Notification',
+                description: '付款/繳費期限自動提醒腳本。',
+                longDescription: '以 Python 撰寫的自動化通知腳本，搭配 GitHub Actions 排程定期執行，用於監控 Gmail 郵件並提醒繳費或付款期限，避免人工追蹤疏漏。',
+                reason: '繳費期限容易遺忘，人工追蹤耗時且不可靠。',
+                problem: '缺乏自動化機制，逾期繳費可能造成額外費用或服務中斷。',
+                results: [
+                    '透過 GitHub Actions 排程自動定期執行檢查。',
+                    '降低人工追蹤各項費用期限的疏漏風險。'
+                ],
+                image: './assets/images/pay-notify.png',
+                galleryImages: [],
+                demoVideo: '',
+                categories: ['Automate', 'Bot'],
+                technologies: ['Python', 'Line Notify', 'Gmail Application', 'GitHub Actions'],
+                github: 'https://github.com/Joy0130/pay_notify'
+            },
+            {
+                id: 'smart-commit',
+                title: 'aicommit',
+                description: '串接 Gemini API 自動生成符合 Conventional Commits 規範的 Git commit 訊息。',
+                longDescription: '利用 AI 自動分析程式碼變動，並生成結構化的 Commit 訊息，提升團隊協作效率。',
+                reason: '開發者撰寫的 Commit 訊息往往模糊不清，難以追蹤變動歷史。',
+                problem: '手動遵循規範耗時，且訊息品質參差不齊。',
+                results: [
+                    '自動化生成高品質 Commit 訊息。',
+                    '完全符合 Conventional Commits 標準。',
+                    '提升了 Git 歷史記錄的可讀性。',
+                    '發佈到Pipy，用指令快速安裝。'
+                ],
+                image: './assets/images/aicommit.png',
+                galleryImages: [],
+                demoVideo: '',
+                categories: ['AI', 'API'],
+                technologies: ['Python', 'Gemini API', 'Git', 'pipy'],
+                github: 'https://github.com/Joy0130/SmartCommit/tree/ai',
+                automate:'https://drive.google.com/file/d/1DWzHsa7PrDYopaq8RoBmx-enYK3kEiAO/view?usp=sharing'
+            },
+            {
+                id: 'aireview',
+                title: 'aireview',
+                description: 'Git Commit 前置 AI 分析工具，檢查程式碼安全性。',
+                longDescription: '在 Commit 前自動分析變動，找出潛在的安全漏洞或邏輯錯誤。',
+                reason: '避免不安全的程式碼流入生產環境。',
+                problem: '人為審查容易疏漏，需要自動化工具輔助。',
+                results: [
+                    '有效攔截潛在的安全風險。',
+                    '提升了程式碼審核的自動化程度。',
+                    '發佈到Pipy，用指令快速安裝。'
+                ],
+                image: './assets/images/aireview.png',
+                galleryImages: [],
+                demoVideo: '',
+                categories: ['AI', 'API'],
+                technologies: ['Python','Git', 'Gemini API', 'Pipy'],
+                github: 'https://github.com/Joy0130/aireview',
+                automate:'https://drive.google.com/file/d/1DWzHsa7PrDYopaq8RoBmx-enYK3kEiAO/view?usp=sharing'
+            },
+            {
                 id: 'argo-cd-notifications',
                 title: 'Argo-CD-Notifications',
                 description: 'Argo CD Notifications 串接 Microsoft Teams 通知系統。',
@@ -988,43 +1032,6 @@
                 categories: ['AI', 'DevOps', 'API'],
                 technologies: ['Kubernetes', 'Argo CD', 'Teams Webhook', 'Shell', 'Gemini API'],
                 github: 'https://github.com/Joy0130/Argo-CD-Notifications'
-            },
-            {
-                id: 'smart-commit',
-                title: 'SmartCommit',
-                description: '串接 Gemini API 自動生成符合 Conventional Commits 規範的 Git commit 訊息。',
-                longDescription: '利用 AI 自動分析程式碼變動，並生成結構化的 Commit 訊息，提升團隊協作效率。',
-                reason: '開發者撰寫的 Commit 訊息往往模糊不清，難以追蹤變動歷史。',
-                problem: '手動遵循規範耗時，且訊息品質參差不齊。',
-                results: [
-                    '自動化生成高品質 Commit 訊息。',
-                    '完全符合 Conventional Commits 標準。',
-                    '提升了 Git 歷史記錄的可讀性。'
-                ],
-                image: './assets/images/smart-commit.png',
-                galleryImages: [],
-                demoVideo: '',
-                categories: ['AI', 'API'],
-                technologies: ['Python', 'Gemini API', 'Git', 'pipy'],
-                github: 'https://github.com/Joy0130/SmartCommit'
-            },
-            {
-                id: 'aireview',
-                title: 'aireview',
-                description: 'Git Commit 前置 AI 分析工具，檢查程式碼安全性。',
-                longDescription: '在 Commit 前自動分析變動，找出潛在的安全漏洞或邏輯錯誤。',
-                reason: '人為審查容易疏漏，需要自動化工具輔助。',
-                problem: '不安全的程式碼流入生產環境。',
-                results: [
-                    '有效攔截潛在的安全風險。',
-                    '提升了程式碼審核的自動化程度。'
-                ],
-                image: './assets/images/aireview.png',
-                galleryImages: [],
-                demoVideo: '',
-                categories: ['AI', 'API'],
-                technologies: ['Python','Git', 'Gemini API', 'Pipy'],
-                github: 'https://github.com/Joy0130/aireview'
             },
             {
                 id: 'argocd-backup',
@@ -1110,6 +1117,25 @@
                 github: 'https://github.com/Joy0130/PDF_Compressor'
             },
             {
+                id: 'pdf-spiltter',
+                title: 'PDF_Spiltter',
+                description: '純前端、免安裝的 PDF 批次分割工具。',
+                longDescription: '直接在本機端操作的 PDF 分割工具，使用 pdf-lib 處理，支援拖曳上傳與多組頁碼範圍批次輸出，檔案全程不上傳伺服器，保障隱私安全。',
+                reason: '線上 PDF 分割服務多需上傳檔案至伺服器，有隱私疑慮。',
+                problem: '需要快速分割多份 PDF，但不想安裝軟體或有資安隱私疑慮。',
+                results: [
+                    '所有處理皆在本地瀏覽器完成，無需上傳伺服器。',
+                    '支援一次輸入多組範圍，批次自動下載多份 PDF。',
+                    '單一 HTML 檔案即可執行，無需安裝或部署。'
+                ],
+                image: './assets/images/pdf-spiltter.png',
+                galleryImages: [],
+                demoVideo: '',
+                categories: ['Extension'],
+                technologies: ['JavaScript', 'HTML', 'pdf-lib'],
+                github: 'https://github.com/Joy0130/PDF_Spiltter'
+            },
+            {
                 id: 'ai-prompt',
                 title: 'AI-Prompt 小幫手',
                 description: '瀏覽器擴充工具，提供常用 AI 提示詞快速複製功能。',
@@ -1145,6 +1171,89 @@
                 categories: ['API', 'Extension'],
                 technologies: ['python', 'JavaScript', 'Chrome Extension'],
                 github: 'https://github.com/Joy0130/AI-Prompt'
+            },
+            {
+                id: 'web-ai-assistant',
+                title: 'Web AI Assistant',
+                description: '瀏覽器擴充工具，選取網頁文字或圖片即可獲得 AI 即時解釋。',
+                longDescription: '透過右鍵選單呼叫 AI 解釋選取的技術文字、圖片或程式碼，同時支援 Gemini、OpenAI、Claude 三種模型，並以 FastAPI 後端統一管理 API Key，回應內容以 Markdown 渲染並支援程式碼語法高亮。',
+                reason: '瀏覽器中閱讀技術文件時常遇到不熟悉的專有名詞或複雜的圖片或程式碼。',
+                problem: '時常需要切換視窗查詢會打斷思路。',
+                results: [
+                    '整合三大主流 AI 模型，可依需求到擴充>選項中的設定切換。',
+                    '支援 Markdown 渲染與程式碼語法高亮，閱讀體驗佳。',
+                    '支援圖片辨識分析，針對圖片提取圖片中的內容提供摘要與解釋'
+                ],
+                image: './assets/images/web3.png',
+                galleryImages: [
+                    { src: "./assets/images/web.png", caption: "擴充>選項，後端伺服器網址、模型和API Key設定" },
+                    { src: "./assets/images/web1.png", caption: "選取要解釋的文字後，右鍵>用AI解釋" },
+                    { src: "./assets/images/web2.png", caption: "AI解釋思考中" },
+                    { src: "./assets/images/web3.png", caption: "AI回覆內容，彈跳視窗可以搭配原文章一起查看" },
+                    { src: "./assets/images/web4.png", caption: "AI回覆內容:程式碼部分另外用程式碼語法高亮顯示，並提供一鍵複製功能" },
+                    { src: "./assets/images/web5.png", caption: "AI回覆內容:視窗可以切換暗黑模式，會記憶使用者最後切換的模式，下次開啟時會顯示最後切換的模式" },
+                    { src: "./assets/images/web6.png", caption: "對要解釋的圖片點右鍵>用AI辨識圖片" },
+                    { src: "./assets/images/web7.png", caption: "AI辨識圖片思考中" },
+                    { src: "./assets/images/web8.png", caption: "AI辨識圖片回覆內容" },
+                    { src: "./assets/images/web9.png", caption: "呈上圖，AI辨識圖片回覆內容：專有名詞或程式碼部分有標記語法高亮顯示" },
+                    { src: "./assets/images/web10.png", caption: "呈上圖，AI辨識圖片回覆內容：AI解釋的視窗可以自由移動並調整視窗大小" },
+                    { src: "./assets/images/web11.png", caption: "呈上圖，AI辨識圖片回覆內容" },
+                ],
+                demoVideo: '',
+                categories: ['AI', 'API', 'Extension'],
+                technologies: ['Python', 'FastAPI', 'JavaScript', 'Chrome Extension',],
+                github: 'https://github.com/Joy0130/web-AI-Assistant'
+            },
+            {
+                id: 'python-fpns',
+                title: '推播系統',
+                description: '福委會推播系統。',
+                longDescription: '專為企業福委會設計的推播系統，即時發送福利資訊。',
+                reason: '福委會資訊傳遞效率低，且容易遺漏重要通知，串接公司開發的Portal App 推播API製作此系統，可以批次大量發送推播給公司同仁。',
+                problem: '手動發送通知耗時且難以追蹤。',
+                results: [
+                    '自動化推播流程，節省大量行政作業時間。',
+                    'Portal App 推播通知。',
+                    '員工可以即時獲取福利資訊。'
+                ],
+                image: './assets/images/ewc1.png',
+                galleryImages: [
+                    { src: "./assets/images/ewc.png", caption: "推播系統串接公司Keycloak，採用OAuth2認證方式登入，透過Keycloak設定group管理登入權限" },
+                    { src: "./assets/images/ewc1.png", caption: "推播系統首頁，可以在此上傳Excel檔案、進行批次發送推播或是排程推播" },
+                    { src: "./assets/images/ewc2.png", caption: "開啟排程推播功能，可以設定預計發送的日期與時間，等到設定的日期與時間後會自動發送推播" },
+                    { src: "./assets/images/ewc3.png", caption: "推播系統歷史紀錄，可以看到使用者曾經發送與預訂排程推播的紀錄(有顯示排程時間為排程推播發送的紀錄)" },
+                    { src: "./assets/images/ewc4.png", caption: "點其中一筆歷史紀錄後會顯示該則推播的詳細內容與發送狀態" },
+                    { src: "./assets/images/ewc5.jpeg", caption: "手機Potal App收到推播通知" }
+                ],
+                demoVideo: '',
+                categories: ['web', 'API', 'Automate'],
+                technologies: ['Python', 'HTML', 'Flask'],
+                github: 'https://github.com/Joy0130/Python_FPNS'
+            },
+            {
+                id: 'my-chatbot',
+                title: 'ChatBot',
+                description: '支援多模型切換（Gemini／Ollama）的多對話聊天機器人。',
+                longDescription: '以 React 前端、Flask 後端打造的聊天機器人，同時支援雲端 Google Gemini 與本機 Ollama 模型即時切換，具備多對話管理、localStorage 對話紀錄保存、TXT/PDF/DOCX 文件上傳分析，以及淺色/深色主題。',
+                reason: '可自由切換雲端與本機模型、且能保存對話紀錄的聊天介面。',
+                problem: '此專案為個人專案，主要為練習前後端串接API以及本地端模型與保存對話紀錄的聊天介面。',
+                results: [
+                    '可自由切換雲端(gemini API)與本機模型(Ollama)、且能保存對話紀錄。',
+                    '文件上傳採 tempfile 隨機命名與 magic bytes 內容驗證，杜絕路徑遍歷風險。',
+                    'PDF 優先以 PyMuPDF 擷取中文內容，失敗自動退回 PyPDF2。',
+                    'localStorage 容量不足時提供刪除舊對話提示，避免資料遺失或崩潰。'
+                ],
+                image: './assets/images/chatbot.png',
+                galleryImages: [
+                    { src: "./assets/images/chatbot.png", caption: "聊天機器人主畫面（明亮模式）" },
+                    { src: "./assets/images/chatbot3.png", caption: "聊天機器人可切換模式（暗黑模式）" },
+                    { src: "./assets/images/chatbot1.png", caption: "聊天機器人預設模型為 gemini-3.1-flash-lite" },
+                    { src: "./assets/images/chatbot2.png", caption: "可自由切換雲端或地端模型" }
+                ],
+                demoVideo: '',
+                categories: ['AI', 'web', 'API'],
+                technologies: ['Gemini API', 'Ollama', 'Python', 'FastAPI', 'JavaScript', 'React', 'TailwindCSS'],
+                github: 'https://github.com/Joy0130/My-ChatBot'
             },
             {
                 id: 'tftcoin',
@@ -1219,78 +1328,6 @@
                 github: '此為公司內部系統，無法公開程式碼。'
             },
             {
-                id: 'pdf-spiltter',
-                title: 'PDF_Spiltter',
-                description: '純前端、免安裝的 PDF 批次分割工具。',
-                longDescription: '直接在本機端操作的 PDF 分割工具，使用 pdf-lib 處理，支援拖曳上傳與多組頁碼範圍批次輸出，檔案全程不上傳伺服器，保障隱私安全。',
-                reason: '線上 PDF 分割服務多需上傳檔案至伺服器，有隱私疑慮。',
-                problem: '需要快速分割多份 PDF，但不想安裝軟體或有資安隱私疑慮。',
-                results: [
-                    '所有處理皆在本地瀏覽器完成，無需上傳伺服器。',
-                    '支援一次輸入多組範圍，批次自動下載多份 PDF。',
-                    '單一 HTML 檔案即可執行，無需安裝或部署。'
-                ],
-                image: './assets/images/pdf-spiltter.png',
-                galleryImages: [],
-                demoVideo: '',
-                categories: ['Extension'],
-                technologies: ['JavaScript', 'HTML', 'pdf-lib'],
-                github: 'https://github.com/Joy0130/PDF_Spiltter'
-            },
-            {
-                id: 'web-ai-assistant',
-                title: 'Web AI Assistant',
-                description: '瀏覽器擴充工具，選取網頁文字或圖片即可獲得 AI 即時解釋。',
-                longDescription: '透過右鍵選單呼叫 AI 解釋選取的技術文字、圖片或程式碼，同時支援 Gemini、OpenAI、Claude 三種模型，並以 FastAPI 後端統一管理 API Key，回應內容以 Markdown 渲染並支援程式碼語法高亮。',
-                reason: '瀏覽器中閱讀技術文件時常遇到不熟悉的專有名詞或複雜的圖片或程式碼。',
-                problem: '時常需要切換視窗查詢會打斷思路。',
-                results: [
-                    '整合三大主流 AI 模型，可依需求到擴充>選項中的設定切換。',
-                    '支援 Markdown 渲染與程式碼語法高亮，閱讀體驗佳。',
-                    '支援圖片辨識分析，針對圖片提取圖片中的內容提供摘要與解釋'
-                ],
-                image: './assets/images/web3.png',
-                galleryImages: [
-                    { src: "./assets/images/web.png", caption: "擴充>選項，後端伺服器網址、模型和API Key設定" },
-                    { src: "./assets/images/web1.png", caption: "選取要解釋的文字後，右鍵>用AI解釋" },
-                    { src: "./assets/images/web2.png", caption: "AI解釋思考中" },
-                    { src: "./assets/images/web3.png", caption: "AI回覆內容，彈跳視窗可以搭配原文章一起查看" },
-                    { src: "./assets/images/web4.png", caption: "AI回覆內容:程式碼部分另外用程式碼語法高亮顯示，並提供一鍵複製功能" },
-                    { src: "./assets/images/web5.png", caption: "AI回覆內容:視窗可以切換暗黑模式，會記憶使用者最後切換的模式，下次開啟時會顯示最後切換的模式" },
-                    { src: "./assets/images/web6.png", caption: "對要解釋的圖片點右鍵>用AI辨識圖片" },
-                    { src: "./assets/images/web7.png", caption: "AI辨識圖片思考中" },
-                    { src: "./assets/images/web8.png", caption: "AI辨識圖片回覆內容" },
-                    { src: "./assets/images/web9.png", caption: "呈上圖，AI辨識圖片回覆內容：專有名詞或程式碼部分有標記語法高亮顯示" },
-                    { src: "./assets/images/web10.png", caption: "呈上圖，AI辨識圖片回覆內容：AI解釋的視窗可以自由移動並調整視窗大小" },
-                    { src: "./assets/images/web11.png", caption: "呈上圖，AI辨識圖片回覆內容" },
-                ],
-                demoVideo: '',
-                categories: ['AI', 'API', 'Extension'],
-                technologies: ['Python', 'FastAPI', 'JavaScript', 'Chrome Extension',],
-                github: 'https://github.com/Joy0130/web-AI-Assistant'
-            },
-            {
-                id: 'line-notify',
-                title: 'LineNotify 提醒記事本',
-                description: '雲端全自動的 LINE 提醒記事本，免掛機即可定時通知。',
-                longDescription: '前端網頁負責記事的新增與管理，資料同步至 GitHub Gist；後端以 Google Apps Script 定時觸發器每隔數分鐘檢查到期提醒，並透過 LINE API 主動推播通知，支援每日/每週/每月重複提醒。',
-                reason: '一般提醒工具需要裝置保持開啟，手機關螢幕或電腦關機就無法運作。',
-                problem: '需要穩定、免費、24 小時運作的提醒通知。',
-                results: [
-                    '利用 GAS 免費額度達成 24/7 全自動監控，無需掛機。',
-                    '以 GitHub Gist 作為輕量資料庫，前後端與多裝置資料自動同步。',
-                    '支援手動匯出匯入資料與手動同步備份資料上雲端或從雲端下載資料，換新裝置時可快速回復資料。',
-                    '透過GitHub Pages進行網頁部署。',
-                    '支援每日、每週、每月的智慧重複提醒。'
-                ],
-                image: './assets/images/line-notify.png',
-                galleryImages: [],
-                demoVideo: '',
-                categories: ['API', 'Bot', 'Web'],
-                technologies: ['Google Apps Script', 'LINE Notify API', 'GitHub Gist', 'GitHub Pages', 'JavaScript'],
-                github: 'https://github.com/Joy0130/LineNotify'
-            },
-            {
                 id: 'registration-website',
                 title: 'Registration Website',
                 description: '以 Flask 開發的活動報名網站。',
@@ -1307,24 +1344,6 @@
                 categories: ['web'],
                 technologies: ['Python', 'Flask', 'JavaScript'],
                 github: 'https://github.com/Joy0130/Registration-website'
-            },
-            {
-                id: 'pay-notify',
-                title: 'Pay Notification',
-                description: '付款/繳費期限自動提醒腳本。',
-                longDescription: '以 Python 撰寫的自動化通知腳本，搭配 GitHub Actions 排程定期執行，用於監控 Gmail 郵件並提醒繳費或付款期限，避免人工追蹤疏漏。',
-                reason: '繳費期限容易遺忘，人工追蹤耗時且不可靠。',
-                problem: '缺乏自動化機制，逾期繳費可能造成額外費用或服務中斷。',
-                results: [
-                    '透過 GitHub Actions 排程自動定期執行檢查。',
-                    '降低人工追蹤各項費用期限的疏漏風險。'
-                ],
-                image: './assets/images/pay-notify.png',
-                galleryImages: [],
-                demoVideo: '',
-                categories: ['Automate', 'Bot'],
-                technologies: ['Python', 'Line Notify', 'Gmail Application', 'GitHub Actions'],
-                github: 'https://github.com/Joy0130/pay_notify'
             },
             {
                 id: 'power-automate',
@@ -1485,7 +1504,16 @@
             if (project.demoVideo) {
                 videoElement.src = project.demoVideo;
                 videoContainer.style.display = 'block';
-                videoElement.onclick = () => openLightbox(project.demoVideo, 'video');
+                videoElement.onclick = (e) => {
+                    e.preventDefault();
+                    videoElement.pause();
+                    openLightbox(project.demoVideo, 'video');
+                };
+                videoElement.onplay = (e) => {
+                    e.preventDefault();
+                    videoElement.pause();
+                    openLightbox(project.demoVideo, 'video');
+                };
             } else {
                 videoContainer.style.display = 'none';
             }
