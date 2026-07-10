@@ -39,8 +39,31 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
+        /* Aurora Background */
+        .aurora-bg {
+            position: absolute;
+            inset: -10px;
+            background-image: 
+                repeating-linear-gradient(100deg, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0.5) 8%, transparent 10%, transparent 12%, rgba(255, 255, 255, 0.8) 16%), 
+                repeating-linear-gradient(100deg, #e0f2fe 10%, #e0e7ff 15%, #bae6fd 20%, #e5e7eb 25%, #bae6fd 30%);
+            background-size: 300% 200%;
+            background-position: 50% 50%, 50% 50%;
+            animation: aurora 60s linear infinite;
+            mask-image: radial-gradient(ellipse at 50% 0%, black 60%, transparent 100%);
+            -webkit-mask-image: radial-gradient(ellipse at 50% 0%, black 60%, transparent 100%);
+            pointer-events: none;
+            opacity: 1;
+            filter: blur(25px);
+        }
+
+        @keyframes aurora {
+            from { background-position: 50% 50%, 50% 50%; }
+            to { background-position: 350% 50%, 350% 50%; }
+        }
+
+
         body {
-            background-color: #ffffff;
+            background-color: transparent;
             color: #212529;
             font-family: 'Inter', sans-serif;
             font-weight: 400;
@@ -632,15 +655,20 @@
 </head>
 
 <body class="antialiased">
+    <!-- Background Effect -->
+    <div class="fixed inset-0 -z-10 h-full w-full bg-white">
+        <div class="aurora-bg"></div>
+    </div>
+
     <!-- 導覽列 -->
     <nav class="fixed top-0 w-full z-50 glass-nav">
         <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
             <div class="text-base md:text-xl font-bold tracking-tighter text-primary whitespace-nowrap">JOY'S PORTFOLIO
             </div>
             <div class="hidden md:flex space-x-8 text-sm font-medium text-ink-mute">
-                <a href="#about" class="hover:text-secondary transition-colors">關於我</a>
-                <a href="#portfolio" class="hover:text-primary transition-colors">作品集</a>
-                <a href="#contact" class="hover:text-secondary transition-colors">聯絡我</a>
+                <a href="#about" class="desktop-nav-link pb-1 border-b-[3px] border-secondary text-secondary hover:text-secondary hover:border-secondary transition-all" data-color="border-secondary" data-text="text-secondary">關於我</a>
+                <a href="#portfolio" class="desktop-nav-link pb-1 border-b-[3px] border-transparent hover:text-primary hover:border-primary transition-all" data-color="border-primary" data-text="text-primary">作品集</a>
+                <a href="#contact" class="desktop-nav-link pb-1 border-b-[3px] border-transparent hover:text-secondary hover:border-secondary transition-all" data-color="border-secondary" data-text="text-secondary">聯絡我</a>
             </div>
             <div class="flex items-center gap-3">
                 <button id="hamburger-btn"
@@ -674,7 +702,7 @@
     </nav>
 
     <!-- 個人簡介區塊 -->
-    <section id="about" class="pt-32 pb-20 px-6 bg-canvas">
+    <section id="about" class="pt-32 pb-20 px-6">
         <div class="max-w-4xl mx-auto flex flex-col md:flex-row items-center gap-12">
             <div
                 class="w-40 h-40 md:w-64 md:h-64 rounded-full overflow-hidden shadow-xl flex-shrink-0 border-4 border-white">
@@ -682,8 +710,8 @@
                     onerror="this.onerror=null;this.src='https://avatars.githubusercontent.com/u/64908025?v=4'">
             </div>
             <div class="text-center md:text-left">
-                <h1 class="text-4xl md:text-5xl font-bold tracking-tightest mb-4 text-ink">
-                    你好，我是 <span class="text-secondary">Joy</span>
+                <h1 class="text-4xl md:text-5xl font-bold tracking-tightest mb-4 text-ink flex items-center justify-center md:justify-start gap-2">
+                    你好，我是 <span class="text-secondary bg-canvas/20 px-4 py-1 rounded-full">Joy</span>
                 </h1>
                 <p class="text-lg md:text-xl text-ink-secondary leading-relaxed mb-8 font-light">
                     專注於網頁開發與 AI 整合的工程師。擅長運用自動化流程與 AI 技術解決複雜問題，並致力於探索 Agentic Workflow，打造具高實用性的創新應用。
@@ -699,7 +727,7 @@
     </section>
 
     <!-- 篩選與搜尋區塊 -->
-    <section class="py-6 md:py-12 px-6 bg-canvas-soft border-y border-hairline">
+    <section class="py-6 md:py-12 px-6 bg-white/85 backdrop-blur-md border-y border-hairline">
         <div class="max-w-7xl mx-auto flex flex-col md:flex-row md:items-center justify-between gap-8">
             <div class="filter-scroll-wrapper">
                 <div class="flex items-center space-x-4 overflow-x-auto no-scrollbar pb-3 md:pb-0" id="filter-buttons">
@@ -752,7 +780,7 @@
     </section>
 
     <!-- 作品集網格區塊 -->
-    <section id="portfolio" class="py-24 px-6 bg-canvas">
+    <section id="portfolio" class="py-24 px-6">
         <div class="max-w-7xl mx-auto">
             <div class="text-center mb-16">
                 <h2 class="text-3xl md:text-4xl font-bold tracking-tight mb-4 text-ink">精選作品集</h2>
@@ -766,7 +794,7 @@
     </section>
 
     <!-- 聯絡我區塊 -->
-    <section id="contact" class="py-24 px-6 bg-canvas-soft border-t border-hairline">
+    <section id="contact" class="py-24 px-6 bg-white/80 backdrop-blur-md border-t border-hairline">
         <div class="max-w-3xl mx-auto text-center">
             <h2 class="text-xl sm:text-2xl md:text-4xl font-bold mb-5 md:mb-8 text-ink">對我的專案感興趣或是想和我一起合作嗎？</h2>
             <p class="text-base md:text-lg text-ink-secondary mb-8 md:mb-12 font-light">
@@ -1836,6 +1864,43 @@
                 });
             });
         });
+
+        // Navigation Scroll Spy for Top Menu
+        const sections = document.querySelectorAll('section[id]');
+        const navLinks = document.querySelectorAll('.desktop-nav-link');
+
+        function updateNavSpy() {
+            let current = 'about'; // default
+            
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                // If the user has scrolled past the top of the section (minus a 150px offset for the fixed header)
+                if (window.scrollY >= sectionTop - 150) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            // If scrolled to the absolute bottom of the page, force the last section (contact)
+            if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 50) {
+                current = 'contact';
+            }
+
+            navLinks.forEach(link => {
+                const linkColor = link.getAttribute('data-color');
+                const linkText = link.getAttribute('data-text');
+                if (link.getAttribute('href') === `#${current}`) {
+                    link.classList.remove('border-transparent');
+                    link.classList.add(linkColor, linkText);
+                } else {
+                    link.classList.add('border-transparent');
+                    link.classList.remove(linkColor, linkText);
+                }
+            });
+        }
+
+        window.addEventListener('scroll', updateNavSpy, { passive: true });
+        // Run once on load
+        updateNavSpy();
 
         const hamburgerBtn = document.getElementById('hamburger-btn');
         const mobileMenu = document.getElementById('mobile-menu');
