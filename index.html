@@ -1135,28 +1135,35 @@
                     { src: "./assets/images/Notify10.png", caption: "呈上，編輯記事" },
                     { src: "./assets/images/Notify11.png", caption: "Google Apps Script 寫js設定排程與通知流程和發送Line通知。" },
                     { src: "./assets/images/Notify12.png", caption: "Google Apps Script 設定觸發條件，每分鐘檢查是否需要通知，如有則觸發流程。" },
+                    { src: "./assets/images/Notify13.png", caption: "Line收到通知。" }
                 ],
                 demoVideo: '',
-                categories: ['API', 'Bot', 'Web','Automate'],
-                technologies: ['Google Apps Script(GAS)', 'LINE Notify API', 'GitHub Gist', 'GitHub Pages', 'JavaScript'],
+                categories: ['API', 'Bot', 'web','Automate'],
+                technologies: ['Google Apps Script(GAS)', 'LINE Message API', 'GitHub Gist', 'GitHub Pages', 'JavaScript'],
                 github: 'https://github.com/Joy0130/LineNotify'
             },
             {
                 id: 'pay-notify',
                 title: 'Pay Notification',
-                description: '付款/繳費期限自動提醒腳本。',
+                description: 'Pay Notify 繳費通知機器人',
                 longDescription: '以 Python 撰寫的自動化通知腳本，搭配 GitHub Actions 排程定期執行，用於監控 Gmail 郵件並提醒繳費或付款期限，避免人工追蹤疏漏。',
-                reason: '繳費期限容易遺忘，人工追蹤耗時且不可靠。',
+                reason: '容易忘記繳款日期，導致逾期。',
                 problem: '缺乏自動化機制，逾期繳費可能造成額外費用或服務中斷。',
                 results: [
                     '透過 GitHub Actions 排程自動定期執行檢查。',
-                    '降低人工追蹤各項費用期限的疏漏風險。'
+                    '降低人工追蹤各項費用期限的疏漏風險。',
+                    '透過 IMAP 連線 Gmail，掃描未讀信件中符合條件的繳費通知',
+                    '依「寄件人 + 主旨關鍵字」比對',
+                    '找到符合條件的信件後，透過 LINE 推播訊息（含信件連結），並將信件標示為已讀'
                 ],
-                image: './assets/images/pay-notify.png',
-                galleryImages: [],
+                image: './assets/images/pay.png',
+                galleryImages: [
+                    { src: "./assets/images/pay1.png", caption: "手機LINE收到繳費通知" },
+                    { src: "./assets/images/pay.png", caption: "LINE 通知內容，可以直接點擊連結前往信件" },
+                ],
                 demoVideo: '',
                 categories: ['Automate', 'Bot'],
-                technologies: ['Python', 'Line Notify', 'Gmail Application', 'GitHub Actions'],
+                technologies: ['Python', 'LINE Message API', 'GitHub Actions'],
                 github: 'https://github.com/Joy0130/pay_notify'
             },
             {
@@ -1315,16 +1322,26 @@
                 id: 'pdf-spiltter',
                 title: 'PDF_Spiltter',
                 description: '純前端、免安裝的 PDF 批次分割工具。',
-                longDescription: '直接在本機端操作的 PDF 分割工具，使用 pdf-lib 處理，支援拖曳上傳與多組頁碼範圍批次輸出，檔案全程不上傳伺服器，保障隱私安全。',
-                reason: '線上 PDF 分割服務多需上傳檔案至伺服器，有隱私疑慮。',
-                problem: '需要快速分割多份 PDF，但不想安裝軟體或有資安隱私疑慮。',
+                longDescription: '直接在本機端操作的 PDF 分割工具，使用 PDFlib 處理，支援拖曳上傳與多組頁碼範圍批次輸出，檔案全程不上傳伺服器，保障隱私安全。',
+                reason: '線上 PDF 分割服務大多需上傳檔案至伺服器，有資料安全與資安疑慮。',
+                problem: '需要快速分割PDF，且不想安裝額外軟體。',
                 results: [
                     '所有處理皆在本地瀏覽器完成，無需上傳伺服器。',
-                    '支援一次輸入多組範圍，批次自動下載多份 PDF。',
-                    '單一 HTML 檔案即可執行，無需安裝或部署。'
+                    '單一 HTML 檔案即可執行，無需安裝或部署。',
+                    '彈性分割：可指定任意頁數範圍進行分割',
+                    '平均分割：輸入要分割的份數，系統自動平均分配頁數',
+                    '結果預覽：分割完成後先列出每份檔案名稱與大小，確認後再下載',
+                    '批次輸出：一次輸入多組範圍，多份檔案會打包成 ZIP（同一資料夾）一次下載'
                 ],
-                image: './assets/images/pdf-spiltter.png',
-                galleryImages: [],
+                image: './assets/images/pdf.png',
+                galleryImages: [
+                    { src: "./assets/images/pdf1.png", caption: "PDF自訂範圍分割：上傳PDF後，會自動顯示檔案總頁數，輸入要切割的頁數範圍" },
+                    { src: "./assets/images/pdf2.png", caption: "PDF自訂範圍分割：點擊開始分割後，會顯示分割後的檔案名稱與大小" },
+                    { src: "./assets/images/pdf3.png", caption: "PDF自訂範圍分割：下載分割檔案(打包成.ZIP檔，方便一次下載多份檔案)" },
+                    { src: "./assets/images/pdf4.png", caption: "PDF平均分割：上傳PDF後，會自動顯示檔案總頁數，輸入要分割的份數" },
+                    { src: "./assets/images/pdf5.png", caption: "PDF平均分割：點擊開始分割後，會顯示分割後的檔案名稱與大小" },
+                    { src: "./assets/images/pdf6.png", caption: "PDF平均分割：下載分割檔案(打包成.ZIP檔，方便一次下載多份檔案)" }
+                ],
                 demoVideo: '',
                 categories: ['Extension'],
                 technologies: ['JavaScript', 'HTML', 'pdf-lib'],
@@ -1518,7 +1535,7 @@
                     { src: "./assets/images/inv11.png", caption: "借出清單：歸還物料" },
                 ],
                 demoVideo: '',
-                categories: ['Web', 'API'],
+                categories: ['web', 'API'],
                 technologies: ['Angular', 'TypeScript', 'SCSS', 'FastAPI', 'LDAP'],
                 github: '此為公司內部系統，無法公開程式碼。'
             },
