@@ -1443,6 +1443,40 @@
                 github: 'https://github.com/Joy0130/Python_FPNS'
             },
             {
+                id: 'Korean-daily',
+                title: '韓語學習小工具',
+                description: '韓語學習網頁。',
+                longDescription: '自行設計開發的韓語學習網頁，主要為韓國旅遊常用句子，並且有提供每日一句、例句總表、圖卡背誦、我的最愛收藏、語音朗讀、AI 例句生成，以及跨裝置的雲端備份。',
+                reason: '本身非常喜歡去韓國旅遊，之前都習慣用紙本或線上筆記本記下常用的韓語句子，但因為筆記本比較不方便攜帶，且無語音功能無法聽取句子發音，所以自行設計開發了這個網頁，希望可以透過這個網頁來學習韓語。',
+                problem: '手寫筆記容易損壞、遺失，且不方便攜帶。',
+                results: [
+                    '串接Gemini API，可以提供AI產生例句並翻譯。',
+                    '顯示韓文、中文、英文對照，並可一鍵播放語音，支援多種語音發音引擎。',
+                    '以「列表」或「圖卡（Flashcard）」兩種檢視模式瀏覽所有例句。',
+                    '可以針對常用的句子加入「我的最愛」收藏',
+                    'GitHub Gist 同步：將所有例句與我的最愛備份到 GitHub Gist，或從既有 Gist 復原，方便換裝置使用。',
+                    'JSON 檔案備份 / 還原：將例句與最愛匯出成單一 JSON 檔案，或從檔案匯入還原。',
+                    'RWD響應式設計，適用於手機與電腦。'
+                ],
+                image: './assets/images/korean.png',
+                galleryImages: [
+                    { src: "./assets/images/korean.png", caption: "韓語學習網頁首頁(電腦版)" },
+                    { src: "./assets/images/korean1.jpeg", caption: "韓語學習網頁首頁(手機版)" },
+                    { src: "./assets/images/korean2.png", caption: "今日例句列表模式(可播放語音)" },
+                    { src: "./assets/images/korean3.png", caption: "今日例句圖卡模式(可播放語音)" },
+                    { src: "./assets/images/korean4.png", caption: "自訂翻譯：輸入繁體中文後透過Gemini API 自動翻譯成韓文，AI會依照現有的分類給出最接近的選項，分類可以自行修正，並可直接加入到例句庫中。" },
+                    { src: "./assets/images/korean5.png", caption: "AI 產生例句：輸入主題後透過Gemini API 依照選擇的句數以該主題生成韓文例句，AI會依照現有的分類給出最接近的選項，分類可以自行修正，並可直接加入到例句庫中。" },
+                    { src: "./assets/images/korean6.png", caption: "例句總表列表模式：顯示所有例句，在此畫面中可以搜尋、篩選、播放語音"},
+                    { src: "./assets/images/korean7.png", caption: "例句總表圖卡模式：顯示所有例句，在此畫面中可以搜尋、篩選、播放語音"},
+                    { src: "./assets/images/korean8.png", caption: "我的最愛：將常用例句加入我的最愛，方便快速查看。" },
+                    { src: "./assets/images/korean9.png", caption: "設定：在此可以設定Gemini API Key、Github Gist、JSON檔案備份/還原、例句分類管理。" },
+                ],
+                demoVideo: './assets/videos/korean.mp4',
+                categories: ['web', 'API'],
+                technologies: ['HTML', 'CSS', 'JavaScript', 'Gemini API','GitHub Gist'],
+                github: 'https://github.com/Joy0130/Korean_daily'
+            },
+            {
                 id: 'my-chatbot',
                 title: 'ChatBot',
                 description: '支援多模型切換（Gemini／Ollama）的多對話聊天機器人。',
