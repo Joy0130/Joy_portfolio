@@ -172,8 +172,8 @@
         .aurora-bg {
             position: absolute;
             inset: -10px;
-            background-image: 
-                repeating-linear-gradient(100deg, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0.5) 8%, transparent 10%, transparent 12%, rgba(255, 255, 255, 0.8) 16%), 
+            background-image:
+                repeating-linear-gradient(100deg, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0.5) 8%, transparent 10%, transparent 12%, rgba(255, 255, 255, 0.8) 16%),
                 repeating-linear-gradient(100deg, #e0f2fe 10%, #e0e7ff 15%, #bae6fd 20%, #e5e7eb 25%, #bae6fd 30%);
             background-size: 300% 200%;
             background-position: 50% 50%, 50% 50%;
@@ -186,8 +186,13 @@
         }
 
         @keyframes aurora {
-            from { background-position: 50% 50%, 50% 50%; }
-            to { background-position: 350% 50%, 350% 50%; }
+            from {
+                background-position: 50% 50%, 50% 50%;
+            }
+
+            to {
+                background-position: 350% 50%, 350% 50%;
+            }
         }
 
 
@@ -797,35 +802,45 @@
             <div class="text-base md:text-xl font-bold tracking-tighter text-primary whitespace-nowrap">JOY'S PORTFOLIO
             </div>
             <div class="hidden md:flex space-x-8 text-sm font-medium text-ink-mute">
-                <a href="#about" class="desktop-nav-link pb-1 border-b-[3px] border-secondary text-secondary hover:text-secondary hover:border-secondary transition-all" data-color="border-secondary" data-text="text-secondary">關於我</a>
-                <a href="#portfolio" class="desktop-nav-link pb-1 border-b-[3px] border-transparent hover:text-primary hover:border-primary transition-all" data-color="border-primary" data-text="text-primary">作品集</a>
-                <a href="#contact" class="desktop-nav-link pb-1 border-b-[3px] border-transparent hover:text-secondary hover:border-secondary transition-all" data-color="border-secondary" data-text="text-secondary">聯絡我</a>
+                <a href="#about"
+                    class="desktop-nav-link pb-1 border-b-[3px] border-secondary text-secondary hover:text-secondary hover:border-secondary transition-all"
+                    data-color="border-secondary" data-text="text-secondary">關於我</a>
+                <a href="#portfolio"
+                    class="desktop-nav-link pb-1 border-b-[3px] border-transparent hover:text-primary hover:border-primary transition-all"
+                    data-color="border-primary" data-text="text-primary">作品集</a>
+                <a href="#contact"
+                    class="desktop-nav-link pb-1 border-b-[3px] border-transparent hover:text-secondary hover:border-secondary transition-all"
+                    data-color="border-secondary" data-text="text-secondary">聯絡我</a>
             </div>
             <div class="flex items-center gap-3">
                 <div class="relative">
                     <button id="theme-toggle-btn"
                         class="flex items-center justify-center p-2 rounded-lg hover:bg-canvas-soft transition-colors"
                         aria-label="切換佈景主題" aria-haspopup="true" aria-expanded="false">
-                        <svg id="icon-theme-default" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-ink-secondary"
-                            fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <svg id="icon-theme-default" xmlns="http://www.w3.org/2000/svg"
+                            class="w-5 h-5 text-ink-secondary" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                            stroke-width="2">
                             <path stroke-linecap="round" stroke-linejoin="round"
                                 d="M9 3v2m6-2v2M9 19v2m6-2v2M3 9h2m14 0h2M3 15h2m14 0h2M7 7h10v10H7V7z" />
                         </svg>
-                        <svg id="icon-theme-white" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-ink-secondary hidden"
-                            fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <svg id="icon-theme-white" xmlns="http://www.w3.org/2000/svg"
+                            class="w-5 h-5 text-ink-secondary hidden" fill="none" viewBox="0 0 24 24"
+                            stroke="currentColor" stroke-width="2">
                             <circle cx="12" cy="12" r="5" />
                             <path stroke-linecap="round" stroke-linejoin="round"
                                 d="M12 1v2m0 18v2M4.22 4.22l1.42 1.42m12.72 12.72l1.42 1.42M1 12h2m18 0h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" />
                         </svg>
-                        <svg id="icon-theme-dark" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-ink-secondary hidden"
-                            fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <svg id="icon-theme-dark" xmlns="http://www.w3.org/2000/svg"
+                            class="w-5 h-5 text-ink-secondary hidden" fill="none" viewBox="0 0 24 24"
+                            stroke="currentColor" stroke-width="2">
                             <path stroke-linecap="round" stroke-linejoin="round"
                                 d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" />
                         </svg>
                     </button>
                     <div id="theme-menu" class="theme-menu hidden">
                         <button class="theme-menu-item" data-theme-choice="default">
-                            <span class="theme-swatch" style="background: linear-gradient(135deg, #bae6fd, #e0e7ff);"></span>
+                            <span class="theme-swatch"
+                                style="background: linear-gradient(135deg, #bae6fd, #e0e7ff);"></span>
                             漸層樣式
                         </button>
                         <button class="theme-menu-item" data-theme-choice="white">
@@ -877,7 +892,8 @@
                     onerror="this.onerror=null;this.src='https://avatars.githubusercontent.com/u/64908025?v=4'">
             </div>
             <div class="text-center md:text-left">
-                <h1 class="text-4xl md:text-5xl font-bold tracking-tightest mb-4 text-ink flex items-center justify-center md:justify-start gap-2">
+                <h1
+                    class="text-4xl md:text-5xl font-bold tracking-tightest mb-4 text-ink flex items-center justify-center md:justify-start gap-2">
                     你好，我是 <span class="text-secondary bg-canvas/20 px-4 py-1 rounded-full">Joy</span>
                 </h1>
                 <p class="text-lg md:text-xl text-ink-secondary leading-relaxed mb-8 font-light">
@@ -1129,16 +1145,16 @@
                     { src: "./assets/images/Notify4.png", caption: "下載JSON備份檔" },
                     { src: "./assets/images/Notify6.png", caption: "新增記事，可以設定分類、發送提醒日期與設定重複提醒" },
                     { src: "./assets/images/Notify7.png", caption: "設定重複提醒，可設定開始日期(自動帶入發送提醒時間)、重複頻率、結束日期(最後一天通知的日期與時間)" },
-                    { src:"./assets/images/Notify5.png", caption: "記事列表，依照顏色區分待發送、已發送，有分類可以快速篩選"},
+                    { src: "./assets/images/Notify5.png", caption: "記事列表，依照顏色區分待發送、已發送，有分類可以快速篩選" },
                     { src: "./assets/images/Notify9.png", caption: "滑鼠移入記事列表中的卡片後會顯示編輯與刪除的icon。" },
-                    { src:"./assets/images/Notify8.png", caption: "編輯記事，可以修改分類、記事內容、發送提醒日期與重複提醒設定。"},
+                    { src: "./assets/images/Notify8.png", caption: "編輯記事，可以修改分類、記事內容、發送提醒日期與重複提醒設定。" },
                     { src: "./assets/images/Notify10.png", caption: "呈上，編輯記事" },
                     { src: "./assets/images/Notify11.png", caption: "Google Apps Script 寫js設定排程與通知流程和發送Line通知。" },
                     { src: "./assets/images/Notify12.png", caption: "Google Apps Script 設定觸發條件，每分鐘檢查是否需要通知，如有則觸發流程。" },
                     { src: "./assets/images/Notify13.png", caption: "Line收到通知。" }
                 ],
                 demoVideo: '',
-                categories: ['API', 'Bot', 'web','Automate'],
+                categories: ['API', 'Bot', 'web', 'Automate'],
                 technologies: ['Google Apps Script(GAS)', 'LINE Message API', 'GitHub Gist', 'GitHub Pages', 'JavaScript'],
                 github: 'https://github.com/Joy0130/LineNotify'
             },
@@ -1185,7 +1201,7 @@
                 categories: ['AI', 'API'],
                 technologies: ['Python', 'Gemini API', 'Git', 'pipy'],
                 github: 'https://github.com/Joy0130/SmartCommit/tree/ai',
-                automate:'https://drive.google.com/file/d/1DWzHsa7PrDYopaq8RoBmx-enYK3kEiAO/view?usp=sharing'
+                automate: 'https://drive.google.com/file/d/1DWzHsa7PrDYopaq8RoBmx-enYK3kEiAO/view?usp=sharing'
             },
             {
                 id: 'aireview',
@@ -1203,9 +1219,9 @@
                 galleryImages: [],
                 demoVideo: '',
                 categories: ['AI', 'API'],
-                technologies: ['Python','Git', 'Gemini API', 'Pipy'],
+                technologies: ['Python', 'Git', 'Gemini API', 'Pipy'],
                 github: 'https://github.com/Joy0130/aireview',
-                automate:'https://drive.google.com/file/d/1DWzHsa7PrDYopaq8RoBmx-enYK3kEiAO/view?usp=sharing'
+                automate: 'https://drive.google.com/file/d/1DWzHsa7PrDYopaq8RoBmx-enYK3kEiAO/view?usp=sharing'
             },
             {
                 id: 'argo-cd-notifications',
@@ -1466,14 +1482,14 @@
                     { src: "./assets/images/korean3.png", caption: "今日例句圖卡模式(可播放語音)" },
                     { src: "./assets/images/korean4.png", caption: "自訂翻譯：輸入繁體中文後透過Gemini API 自動翻譯成韓文，AI會依照現有的分類給出最接近的選項，分類可以自行修正，並可直接加入到例句庫中。" },
                     { src: "./assets/images/korean5.png", caption: "AI 產生例句：輸入主題後透過Gemini API 依照選擇的句數以該主題生成韓文例句，AI會依照現有的分類給出最接近的選項，分類可以自行修正，並可直接加入到例句庫中。" },
-                    { src: "./assets/images/korean6.png", caption: "例句總表列表模式：顯示所有例句，在此畫面中可以搜尋、篩選、播放語音"},
-                    { src: "./assets/images/korean7.png", caption: "例句總表圖卡模式：顯示所有例句，在此畫面中可以搜尋、篩選、播放語音"},
+                    { src: "./assets/images/korean6.png", caption: "例句總表列表模式：顯示所有例句，在此畫面中可以搜尋、篩選、播放語音" },
+                    { src: "./assets/images/korean7.png", caption: "例句總表圖卡模式：顯示所有例句，在此畫面中可以搜尋、篩選、播放語音" },
                     { src: "./assets/images/korean8.png", caption: "我的最愛：將常用例句加入我的最愛，方便快速查看。" },
                     { src: "./assets/images/korean9.png", caption: "設定：在此可以設定Gemini API Key、Github Gist、JSON檔案備份/還原、例句分類管理。" },
                 ],
                 demoVideo: './assets/videos/Korean.mp4',
                 categories: ['web', 'API'],
-                technologies: ['HTML', 'CSS', 'JavaScript', 'Gemini API','GitHub Gist'],
+                technologies: ['HTML', 'CSS', 'JavaScript', 'Gemini API', 'GitHub Gist'],
                 github: 'https://github.com/Joy0130/Korean_daily'
             },
             {
@@ -1606,8 +1622,8 @@
                 galleryImages: [],
                 demoVideo: './assets/videos/automate_compressed.mp4',
                 categories: ['Automate', 'LowCode'],
-                technologies: ['Microsoft Power Automate', 'Microsoft AI Hub','RPA'],
-                automate: 'https://drive.google.com/file/d/1XqJNdJ80nm6lgUCW3M_wD0EzJxUpESCi/view?usp=sharing'
+                technologies: ['Microsoft Power Automate', 'Microsoft AI Hub', 'RPA'],
+                automate: 'https://drive.google.com/file/d/1RVGW6h76scMghpMNn0drreGrDXQ42_ow/view?usp=sharing'
             },
             {
                 id: 'power-apps',
@@ -1633,7 +1649,7 @@
                 ],
                 demoVideo: '',
                 categories: ['LowCode'],
-                technologies: ['Microsoft Power Apps','SharePoint'],
+                technologies: ['Microsoft Power Apps', 'SharePoint'],
                 automate: 'https://drive.google.com/file/d/1XqJNdJ80nm6lgUCW3M_wD0EzJxUpESCi/view?usp=sharing'
             },
         ];
@@ -1802,7 +1818,7 @@
                 currentGallery = [];
                 currentGalleryIndex = -1;
                 lightboxImg.style.display = 'none';
-                
+
                 const modalVideo = document.getElementById('modal-video');
                 if (modalVideo) {
                     modalVideo.pause();
@@ -2043,10 +2059,10 @@
                 });
                 btnTarget.classList.add('bg-primary', 'text-white', 'shadow-md');
                 btnTarget.classList.remove('bg-canvas', 'text-ink-mute', 'hover:text-primary', 'border', 'border-hairline', 'shadow-sm');
-                
+
                 // Scroll the clicked button into view to ensure it's not hidden by container overflow
                 btnTarget.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
-                
+
                 searchInput.dispatchEvent(new Event('input'));
             }
         });
@@ -2107,7 +2123,7 @@
 
         function updateNavSpy() {
             let current = 'about'; // default
-            
+
             sections.forEach(section => {
                 const sectionTop = section.offsetTop;
                 // If the user has scrolled past the top of the section (minus a 150px offset for the fixed header)
