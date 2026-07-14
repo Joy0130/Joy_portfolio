@@ -966,7 +966,11 @@
     <section id="portfolio" class="py-24 px-6">
         <div class="max-w-7xl mx-auto">
             <div class="text-center mb-16">
-                <h2 class="text-3xl md:text-4xl font-bold tracking-tight mb-4 text-ink">精選作品集</h2>
+                <h2 class="text-3xl md:text-4xl font-bold tracking-tight mb-4 text-ink relative inline-block">
+                    精選作品集
+                    <span id="project-count"
+                        class="absolute left-full top-1/2 -translate-y-1/2 ml-3 bg-primary/10 text-primary text-xl md:text-2xl px-4 py-1 rounded-full font-bold border border-primary/20 shadow-sm"></span>
+                </h2>
                 <p class="text-ink-mute font-light">My Projects</p>
                 <div class="h-1 w-16 bg-primary mx-auto mt-4 rounded-full"></div>
             </div>
@@ -1112,7 +1116,7 @@
                     { src: "./assets/images/Bank3.png", caption: "各國匯率資料，共顯示19國匯率資訊" },
                     { src: "./assets/images/Bank4.jpeg", caption: "牌告匯率，直接開啟台灣銀行網站" },
                     { src: "./assets/images/Bank5.jpeg", caption: "匯率換算，顯示台灣銀行換率換算網址" },
-                    { src: "./assets/images/Bank6.jpeg", caption: "歷史走勢查詢(下拉選單)，顯示各國匯率清單" },
+                    { src: "./assets/images/Bank6.jpeg", caption: "歷史走勢查詢(按鈕選單)，顯示各國匯率清單" },
                     { src: "./assets/images/Bank7.jpeg", caption: "歷史走勢查詢(點選國家後)，會自動開啟該國在台灣銀行網站的歷史牌告匯率頁面" },
                     { src: "./assets/images/Bank1.png", caption: "Render部署畫面" },
                 ],
@@ -1650,7 +1654,7 @@
                 demoVideo: '',
                 categories: ['LowCode'],
                 technologies: ['Microsoft Power Apps', 'SharePoint'],
-                automate: 'https://drive.google.com/file/d/1XqJNdJ80nm6lgUCW3M_wD0EzJxUpESCi/view?usp=sharing'
+                //automate: 'https://drive.google.com/file/d/1XqJNdJ80nm6lgUCW3M_wD0EzJxUpESCi/view?usp=sharing'
             },
         ];
 
@@ -1673,6 +1677,8 @@
         let currentGalleryIndex = -1;
 
         function renderProjects(filteredProjects) {
+            const countEl = document.getElementById('project-count');
+            if (countEl) countEl.textContent = filteredProjects.length;
             portfolioGrid.innerHTML = '';
             filteredProjects.forEach(project => {
                 const card = `
