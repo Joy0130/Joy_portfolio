@@ -1612,6 +1612,27 @@
                 github: 'https://github.com/Joy0130/Registration-website'
             },
             {
+                id: 'data-desensitization',
+                title: '機敏文件去識別化',
+                description: '本機端機敏文件去識別化工具。',
+                longDescription: '本專案是部署在公司內網的機敏文件去識別化工具，使用 Python、Flask、PyMuPDF、EasyOCR、OpenCV、python-docx 與 openpyxl 等技術，支援 DOCX、XLSX、CSV，以及數位版與掃描版 PDF，可自動偵測姓名、電話、地址、身分證、Logo、印章與簽名等敏感資訊，並提供遮蔽、文字取代、刪除、人工覆核及圖片白名單功能。',
+                reason: '公司內部的機敏文件需要去識別化後才能在外部系統使用。',
+                problem: '使用外部AI系統不能將公司相關機密資料上傳使用，必須人工手動將資料去識別化，再重新上傳，沒有工具前去識別話麻煩沒有效率，且容易遺漏需要去識別的敏感資訊。',
+                results: [
+                    '將多格式文件、OCR 與影像辨識整合成單一操作流程。',
+                    '解決人工遮蔽耗時、容易漏遮、格式相容、PDF 排版及資料外洩等痛點。',
+                    '支援 Logo、印鑑、嵌入圖片及向量 Logo，比單純文字 Regex 更完整。',
+                    '提供圖片白名單，避免教學截圖、說明圖片等重要內容被誤遮。',
+                    '提供原文／結果預覽、分類統計、處理報告、還原對照表及人工修正能力。',
+                ],
+                image: './assets/images/registration-website.png',
+                galleryImages: [],
+                demoVideo: '',
+                categories: ['web'],
+                technologies: ['Python', 'Flask', 'JavaScript'],
+                github: 'https://github.com/Joy0130/Registration-website'
+            },
+            {
                 id: 'power-automate',
                 title: 'Power Automate-水電費帳單RPA流程',
                 description: '運用 Power Automate 與 AI OCR 辨識帳單，自動拋轉財務系統建立傳票。',
