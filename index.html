@@ -8,8 +8,11 @@
     <!-- 佈景主題：於載入前先套用，避免畫面閃爍 (FOUC) -->
     <script>
         (function () {
-            const saved = localStorage.getItem('portfolio-theme') || 'white';
-            document.documentElement.setAttribute('data-theme', saved);
+            const VALID_THEMES = ['default', 'white', 'dark'];
+            const saved = localStorage.getItem('portfolio-theme');
+            document.documentElement.setAttribute('data-theme', VALID_THEMES.includes(saved) ? saved : 'white');
+            const language = localStorage.getItem('portfolio-language') || 'zh-TW';
+            document.documentElement.setAttribute('lang', language);
         })();
     </script>
     <!-- Tailwind CSS via CDN -->
@@ -158,6 +161,10 @@
         .theme-menu-item.active {
             background: rgb(var(--color-primary) / 0.1);
             color: rgb(var(--color-primary));
+        }
+
+        .language-menu {
+            min-width: 8rem;
         }
 
         .theme-swatch {
@@ -802,17 +809,30 @@
             <div class="text-base md:text-xl font-bold tracking-tighter text-primary whitespace-nowrap">JOY'S PORTFOLIO
             </div>
             <div class="hidden md:flex space-x-8 text-sm font-medium text-ink-mute">
-                <a href="#about"
+                <a href="#about" data-i18n="nav.about"
                     class="desktop-nav-link pb-1 border-b-[3px] border-secondary text-secondary hover:text-secondary hover:border-secondary transition-all"
                     data-color="border-secondary" data-text="text-secondary">關於我</a>
-                <a href="#portfolio"
+                <a href="#portfolio" data-i18n="nav.portfolio"
                     class="desktop-nav-link pb-1 border-b-[3px] border-transparent hover:text-primary hover:border-primary transition-all"
                     data-color="border-primary" data-text="text-primary">作品集</a>
-                <a href="#contact"
+                <a href="#contact" data-i18n="nav.contact"
                     class="desktop-nav-link pb-1 border-b-[3px] border-transparent hover:text-secondary hover:border-secondary transition-all"
                     data-color="border-secondary" data-text="text-secondary">聯絡我</a>
             </div>
             <div class="flex items-center gap-3">
+                <div class="relative">
+                    <button id="language-toggle-btn"
+                        class="flex items-center justify-center p-2 rounded-lg hover:bg-canvas-soft transition-colors"
+                        aria-label="切換語言" aria-haspopup="true" aria-expanded="false">
+                        <span id="language-current-label" class="text-sm font-semibold text-ink-secondary">繁中</span>
+                    </button>
+                    <div id="language-menu" class="theme-menu language-menu hidden">
+                        <button class="theme-menu-item" data-language-choice="zh-TW">繁體中文</button>
+                        <button class="theme-menu-item" data-language-choice="en">English</button>
+                        <button class="theme-menu-item" data-language-choice="ko">한국어</button>
+                        <button class="theme-menu-item" data-language-choice="ja">日本語</button>
+                    </div>
+                </div>
                 <div class="relative">
                     <button id="theme-toggle-btn"
                         class="flex items-center justify-center p-2 rounded-lg hover:bg-canvas-soft transition-colors"
@@ -867,18 +887,21 @@
                 </button>
                 <a href="https://github.com/Joy0130" target="_blank"
                     class="bg-primary hover:bg-primary-hover text-white text-xs font-semibold px-4 py-2.5 rounded-full transition-all shadow-sm whitespace-nowrap">
-                    GitHub Profile
+                    <span data-i18n="nav.github">GitHub Profile</span>
                 </a>
             </div>
         </div>
         <div id="mobile-menu" class="md:hidden hidden border-t border-hairline bg-canvas/95 backdrop-blur-sm">
             <div class="flex flex-col py-3 px-6">
                 <a href="#about"
-                    class="mobile-nav-link py-3 text-sm font-medium text-ink-secondary hover:text-secondary transition-colors border-b border-hairline">關於我</a>
+                    class="mobile-nav-link py-3 text-sm font-medium text-ink-secondary hover:text-secondary transition-colors border-b border-hairline"
+                    data-i18n="nav.about">關於我</a>
                 <a href="#portfolio"
-                    class="mobile-nav-link py-3 text-sm font-medium text-ink-secondary hover:text-primary transition-colors border-b border-hairline">作品集</a>
+                    class="mobile-nav-link py-3 text-sm font-medium text-ink-secondary hover:text-primary transition-colors border-b border-hairline"
+                    data-i18n="nav.portfolio">作品集</a>
                 <a href="#contact"
-                    class="mobile-nav-link py-3 text-sm font-medium text-ink-secondary hover:text-secondary transition-colors">聯絡我</a>
+                    class="mobile-nav-link py-3 text-sm font-medium text-ink-secondary hover:text-secondary transition-colors"
+                    data-i18n="nav.contact">聯絡我</a>
             </div>
         </div>
     </nav>
@@ -894,16 +917,19 @@
             <div class="text-center md:text-left">
                 <h1
                     class="text-4xl md:text-5xl font-bold tracking-tightest mb-4 text-ink flex items-center justify-center md:justify-start gap-2">
-                    你好，我是 <span class="text-secondary bg-canvas/20 px-4 py-1 rounded-full">Joy</span>
+                    <span data-i18n="hero.greeting">你好，我是</span> <span
+                        class="text-secondary bg-canvas/20 px-4 py-1 rounded-full">Joy</span>
                 </h1>
-                <p class="text-lg md:text-xl text-ink-secondary leading-relaxed mb-8 font-light">
+                <p class="text-lg md:text-xl text-ink-secondary leading-relaxed mb-8 font-light" data-i18n="hero.bio">
                     專注於網頁開發與 AI 整合的工程師。擅長運用自動化流程與 AI 技術解決複雜問題，並致力於探索 AI Agent 工作流，打造具高實用性的創新應用。
                 </p>
                 <div class="flex flex-wrap justify-center md:justify-start gap-4">
                     <a href="#portfolio"
-                        class="bg-primary hover:bg-primary-hover text-white px-8 py-3 rounded-full font-semibold shadow-md transition-all">精選作品集</a>
+                        class="bg-primary hover:bg-primary-hover text-white px-8 py-3 rounded-full font-semibold shadow-md transition-all"
+                        data-i18n="hero.portfolio">精選作品集</a>
                     <a href="#contact"
-                        class="bg-canvas hover:bg-canvas-soft hover:text-secondary text-ink-secondary border border-hairline px-8 py-3 rounded-full font-semibold shadow-sm transition-all">聯絡我</a>
+                        class="bg-canvas hover:bg-canvas-soft hover:text-secondary text-ink-secondary border border-hairline px-8 py-3 rounded-full font-semibold shadow-sm transition-all"
+                        data-i18n="nav.contact">聯絡我</a>
                 </div>
             </div>
         </div>
@@ -914,32 +940,33 @@
         <div class="max-w-7xl mx-auto flex flex-col md:flex-row md:items-center justify-between gap-8">
             <div class="filter-scroll-wrapper">
                 <div class="flex items-center space-x-4 overflow-x-auto no-scrollbar pb-3 md:pb-0" id="filter-buttons">
-                    <button class="pill-button bg-primary text-white shadow-md" data-filter="all"
-                        title="顯示所有專案">全部專案</button>
+                    <button class="pill-button bg-primary text-white shadow-md" data-filter="all" title="顯示所有專案"
+                        data-i18n="filters.all">全部專案</button>
                     <button
                         class="pill-button bg-canvas text-ink-mute hover:text-primary border border-hairline shadow-sm"
-                        data-filter="AI" title="與AI模型串接或是AI相關的應用">AI應用</button>
+                        data-filter="AI" title="與AI模型串接或是AI相關的應用" data-i18n="filters.ai">AI應用</button>
                     <button
                         class="pill-button bg-canvas text-ink-mute hover:text-primary border border-hairline shadow-sm"
-                        data-filter="Bot" title="串接Line Bot或是相關的應用">LINE Bot</button>
+                        data-filter="Bot" title="串接Line Bot或是相關的應用" data-i18n="filters.bot">LINE Bot</button>
                     <button
                         class="pill-button bg-canvas text-ink-mute hover:text-primary border border-hairline shadow-sm"
-                        data-filter="web" title="提供對外服務的完整網站/應用，具備後端資料庫或使用者互動流程">網站開發</button>
+                        data-filter="web" title="提供對外服務的完整網站/應用，具備後端資料庫或使用者互動流程" data-i18n="filters.web">網站開發</button>
                     <button
                         class="pill-button bg-canvas text-ink-mute hover:text-primary border border-hairline shadow-sm"
-                        data-filter="DevOps" title="DevOps 工具與自動化部署">DevOps</button>
+                        data-filter="DevOps" title="DevOps 工具與自動化部署" data-i18n="filters.devops">DevOps</button>
                     <button
                         class="pill-button bg-canvas text-ink-mute hover:text-primary border border-hairline shadow-sm"
-                        data-filter="API" title="串接API或是API相關的應用程式">API</button>
+                        data-filter="API" title="串接API或是API相關的應用程式" data-i18n="filters.api">API</button>
                     <button
                         class="pill-button bg-canvas text-ink-mute hover:text-primary border border-hairline shadow-sm"
-                        data-filter="Automate" title="自動化腳本、通知系統、Power Automate">自動化</button>
+                        data-filter="Automate" title="自動化腳本、通知系統、Power Automate"
+                        data-i18n="filters.automate">自動化</button>
                     <button
                         class="pill-button bg-canvas text-ink-mute hover:text-primary border border-hairline shadow-sm"
-                        data-filter="LowCode" title="Low Code 平台應用">Low Code</button>
+                        data-filter="LowCode" title="Low Code 平台應用" data-i18n="filters.lowcode">Low Code</button>
                     <button
                         class="pill-button bg-canvas text-ink-mute hover:text-primary border border-hairline shadow-sm"
-                        data-filter="Extension" title="擴充功能或單機版工具">擴充功能與單機版工具</button>
+                        data-filter="Extension" title="擴充功能或單機版工具" data-i18n="filters.extension">擴充功能與單機版工具</button>
                 </div>
                 <div class="filter-scroll-hint" id="filter-scroll-hint">
                     <div class="scroll-arrow">
@@ -951,7 +978,7 @@
                 </div>
             </div>
             <div class="relative w-full md:w-80">
-                <input type="text" placeholder="搜尋"
+                <input type="text" placeholder="搜尋" data-i18n-placeholder="search"
                     class="search-input w-full px-5 py-3 rounded-full text-sm text-ink shadow-sm" id="search-input">
                 <svg class="absolute right-4 top-3.5 w-4 h-4 text-ink-mute" fill="none" stroke="currentColor"
                     viewBox="0 0 24 24">
@@ -967,11 +994,11 @@
         <div class="max-w-7xl mx-auto">
             <div class="text-center mb-16">
                 <h2 class="text-3xl md:text-4xl font-bold tracking-tight mb-4 text-ink relative inline-block">
-                    精選作品集
+                    <span data-i18n="portfolio.title">精選作品集</span>
                     <span id="project-count"
                         class="absolute left-full top-1/2 -translate-y-1/2 ml-3 bg-primary/10 text-primary text-xl md:text-2xl px-4 py-1 rounded-full font-bold border border-primary/20 shadow-sm"></span>
                 </h2>
-                <p class="text-ink-mute font-light">My Projects</p>
+                <p class="text-ink-mute font-light" data-i18n="portfolio.subtitle">My Projects</p>
                 <div class="h-1 w-16 bg-primary mx-auto mt-4 rounded-full"></div>
             </div>
             <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-8" id="portfolio-grid">
@@ -983,13 +1010,14 @@
     <!-- 聯絡我區塊 -->
     <section id="contact" class="py-24 px-6 bg-canvas/80 backdrop-blur-md border-t border-hairline">
         <div class="max-w-3xl mx-auto text-center">
-            <h2 class="text-xl sm:text-2xl md:text-4xl font-bold mb-5 md:mb-8 text-ink">對我的專案感興趣或是想和我一起合作嗎？</h2>
-            <p class="text-base md:text-lg text-ink-secondary mb-8 md:mb-12 font-light">
+            <h2 class="text-xl sm:text-2xl md:text-4xl font-bold mb-5 md:mb-8 text-ink" data-i18n="contact.title">
+                對我的專案感興趣或是想和我一起合作嗎？</h2>
+            <p class="text-base md:text-lg text-ink-secondary mb-8 md:mb-12 font-light" data-i18n="contact.description">
                 歡迎透過電子郵件與我聯繫，討論合作機會或交流。
             </p>
             <a href="https://mail.google.com/mail/?view=cm&fs=1&to=joy10290014@gmail.com" target="_blank"
                 class="bg-secondary hover:bg-secondary-hover text-white px-10 py-4 rounded-full text-lg font-bold shadow-md transition-all inline-block">
-                立即發送郵件
+                <span data-i18n="contact.email">立即發送郵件</span>
             </a>
         </div>
     </section>
@@ -1012,7 +1040,8 @@
     <div id="project-modal" class="modal">
         <div class="modal-content">
             <!-- 關閉按鈕改放 header 層級，確保永遠可見且位置固定 -->
-            <span class="close-button shadow-sm" id="close-modal" aria-label="關閉">&times;</span>
+            <span class="close-button shadow-sm" id="close-modal" aria-label="關閉"
+                data-i18n-aria-label="close">&times;</span>
 
             <!-- 固定在頂部的區域 (Title, Tags, etc.) -->
             <div class="modal-header">
@@ -1028,42 +1057,45 @@
 
                 <div class="grid md:grid-cols-2 gap-4 md:gap-8 mb-8 md:mb-10">
                     <div class="bg-canvas-soft p-6 rounded-xl border border-hairline">
-                        <h3 class="text-primary font-bold mb-3 uppercase tracking-widest text-sm">開發背景</h3>
+                        <h3 class="text-primary font-bold mb-3 uppercase tracking-widest text-sm"
+                            data-i18n="modal.reason">開發背景</h3>
                         <p class="text-ink-secondary leading-relaxed text-sm" id="modal-reason"></p>
                     </div>
                     <div class="bg-canvas-soft p-6 rounded-xl border border-hairline">
-                        <h3 class="text-primary font-bold mb-3 uppercase tracking-widest text-sm">解決痛點</h3>
+                        <h3 class="text-primary font-bold mb-3 uppercase tracking-widest text-sm"
+                            data-i18n="modal.problem">解決痛點</h3>
                         <p class="text-ink-secondary leading-relaxed text-sm" id="modal-problem"></p>
                     </div>
                     <div
                         class="md:col-span-2 bg-canvas-soft p-6 rounded-xl border border-hairline hover:border-secondary-hover">
                         <h3 class="text-secondary font-bold mb-3 uppercase tracking-widest text-sm ">
-                            核心成果</h3>
+                            <span data-i18n="modal.results">核心成果</span>
+                        </h3>
                         <ul class="space-y-3 text-ink-secondary text-sm" id="modal-results"></ul>
                     </div>
                 </div>
 
                 <div id="modal-video-container" class="mb-10" style="display: none;">
-                    <h3 class="text-xl font-bold mb-5 text-ink">實機演示</h3>
+                    <h3 class="text-xl font-bold mb-5 text-ink" data-i18n="modal.video">實機演示</h3>
                     <div class="rounded-xl overflow-hidden border border-hairline shadow-md aspect-video">
                         <video controls class="w-full h-full object-cover" id="modal-video"></video>
                     </div>
                 </div>
 
                 <div id="modal-gallery-container" style="display: none;">
-                    <h3 class="text-xl font-bold mb-5 text-ink">專案畫廊</h3>
+                    <h3 class="text-xl font-bold mb-5 text-ink" data-i18n="modal.gallery">專案畫廊</h3>
                     <div class="grid grid-cols-2 md:grid-cols-3 gap-4" id="modal-gallery"></div>
                 </div>
 
                 <div class="mt-8 flex flex-col items-center gap-3 pb-4">
                     <a id="modal-github-link" href="#" target="_blank"
                         class="inline-flex items-center text-primary font-semibold hover:underline">
-                        在 GitHub 上查看原始碼 →
+                        <span data-i18n="modal.github">在 GitHub 上查看原始碼 →</span>
                     </a>
                     <a id="modal-automate-link" href="#" target="_blank"
                         class="inline-flex items-center text-primary font-semibold hover:underline"
                         style="display: none;">
-                        看簡報說明 →
+                        <span data-i18n="modal.slides">看簡報說明 →</span>
                     </a>
                 </div>
             </div>
@@ -1728,16 +1760,148 @@
 
         let currentGallery = [];
         let currentGalleryIndex = -1;
+        let currentProjectId = null;
+        let activeFilter = 'all';
+
+        const LANGUAGE_KEY = 'portfolio-language';
+        let currentLanguage = localStorage.getItem(LANGUAGE_KEY) || 'zh-TW';
+        const languageLabels = { 'zh-TW': '繁中', en: 'EN', ko: '한국어', ja: '日本語' };
+        const translations = {
+            'zh-TW': {
+                'nav.about': '關於我', 'nav.portfolio': '作品集', 'nav.contact': '聯絡我', 'nav.github': 'GitHub Profile', 'hero.greeting': '你好，我是',
+                'hero.role': '專注於網頁開發與 AI 整合',
+                'hero.bio': '專注於網頁開發與 AI 整合的工程師。擅長運用自動化流程與 AI 技術解決複雜問題，並致力於探索 AI Agent 工作流，打造具高實用性的創新應用。',
+                'hero.portfolio': '精選作品集', 'filters.all': '全部專案', 'filters.ai': 'AI應用', 'filters.bot': 'LINE Bot',
+                'filters.web': '網站開發', 'filters.devops': 'DevOps', 'filters.api': 'API', 'filters.automate': '自動化',
+                'filters.lowcode': 'Low Code', 'filters.extension': '擴充功能與單機版工具', search: '搜尋',
+                'portfolio.title': '精選作品集', 'portfolio.subtitle': 'My Projects',
+                'contact.title': '對我的專案感興趣或是想和我一起合作嗎？',
+                'contact.description': '歡迎透過電子郵件與我聯繫，討論合作機會或交流。', 'contact.email': '立即發送郵件',
+                'modal.reason': '開發背景', 'modal.problem': '解決痛點', 'modal.results': '核心成果',
+                'modal.video': '實機演示', 'modal.gallery': '專案畫廊', 'modal.github': '在 GitHub 上查看原始碼 →',
+                'modal.slides': '看簡報說明 →', close: '關閉', 'theme.default': '漸層樣式', 'theme.white': '純白樣式(預設)', 'theme.dark': '暗黑模式'
+            },
+            en: {
+                'nav.about': 'About', 'nav.portfolio': 'Portfolio', 'nav.contact': 'Contact', 'nav.github': 'GitHub Profile', 'hero.greeting': "Hi, I'm",
+                'hero.role': 'Focused on web development and AI integration',
+                'hero.bio': 'An engineer focused on web development and AI integration. I use automation and AI to solve complex problems, explore AI agent workflows, and build practical, innovative applications.',
+                'hero.portfolio': 'Featured Work', 'filters.all': 'All Projects', 'filters.ai': 'AI Apps', 'filters.bot': 'LINE Bot',
+                'filters.web': 'Web Development', 'filters.devops': 'DevOps', 'filters.api': 'API', 'filters.automate': 'Automation',
+                'filters.lowcode': 'Low Code', 'filters.extension': 'Extensions & Desktop Tools', search: 'Search',
+                'portfolio.title': 'Featured Work', 'portfolio.subtitle': 'My Projects',
+                'contact.title': 'Interested in my projects or want to work together?',
+                'contact.description': 'Email me to discuss collaboration opportunities or exchange ideas.', 'contact.email': 'Send Email',
+                'modal.reason': 'Background', 'modal.problem': 'Challenge', 'modal.results': 'Key Results',
+                'modal.video': 'Demo Video', 'modal.gallery': 'Project Gallery', 'modal.github': 'View source on GitHub →',
+                'modal.slides': 'View presentation →', close: 'Close', 'theme.default': 'Gradient', 'theme.white': 'Pure White (Default)', 'theme.dark': 'Dark Mode'
+            },
+            ko: {
+                'nav.about': '소개', 'nav.portfolio': '포트폴리오', 'nav.contact': '연락처', 'nav.github': 'GitHub 프로필', 'hero.greeting': '안녕하세요, 저는',
+                'hero.role': '웹 개발과 AI 통합에 집중합니다',
+                'hero.bio': '웹 개발과 AI 통합을 전문으로 하는 엔지니어입니다. 자동화와 AI 기술로 복잡한 문제를 해결하고, AI 에이전트 워크플로를 탐구하며 실용적인 애플리케이션을 만듭니다.',
+                'hero.portfolio': '주요 프로젝트', 'filters.all': '전체 프로젝트', 'filters.ai': 'AI 앱', 'filters.bot': 'LINE Bot',
+                'filters.web': '웹 개발', 'filters.devops': 'DevOps', 'filters.api': 'API', 'filters.automate': '자동화',
+                'filters.lowcode': 'Low Code', 'filters.extension': '확장 프로그램 및 도구', search: '검색',
+                'portfolio.title': '주요 프로젝트', 'portfolio.subtitle': 'My Projects',
+                'contact.title': '제 프로젝트에 관심이 있거나 함께 일하고 싶으신가요?',
+                'contact.description': '협업 기회나 아이디어 교류를 위해 이메일로 연락해 주세요.', 'contact.email': '이메일 보내기',
+                'modal.reason': '개발 배경', 'modal.problem': '해결 과제', 'modal.results': '주요 성과',
+                'modal.video': '실행 영상', 'modal.gallery': '프로젝트 갤러리', 'modal.github': 'GitHub에서 소스 보기 →',
+                'modal.slides': '프레젠테이션 보기 →', close: '닫기', 'theme.default': '그라데이션', 'theme.white': '순백색 (기본값)', 'theme.dark': '다크 모드'
+            },
+            ja: {
+                'nav.about': '私について', 'nav.portfolio': '作品集', 'nav.contact': 'お問い合わせ', 'nav.github': 'GitHub プロフィール', 'hero.greeting': 'こんにちは、',
+                'hero.role': 'Web 開発と AI 統合に取り組んでいます',
+                'hero.bio': 'Web 開発と AI 統合を専門とするエンジニアです。自動化と AI で複雑な課題を解決し、AI エージェントのワークフローを探求しながら実用的なアプリケーションを開発しています。',
+                'hero.portfolio': '代表作品', 'filters.all': 'すべてのプロジェクト', 'filters.ai': 'AI アプリ', 'filters.bot': 'LINE Bot',
+                'filters.web': 'Web 開発', 'filters.devops': 'DevOps', 'filters.api': 'API', 'filters.automate': '自動化',
+                'filters.lowcode': 'Low Code', 'filters.extension': '拡張機能・ツール', search: '検索',
+                'portfolio.title': '代表作品', 'portfolio.subtitle': 'My Projects',
+                'contact.title': '作品に興味がありますか？一緒に仕事をしませんか？',
+                'contact.description': '協業やアイデア交換については、メールでお気軽にご連絡ください。', 'contact.email': 'メールを送る',
+                'modal.reason': '開発背景', 'modal.problem': '課題', 'modal.results': '主な成果',
+                'modal.video': 'デモ動画', 'modal.gallery': 'プロジェクトギャラリー', 'modal.github': 'GitHub でソースを見る →',
+                'modal.slides': 'プレゼンテーションを見る →', close: '閉じる', 'theme.default': 'グラデーション', 'theme.white': '純白 (デフォルト)', 'theme.dark': 'ダークモード'
+            }
+        };
+
+        const projectLabels = {
+            en: {
+                'python-bank-linebot': 'Taiwan Bank Rates & Gold Price LINE Bot', 'line-notify': 'LineNotify Reminder Notebook', 'pay-notify': 'Pay Notify', 'smart-commit': 'Smart Commit', 'aireview': 'AI Code Review', 'argo-cd-notifications': 'Argo CD Notifications', 'argocd-backup': 'Argo CD Backup', helm: 'Helm Chart Repository', 'pdf-compressor': 'PDF & Image Compressor', 'pdf-spiltter': 'PDF Splitter', 'markitdown web': 'MarkItDown Web Service', 'ai-prompt': 'AI-Prompt Assistant', 'web-ai-assistant': 'Web AI Assistant', 'python-fpns': 'Notification System', 'Korean-daily': 'Korean Learning Tool', 'my-chatbot': 'ChatBot', tftcoin: 'tFTCoin', inv: 'Inventory Management System', 'registration-website': 'Registration Website', 'data-desensitization': 'Sensitive Document De-identification', 'power-automate': 'Power Automate Utility Bill RPA', 'power-apps': 'Power Apps Attendance App'
+            },
+            ko: {
+                'python-bank-linebot': '대만은행 환율 및 금 시세 LINE Bot', 'line-notify': 'LineNotify 알림 메모장', 'pay-notify': 'Pay Notify', 'smart-commit': 'Smart Commit', aireview: 'AI 코드 리뷰', 'argo-cd-notifications': 'Argo CD 알림', 'argocd-backup': 'Argo CD 백업', helm: 'Helm Chart 저장소', 'pdf-compressor': 'PDF 및 이미지 압축 도구', 'pdf-spiltter': 'PDF 분할 도구', 'markitdown web': 'MarkItDown 웹 서비스', 'ai-prompt': 'AI-Prompt 도우미', 'web-ai-assistant': 'Web AI Assistant', 'python-fpns': '알림 시스템', 'Korean-daily': '한국어 학습 도구', 'my-chatbot': 'ChatBot', tftcoin: 'tFTCoin', inv: '자재 관리 시스템', 'registration-website': 'Registration Website', 'data-desensitization': '민감 문서 비식별화', 'power-automate': 'Power Automate 전기요금 RPA', 'power-apps': 'Power Apps 출퇴근 앱'
+            },
+            ja: {
+                'python-bank-linebot': '台湾銀行 為替・金価格 LINE Bot', 'line-notify': 'LineNotify リマインダーノート', 'pay-notify': 'Pay Notify', 'smart-commit': 'Smart Commit', aireview: 'AI コードレビュー', 'argo-cd-notifications': 'Argo CD 通知', 'argocd-backup': 'Argo CD バックアップ', helm: 'Helm Chart リポジトリ', 'pdf-compressor': 'PDF・画像圧縮ツール', 'pdf-spiltter': 'PDF 分割ツール', 'markitdown web': 'MarkItDown Web サービス', 'ai-prompt': 'AI-Prompt アシスタント', 'web-ai-assistant': 'Web AI Assistant', 'python-fpns': '通知システム', 'Korean-daily': '韓国語学習ツール', 'my-chatbot': 'ChatBot', tftcoin: 'tFTCoin', inv: '資材管理システム', 'registration-website': 'Registration Website', 'data-desensitization': '機密文書の匿名化', 'power-automate': 'Power Automate 電気料金 RPA', 'power-apps': 'Power Apps 勤怠アプリ'
+            }
+        };
+
+        const projectDescriptions = {
+            en: {
+                'python-bank-linebot': 'Fetches real-time exchange rates and gold prices from Taiwan Bank.', 'line-notify': 'A cloud-based LINE reminder notebook with scheduled notifications.', 'pay-notify': 'An automated payment notification bot.', 'smart-commit': 'Generates Conventional Commits messages with Gemini API.', 'aireview': 'An AI tool that reviews code changes for security and logic issues.', 'argo-cd-notifications': 'Sends Argo CD deployment status and AI analysis to Microsoft Teams.', 'argocd-backup': 'Automatically backs up Argo CD resources and RBAC settings.', helm: 'A Helm Chart Repository for centralized Kubernetes deployment definitions.', 'pdf-compressor': 'A high-performance standalone PDF and image compression tool.', 'pdf-spiltter': 'A browser-based PDF batch splitting tool focused on privacy.', 'markitdown web': 'A web service that converts documents and URLs to Markdown.', 'ai-prompt': 'A browser extension for quickly copying frequently used AI prompts.', 'web-ai-assistant': 'A browser extension that explains selected text, images, and code with AI.', 'python-fpns': 'A corporate welfare notification system.', 'Korean-daily': 'A Korean learning website for common travel phrases.', 'my-chatbot': 'A multi-model chatbot supporting Gemini and Ollama conversations.', tftcoin: 'A cyberpunk employee points and rewards platform.', inv: 'A material inventory management system for construction sites.', 'registration-website': 'An event registration website built with Flask.', 'data-desensitization': 'A local tool for de-identifying sensitive documents.', 'power-automate': 'Uses Power Automate and AI OCR to create accounting vouchers from bills.', 'power-apps': 'A mobile attendance app built with Power Apps and SharePoint.'
+            },
+            ko: {
+                'python-bank-linebot': '대만은행의 실시간 환율과 금 시세를 조회합니다.', 'line-notify': '예약 알림을 지원하는 클라우드 기반 LINE 메모장입니다.', 'pay-notify': '자동 결제 알림 봇입니다.', 'smart-commit': 'Gemini API로 Conventional Commits 메시지를 생성합니다.', 'aireview': '코드 변경의 보안 및 논리 문제를 검사하는 AI 도구입니다.', 'argo-cd-notifications': 'Argo CD 배포 상태와 AI 분석을 Microsoft Teams로 전송합니다.', 'argocd-backup': 'Argo CD 리소스와 RBAC 설정을 자동 백업합니다.', helm: 'Kubernetes 배포 정의를 관리하는 Helm Chart 저장소입니다.', 'pdf-compressor': 'PDF와 이미지를 압축하는 고성능 독립 실행 도구입니다.', 'pdf-spiltter': '개인정보 보호를 고려한 브라우저 기반 PDF 분할 도구입니다.', 'markitdown web': '문서와 URL을 Markdown으로 변환하는 웹 서비스입니다.', 'ai-prompt': '자주 사용하는 AI 프롬프트를 빠르게 복사하는 브라우저 확장입니다.', 'web-ai-assistant': '선택한 텍스트, 이미지, 코드를 AI로 설명하는 브라우저 확장입니다.', 'python-fpns': '기업 복지 알림 시스템입니다.', 'Korean-daily': '여행에서 자주 쓰는 표현을 학습하는 한국어 웹사이트입니다.', 'my-chatbot': 'Gemini와 Ollama를 지원하는 멀티 모델 챗봇입니다.', tftcoin: '사이버펑크 스타일의 임직원 포인트 및 보상 플랫폼입니다.', inv: '건설 현장의 자재 재고 관리 시스템입니다.', 'registration-website': 'Flask로 개발한 행사 등록 웹사이트입니다.', 'data-desensitization': '민감 문서를 비식별화하는 로컬 도구입니다.', 'power-automate': 'Power Automate와 AI OCR로 청구서 전표를 자동 생성합니다.', 'power-apps': 'Power Apps와 SharePoint로 만든 모바일 출퇴근 앱입니다.'
+            },
+            ja: {
+                'python-bank-linebot': '台湾銀行の為替レートと金価格をリアルタイムで取得します。', 'line-notify': '定時通知に対応したクラウド型 LINE リマインダーノートです。', 'pay-notify': '支払いを自動通知するボットです。', 'smart-commit': 'Gemini API で Conventional Commits メッセージを生成します。', 'aireview': 'コード変更のセキュリティとロジックを確認する AI ツールです。', 'argo-cd-notifications': 'Argo CD のデプロイ状況と AI 分析を Microsoft Teams に送信します。', 'argocd-backup': 'Argo CD のリソースと RBAC 設定を自動バックアップします。', helm: 'Kubernetes のデプロイ定義を管理する Helm Chart リポジトリです。', 'pdf-compressor': 'PDF と画像を圧縮する高性能なスタンドアロンツールです。', 'pdf-spiltter': 'プライバシーに配慮したブラウザ型 PDF 分割ツールです。', 'markitdown web': 'ドキュメントや URL を Markdown に変換する Web サービスです。', 'ai-prompt': 'よく使う AI プロンプトをすぐコピーできるブラウザ拡張です。', 'web-ai-assistant': '選択した文章、画像、コードを AI で説明するブラウザ拡張です。', 'python-fpns': '社内向けの福利厚生通知システムです。', 'Korean-daily': '旅行で使う韓国語フレーズを学べる Web サイトです。', 'my-chatbot': 'Gemini と Ollama に対応したマルチモデルチャットボットです。', tftcoin: 'サイバーパンク風の社員ポイント・景品交換プラットフォームです。', inv: '建設現場の資材を管理するシステムです。', 'registration-website': 'Flask で開発したイベント予約 Web サイトです。', 'data-desensitization': '機密文書を匿名化するローカルツールです。', 'power-automate': 'Power Automate と AI OCR で請求書から仕訳を自動作成します。', 'power-apps': 'Power Apps と SharePoint で作ったモバイル勤怠アプリです。'
+            }
+        };
+
+        function localizeProject(project) {
+            return {
+                ...project,
+                title: projectLabels[currentLanguage]?.[project.id] || project.title,
+                description: projectDescriptions[currentLanguage]?.[project.id] || project.description
+            };
+        }
+
+        function getFilteredProjects() {
+            const term = searchInput.value.trim().toLowerCase();
+            return projects.filter(project => {
+                const localized = localizeProject(project);
+                const searchableText = [localized.title, localized.description, ...project.technologies].join(' ').toLowerCase();
+                return (activeFilter === 'all' || project.categories.includes(activeFilter)) && (!term || searchableText.includes(term));
+            });
+        }
+
+        function applyLanguage(language) {
+            currentLanguage = translations[language] ? language : 'zh-TW';
+            localStorage.setItem(LANGUAGE_KEY, currentLanguage);
+            document.documentElement.lang = currentLanguage;
+            document.title = currentLanguage === 'zh-TW' ? "Joy's Portfolio | 個人作品集" : currentLanguage === 'ko' ? "Joy's Portfolio | 개인 포트폴리오" : currentLanguage === 'ja' ? "Joy's Portfolio | ポートフォリオ" : "Joy's Portfolio | Personal Portfolio";
+            document.getElementById('language-current-label').textContent = languageLabels[currentLanguage];
+            const dictionary = translations[currentLanguage];
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const value = dictionary[el.dataset.i18n];
+                if (value) el.textContent = value;
+            });
+            document.querySelectorAll('[data-i18n-placeholder]').forEach(el => el.placeholder = dictionary[el.dataset.i18nPlaceholder] || el.placeholder);
+            document.querySelectorAll('[data-i18n-aria-label]').forEach(el => el.setAttribute('aria-label', dictionary[el.dataset.i18nAriaLabel] || el.getAttribute('aria-label')));
+            document.querySelectorAll('[data-language-choice]').forEach(item => item.classList.toggle('active', item.dataset.languageChoice === currentLanguage));
+            document.querySelectorAll('[data-theme-choice]').forEach(item => {
+                const key = `theme.${item.dataset.themeChoice}`;
+                const label = dictionary[key];
+                if (label) item.lastChild.textContent = `\n                            ${label}\n                        `;
+            });
+            if (typeof renderProjects === 'function') renderProjects(getFilteredProjects());
+            if (currentProjectId) {
+                const activeProject = projects.find(project => project.id === currentProjectId);
+                if (activeProject && projectModal.style.display === 'flex') openModal(activeProject, false);
+            }
+        }
 
         function renderProjects(filteredProjects) {
             const countEl = document.getElementById('project-count');
             if (countEl) countEl.textContent = filteredProjects.length;
             portfolioGrid.innerHTML = '';
             filteredProjects.forEach(project => {
+                const localizedProject = localizeProject(project);
                 const card = `
                     <div class="bg-canvas rounded-xl card-shadow overflow-hidden group cursor-pointer" data-project-id="${project.id}">
                         <div class="h-48 overflow-hidden relative bg-canvas-soft flex items-center justify-center">
-                            <img src="${project.image}" alt="${project.title}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" onerror="imgFallback(this, '${project.title.replace(/'/g, "")}')">
+                            <img src="${project.image}" alt="${localizedProject.title}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" onerror="imgFallback(this, '${localizedProject.title.replace(/'/g, "")}')">
                             <div class="absolute inset-0 bg-primary opacity-0 group-hover:opacity-5 transition-opacity"></div>
                             <div class="absolute bottom-3 left-3 flex flex-wrap gap-2 z-10">
                                 ${project.categories.map(cat => `<span class="bg-black/60 text-white text-xs px-2.5 py-1 rounded-full backdrop-blur-sm font-medium">${cat}</span>`).join('')}
@@ -1745,8 +1909,8 @@
                         </div>
                         <hr class="border-t border-hairline">
                         <div class="p-6">
-                            <h3 class="text-lg font-bold mb-2 text-ink group-hover:text-primary transition-colors">${project.title}</h3>
-                            <p class="text-ink-mute text-xs leading-relaxed mb-4 font-light line-clamp-2">${project.description}</p>
+                            <h3 class="text-lg font-bold mb-2 text-ink group-hover:text-primary transition-colors">${localizedProject.title}</h3>
+                            <p class="text-ink-mute text-xs leading-relaxed mb-4 font-light line-clamp-2">${localizedProject.description}</p>
                             <div class="flex flex-wrap gap-2">
                                 ${project.technologies.slice(0, 3).map(tech => `<span class="tech-tag">${tech}</span>`).join('')}
                                 ${project.technologies.length > 3 ? `<span class="tech-tag">+${project.technologies.length - 3}</span>` : ''}
@@ -1757,15 +1921,18 @@
                 portfolioGrid.innerHTML += card;
             });
 
-            document.querySelectorAll('[data-project-id]').forEach(card => {
-                card.addEventListener('click', () => {
-                    const project = projects.find(p => p.id === card.dataset.projectId);
-                    openModal(project);
-                });
-            });
         }
 
-        function openModal(project) {
+        portfolioGrid.addEventListener('click', (event) => {
+            const card = event.target.closest('[data-project-id]');
+            if (!card || !portfolioGrid.contains(card)) return;
+            const project = projects.find(item => item.id === card.dataset.projectId);
+            if (project) openModal(project);
+        });
+
+        function openModal(project, resetScroll = true) {
+            currentProjectId = project.id;
+            project = localizeProject(project);
             document.getElementById('modal-title').textContent = project.title;
             document.getElementById('modal-long-description').textContent = project.longDescription;
             document.getElementById('modal-reason').textContent = project.reason;
@@ -1862,7 +2029,7 @@
 
             // 打開 Modal 前，將捲動條重置到頂部
             const modalBody = document.querySelector('.modal-body');
-            if (modalBody) {
+            if (modalBody && resetScroll) {
                 modalBody.scrollTop = 0;
             }
 
@@ -2099,19 +2266,13 @@
         };
 
         searchInput.addEventListener('input', () => {
-            const term = searchInput.value.toLowerCase();
-            const activeFilter = filterButtons.querySelector('.bg-primary').dataset.filter;
-            const filtered = projects.filter(p => {
-                const matchesSearch = p.title.toLowerCase().includes(term) || p.description.toLowerCase().includes(term) || p.technologies.some(t => t.toLowerCase().includes(term));
-                const matchesFilter = activeFilter === 'all' || p.categories.includes(activeFilter);
-                return matchesSearch && matchesFilter;
-            });
-            renderProjects(filtered);
+            renderProjects(getFilteredProjects());
         });
 
         filterButtons.addEventListener('click', (e) => {
             const btnTarget = e.target.closest('button');
             if (btnTarget && filterButtons.contains(btnTarget)) {
+                activeFilter = btnTarget.dataset.filter;
                 filterButtons.querySelectorAll('button').forEach(btn => {
                     btn.classList.remove('bg-primary', 'text-white', 'shadow-md');
                     btn.classList.add('bg-canvas', 'text-ink-mute', 'hover:text-primary', 'border', 'border-hairline', 'shadow-sm');
@@ -2122,7 +2283,7 @@
                 // Scroll the clicked button into view to ensure it's not hidden by container overflow
                 btnTarget.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
 
-                searchInput.dispatchEvent(new Event('input'));
+                renderProjects(getFilteredProjects());
             }
         });
 
@@ -2139,7 +2300,7 @@
             });
         });
 
-        renderProjects(projects);
+        renderProjects(getFilteredProjects());
 
         (function () {
             const filterEl = document.getElementById('filter-buttons');
@@ -2243,6 +2404,8 @@
 
         // 佈景主題切換
         const THEME_KEY = 'portfolio-theme';
+        const languageToggleBtn = document.getElementById('language-toggle-btn');
+        const languageMenu = document.getElementById('language-menu');
         const themeToggleBtn = document.getElementById('theme-toggle-btn');
         const themeMenu = document.getElementById('theme-menu');
         const themeIcons = {
@@ -2252,6 +2415,9 @@
         };
 
         function applyTheme(theme) {
+            if (!Object.prototype.hasOwnProperty.call(themeIcons, theme)) {
+                theme = 'white';
+            }
             document.documentElement.setAttribute('data-theme', theme);
             localStorage.setItem(THEME_KEY, theme);
 
@@ -2259,7 +2425,7 @@
                 icon.classList.toggle('hidden', key !== theme);
             });
 
-            document.querySelectorAll('.theme-menu-item').forEach(item => {
+            document.querySelectorAll('[data-theme-choice]').forEach(item => {
                 item.classList.toggle('active', item.dataset.themeChoice === theme);
             });
         }
@@ -2269,6 +2435,26 @@
             themeToggleBtn.setAttribute('aria-expanded', 'false');
         }
 
+        function closeLanguageMenu() {
+            languageMenu.classList.add('hidden');
+            languageToggleBtn.setAttribute('aria-expanded', 'false');
+        }
+
+        languageToggleBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            closeThemeMenu();
+            const isOpen = !languageMenu.classList.contains('hidden');
+            languageMenu.classList.toggle('hidden', isOpen);
+            languageToggleBtn.setAttribute('aria-expanded', String(!isOpen));
+        });
+
+        document.querySelectorAll('[data-language-choice]').forEach(item => {
+            item.addEventListener('click', () => {
+                applyLanguage(item.dataset.languageChoice);
+                closeLanguageMenu();
+            });
+        });
+
         themeToggleBtn.addEventListener('click', (e) => {
             e.stopPropagation();
             const isOpen = !themeMenu.classList.contains('hidden');
@@ -2276,7 +2462,7 @@
             themeToggleBtn.setAttribute('aria-expanded', String(!isOpen));
         });
 
-        document.querySelectorAll('.theme-menu-item').forEach(item => {
+        document.querySelectorAll('[data-theme-choice]').forEach(item => {
             item.addEventListener('click', () => {
                 applyTheme(item.dataset.themeChoice);
                 closeThemeMenu();
@@ -2287,9 +2473,13 @@
             if (!themeMenu.contains(e.target) && e.target !== themeToggleBtn) {
                 closeThemeMenu();
             }
+            if (!languageMenu.contains(e.target) && e.target !== languageToggleBtn) {
+                closeLanguageMenu();
+            }
         });
 
-        applyTheme(localStorage.getItem(THEME_KEY) || 'white');
+        applyTheme(localStorage.getItem(THEME_KEY));
+        applyLanguage(currentLanguage);
     </script>
 </body>
 
