@@ -114,8 +114,7 @@
             box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.45), 0 10px 10px -5px rgba(0, 0, 0, 0.3);
         }
 
-        [data-theme="dark"] #lightbox-scroll-arrow-icon,
-        [data-theme="dark"] .scroll-arrow svg {
+        [data-theme="dark"] #lightbox-scroll-arrow-icon {
             filter: none;
         }
 
@@ -515,71 +514,20 @@
         .filter-scroll-wrapper {
             position: relative;
             min-width: 0;
-            flex: 1 1 auto;
+            flex: 1 1 0;
         }
 
-        .filter-scroll-hint {
-            position: absolute;
-            right: 0;
-            top: 0;
-            bottom: 0.75rem;
-            width: 4rem;
-            background: linear-gradient(to right, transparent, rgb(var(--color-canvas-soft)) 70%);
-            display: flex;
-            align-items: center;
-            justify-content: flex-end;
-            padding-right: 0.25rem;
-            pointer-events: none;
-            transition: opacity 0.3s ease;
-            z-index: 5;
+        #filter-buttons .filter-clone {
+            display: none;
         }
 
-        @media (min-width: 768px) {
-            .filter-scroll-hint {
-                bottom: 0;
-            }
+        #filter-buttons.is-marquee .filter-clone {
+            display: inline-block;
         }
 
-        .filter-scroll-hint.hidden-hint {
-            opacity: 0;
-        }
-
-        .scroll-arrow {
-            width: 1.75rem;
-            height: 1.75rem;
-            background: rgb(var(--color-canvas));
-            border-radius: 50%;
-            border: 1.5px solid rgb(var(--color-hairline));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.10);
-            animation: arrowBounce 1.2s ease-in-out infinite;
-            pointer-events: auto;
-            cursor: pointer;
-        }
-
-        .scroll-arrow:active {
-            background: rgb(var(--color-canvas-soft));
-            border-color: rgb(var(--color-primary));
-        }
-
-        @keyframes arrowBounce {
-
-            0%,
-            100% {
-                transform: translateX(0);
-            }
-
-            50% {
-                transform: translateX(5px);
-            }
-        }
-
-        @media (min-width: 1200px) {
-            .filter-scroll-hint {
-                display: none;
-            }
+        #filter-buttons.is-marquee {
+            -webkit-mask-image: linear-gradient(to right, transparent, #000 2.5rem, #000 calc(100% - 2.5rem), transparent);
+            mask-image: linear-gradient(to right, transparent, #000 2.5rem, #000 calc(100% - 2.5rem), transparent);
         }
 
         @keyframes slideDown {
@@ -824,14 +772,14 @@
                     <button id="language-toggle-btn"
                         class="flex items-center justify-center p-2 rounded-lg hover:bg-canvas-soft transition-colors"
                         aria-label="切換語言" aria-haspopup="true" aria-expanded="false">
-                        <span id="language-current-label" class="text-sm font-semibold text-ink-secondary">繁中</span>
+                        <!-- <span id="language-current-label" class="text-sm font-semibold text-ink-secondary">繁中</span> -->
                     </button>
-                    <div id="language-menu" class="theme-menu language-menu hidden">
+                    <!-- <div id="language-menu" class="theme-menu language-menu hidden">
                         <button class="theme-menu-item" data-language-choice="zh-TW">繁體中文</button>
                         <button class="theme-menu-item" data-language-choice="en">English</button>
                         <button class="theme-menu-item" data-language-choice="ko">한국어</button>
                         <button class="theme-menu-item" data-language-choice="ja">日本語</button>
-                    </div>
+                    </div> -->
                 </div>
                 <div class="relative">
                     <button id="theme-toggle-btn"
@@ -967,14 +915,6 @@
                     <button
                         class="pill-button bg-canvas text-ink-mute hover:text-primary border border-hairline shadow-sm"
                         data-filter="Extension" title="擴充功能或單機版工具" data-i18n="filters.extension">擴充功能與單機版工具</button>
-                </div>
-                <div class="filter-scroll-hint" id="filter-scroll-hint">
-                    <div class="scroll-arrow">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24"
-                            stroke="#007bff" stroke-width="2.5">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
-                        </svg>
-                    </div>
                 </div>
             </div>
             <div class="relative w-full md:w-80">
@@ -1871,7 +1811,8 @@
             localStorage.setItem(LANGUAGE_KEY, currentLanguage);
             document.documentElement.lang = currentLanguage;
             document.title = currentLanguage === 'zh-TW' ? "Joy's Portfolio | 個人作品集" : currentLanguage === 'ko' ? "Joy's Portfolio | 개인 포트폴리오" : currentLanguage === 'ja' ? "Joy's Portfolio | ポートフォリオ" : "Joy's Portfolio | Personal Portfolio";
-            document.getElementById('language-current-label').textContent = languageLabels[currentLanguage];
+            const languageLabel = document.getElementById('language-current-label');
+            if (languageLabel) languageLabel.textContent = languageLabels[currentLanguage];
             const dictionary = translations[currentLanguage];
             document.querySelectorAll('[data-i18n]').forEach(el => {
                 const value = dictionary[el.dataset.i18n];
@@ -2277,8 +2218,10 @@
                     btn.classList.remove('bg-primary', 'text-white', 'shadow-md');
                     btn.classList.add('bg-canvas', 'text-ink-mute', 'hover:text-primary', 'border', 'border-hairline', 'shadow-sm');
                 });
-                btnTarget.classList.add('bg-primary', 'text-white', 'shadow-md');
-                btnTarget.classList.remove('bg-canvas', 'text-ink-mute', 'hover:text-primary', 'border', 'border-hairline', 'shadow-sm');
+                filterButtons.querySelectorAll(`button[data-filter="${activeFilter}"]`).forEach(btn => {
+                    btn.classList.add('bg-primary', 'text-white', 'shadow-md');
+                    btn.classList.remove('bg-canvas', 'text-ink-mute', 'hover:text-primary', 'border', 'border-hairline', 'shadow-sm');
+                });
 
                 // Scroll the clicked button into view to ensure it's not hidden by container overflow
                 btnTarget.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
@@ -2303,29 +2246,62 @@
         renderProjects(getFilteredProjects());
 
         (function () {
-            const filterEl = document.getElementById('filter-buttons');
-            const hintEl = document.getElementById('filter-scroll-hint');
-            const arrowEl = hintEl ? hintEl.querySelector('.scroll-arrow') : null;
-            if (!filterEl || !hintEl) return;
+            const filterEl = filterButtons;
+            if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
-            function updateHint() {
-                if (window.innerWidth >= 1200) {
-                    hintEl.classList.add('hidden-hint');
-                    return;
+            const originals = Array.from(filterEl.querySelectorAll('button'));
+            const first = originals[0];
+            const last = originals[originals.length - 1];
+            const clones = originals.map(btn => {
+                const clone = btn.cloneNode(true);
+                clone.classList.add('filter-clone');
+                clone.setAttribute('aria-hidden', 'true');
+                clone.tabIndex = -1;
+                filterEl.appendChild(clone);
+                return clone;
+            });
+
+            const SPEED = 35; // px per second
+            let pos = 0;
+            let lastTime = null;
+            let hovering = false;
+            let focused = false;
+            let touchUntil = 0;
+
+            function loop(time) {
+                const setWidth = last.offsetLeft + last.offsetWidth - first.offsetLeft;
+                const overflowing = setWidth > filterEl.clientWidth;
+                if (filterEl.classList.contains('is-marquee') !== overflowing) {
+                    filterEl.classList.toggle('is-marquee', overflowing);
+                    if (!overflowing) filterEl.scrollLeft = 0;
+                    pos = filterEl.scrollLeft;
                 }
-                const hasMore = filterEl.scrollLeft + filterEl.clientWidth < filterEl.scrollWidth - 4;
-                hintEl.classList.toggle('hidden-hint', !hasMore);
+
+                const dt = lastTime === null ? 0 : Math.min(time - lastTime, 50);
+                lastTime = time;
+
+                if (overflowing) {
+                    const loopWidth = clones[0].offsetLeft - first.offsetLeft;
+                    const paused = hovering || focused || Date.now() < touchUntil;
+                    if (paused) {
+                        pos = filterEl.scrollLeft;
+                    } else {
+                        pos += SPEED * dt / 1000;
+                    }
+                    if (pos >= loopWidth) pos -= loopWidth;
+                    if (!paused || filterEl.scrollLeft >= loopWidth) filterEl.scrollLeft = pos;
+                }
+                requestAnimationFrame(loop);
             }
 
-            if (arrowEl) {
-                arrowEl.addEventListener('click', () => {
-                    filterEl.scrollBy({ left: 150, behavior: 'smooth' });
-                });
-            }
+            filterEl.addEventListener('mouseenter', () => { hovering = true; });
+            filterEl.addEventListener('mouseleave', () => { hovering = false; });
+            filterEl.addEventListener('focusin', (e) => { focused = e.target.matches(':focus-visible'); });
+            filterEl.addEventListener('focusout', () => { focused = false; });
+            filterEl.addEventListener('touchstart', () => { touchUntil = Infinity; }, { passive: true });
+            filterEl.addEventListener('touchend', () => { touchUntil = Date.now() + 2500; }, { passive: true });
 
-            filterEl.addEventListener('scroll', updateHint, { passive: true });
-            window.addEventListener('resize', updateHint);
-            updateHint();
+            requestAnimationFrame(loop);
         })();
 
         document.querySelectorAll('nav a[href^="#"]').forEach(anchor => {
