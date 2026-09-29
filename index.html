@@ -1101,7 +1101,7 @@
                 id: 'line-notify',
                 title: 'LineNotify 提醒記事本',
                 description: '雲端全自動的 LINE 提醒記事本，免掛機即可定時通知。',
-                longDescription: '網頁負責記事的新增與管理(CRUD)，資料同步至 GitHub Gist；後端以 Google Apps Script 定時觸發器每分鐘檢查到期提醒，並透過 LINE API 主動推播通知，支援每日/每週/每月重複提醒。',
+                longDescription: '網頁負責記事的新增與管理(CRUD)，資料同步至 GitHub Gist；後端以 Google Apps Script 定時觸發器每分鐘檢查到期提醒，並透過 LINE Messaging API 主動推播通知，支援每日/每週/每月重複提醒。',
                 reason: '一般提醒工具需要裝置保持開啟，手機關螢幕或電腦關機就無法運作，或是需要另外找付費軟體來設定。',
                 problem: '穩定、免費、24 小時運作的提醒通知。',
                 results: [
@@ -1110,7 +1110,8 @@
                     '以 GitHub Gist 作為輕量資料庫，前後端與多裝置資料自動同步。',
                     '支援手動匯出匯入資料與手動同步備份資料上傳或從雲端下載，換新裝置時可快速回復資料。',
                     '透過GitHub Pages進行網頁部署。',
-                    '支援每日、每週、每月的智慧重複提醒。'
+                    '支援每日、每週、每月的智慧重複提醒。',
+                    '更新功能：顯示支援列表與行事曆'
                 ],
                 image: './assets/images/Notify.png',
                 galleryImages: [
@@ -1127,11 +1128,14 @@
                     { src: "./assets/images/Notify10.png", caption: "呈上，編輯記事" },
                     { src: "./assets/images/Notify11.png", caption: "Google Apps Script 寫js設定排程與通知流程和發送Line通知。" },
                     { src: "./assets/images/Notify12.png", caption: "Google Apps Script 設定觸發條件，每分鐘檢查是否需要通知，如有則觸發流程。" },
-                    { src: "./assets/images/Notify13.png", caption: "Line收到通知。" }
+                    { src: "./assets/images/Notify13.png", caption: "Line收到通知。" },
+                    { src: "./assets/images/Notify14.png", caption: "支援列表與行事曆的顯示。" },
+                    { src: "./assets/images/Notify15.png", caption: "行事曆模式，顯示各分類的記事。" },
+                    { src: "./assets/images/Notify16.png", caption: "行事曆模式，滑鼠點擊記事，可以看到完整記事內容，可進行編輯或刪除操作(滑鼠移入記事也可以操作)。" }
                 ],
                 demoVideo: '',
                 categories: ['API', 'Bot', 'web', 'Automate'],
-                technologies: ['Google Apps Script(GAS)', 'LINE Message API', 'GitHub Gist', 'GitHub Pages', 'JavaScript'],
+                technologies: ['Google Apps Script(GAS)', 'LINE Message API', 'GitHub Gist', 'GitHub Pages', 'JavaScript','HTML', 'CSS'],
                 github: 'https://github.com/Joy0130/LineNotify'
             },
             {
@@ -1343,6 +1347,37 @@
                 id: 'markitdown web',
                 title: 'Markitdown',
                 description: '以 MarkItDown Python API 為核心的文件轉 Markdown 網頁服務。',
+                longDescription: '以 MarkItDown Python API 為核心的文件轉 Markdown 格式的網頁服務，透過 Docker 提供穩定、一致的執行環境，支援 PDF、Word、網址 等多種格式轉檔。',
+                reason: '直接給企業版AI原始檔案時會消耗很多的token導致額度不夠，透過MaritDown網頁版把檔案轉成Markdown格式後，再給企業版AI讀取檔案後詢問問題，可以節省很多token。',
+                problem: '不需透過外部軟體執行，檔案不外流;同時將文件轉換的工作交給MaritDown網頁執行，不會浪費企業版AI的額度。',
+                results: [
+                    '所有處理皆在本地瀏覽器完成，無需上傳伺服器。',
+                    '支援多種檔案格式，如pdf、docx、doc、pptx、ppt、xlsx、xls、csv、tsv、html、htm、xml、json、txt、網頁連結。',
+                    'URL 抓取功能與 SSRF 防護:透過 DNS 解析取得目標 IP，再驗證該 IP 是否為內網或保留位址。即使攻擊者使用自訂域名（如 http://my-trick.com）但 DNS 指向內網 IP，會被擋下。',
+                    '資料安全性：沒有任何資料庫或持久儲存用來保存上傳內容或轉換結果，透過/tmp 掛載 tmpfs 資料僅存在記憶體，轉換完成後立即刪除暫存檔，保障資料安全性。',
+                    '批次上傳/輸出：一次可以上傳多份檔案做轉換(每份單檔 50 MB，一次最多 20 個檔案)，多份檔案下載時可以選擇是否打包成 ZIP（同一資料夾）一次下載。',
+                ],
+                image: './assets/images/markitdown.png',
+                galleryImages: [
+                    { src: "./assets/images/markitdown1.png", caption: "將檔案拖曳到上傳區，可上傳多份文件(每份單檔 50 MB，一次最多 20 個檔案)。" },
+                    { src: "./assets/images/markitdown2.png", caption: "上傳後點選轉換，檔案執行中。" },
+                    { src: "./assets/images/markitdown3.png", caption: "轉換後可以預覽結果。" },
+                    { src: "./assets/images/markitdown4.png", caption: "轉換後也可以預覽MD原始碼或複製文字。" },
+                    { src: "./assets/images/markitdown5.png", caption: "點擊左邊已轉換的檔案可以切換不同檔案。" },
+                    { src: "./assets/images/markitdown6.png", caption: "上傳多份文件可以一次下載.Zip壓縮檔案，也可以一次下載一個檔案。" },
+                    { src: "./assets/images/markitdown7.png", caption: ".Zip檔案。" },
+                    { src: "./assets/images/markitdown8.png", caption: "可以貼上外部網站的網址，轉換成MD檔案。" },
+                    { src: "./assets/images/markitdown9.png", caption: "網頁轉換結果，一樣可以下載成MD檔案。" }
+                ],
+                demoVideo: '',
+                categories: ['API', 'web'],
+                technologies: ['HTML', 'Python', 'FastAPI', 'Docker'],
+                github: 'https://github.com/Joy0130/markitdown_web'
+            },
+            {
+                id: 'DOC Transform',
+                title: 'Doc-translation',
+                description: '地端版文件翻譯網頁',
                 longDescription: '以 MarkItDown Python API 為核心的文件轉 Markdown 格式的網頁服務，透過 Docker 提供穩定、一致的執行環境，支援 PDF、Word、網址 等多種格式轉檔。',
                 reason: '直接給企業版AI原始檔案時會消耗很多的token導致額度不夠，透過MaritDown網頁版把檔案轉成Markdown格式後，再給企業版AI讀取檔案後詢問問題，可以節省很多token。',
                 problem: '不需透過外部軟體執行，檔案不外流;同時將文件轉換的工作交給MaritDown網頁執行，不會浪費企業版AI的額度。',
