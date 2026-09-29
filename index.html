@@ -1326,7 +1326,8 @@
                     '單一 HTML 檔案即可執行，無需安裝或部署。',
                     '彈性分割：可指定任意頁數範圍進行分割',
                     '平均分割：輸入要分割的份數，系統自動平均分配頁數',
-                    '結果預覽：分割完成後先列出每份檔案名稱與大小，確認後再下載',
+                    '依章節分割：讀取 PDF 內建書籤，依章節自動切分，可選層級並勾選要輸出的章節',
+                    '結果預覽：分割完多份文件後先列出每份文件名稱與大小，確認後再下載',
                     '批次輸出：一次輸入多組範圍，多份檔案會打包成 ZIP（同一資料夾）一次下載'
                 ],
                 image: './assets/images/pdf.png',
@@ -1339,8 +1340,8 @@
                     { src: "./assets/images/pdf6.png", caption: "PDF平均分割：下載分割檔案(打包成.ZIP檔，方便一次下載多份檔案)" }
                 ],
                 demoVideo: '',
-                categories: ['Extension'],
-                technologies: ['JavaScript', 'HTML', 'pdf-lib'],
+                categories: ['web','Extension'],
+                technologies: ['JavaScript', 'HTML', 'pdf-lib','JSZip'],
                 github: 'https://github.com/Joy0130/PDF_Spiltter'
             },
             {
