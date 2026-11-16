@@ -1229,7 +1229,7 @@
                 demoVideo: '',
                 categories: ['AI', 'DevOps', 'API'],
                 technologies: ['Kubernetes', 'Argo CD', 'Teams Webhook', 'Shell', 'Gemini API'],
-                github: 'https://github.com/Joy0130/Argo-CD-Notifications'
+                github: '因Kubernetes環境與github程式碼皆存放於公司內部環境中無法公開'
             },
             {
                 id: 'argocd-backup',
@@ -1349,14 +1349,14 @@
                 title: 'Markitdown',
                 description: '以 MarkItDown Python API 為核心的文件轉 Markdown 網頁服務。',
                 longDescription: '以 MarkItDown Python API 為核心的文件轉 Markdown 格式的網頁服務，透過 Docker 提供穩定、一致的執行環境，支援 PDF、Word、網址 等多種格式轉檔。',
-                reason: '直接給企業版AI原始檔案時會消耗很多的token導致額度不夠，透過MaritDown網頁版把檔案轉成Markdown格式後，再給企業版AI讀取檔案後詢問問題，可以節省很多token。',
-                problem: '不需透過外部軟體執行，檔案不外流;同時將文件轉換的工作交給MaritDown網頁執行，不會浪費企業版AI的額度。',
+                reason: '直接把原始文件交給企業版 AI 會消耗大量 Token，排版也會影響 AI 判讀，所以開發這個內部網頁工具：先把文件轉成 Markdown，檔案不外流，也能省下 AI 額度。',
+                problem: '原本都要在外部網頁轉檔，現在使用者可以直接透過內部網頁把文件轉成 Markdown，檔案不會外流，轉換也不用到企業版 AI 的額度；轉好的文件再交給 AI 讀取，能節省 Token 使用，AI 也更容易抓到重點。',
                 results: [
                     '所有處理皆在本地瀏覽器完成，無需上傳伺服器。',
                     '支援多種檔案格式，如pdf、docx、doc、pptx、ppt、xlsx、xls、csv、tsv、html、htm、xml、json、txt、網頁連結。',
                     'URL 抓取功能與 SSRF 防護:透過 DNS 解析取得目標 IP，再驗證該 IP 是否為內網或保留位址。即使攻擊者使用自訂域名（如 http://my-trick.com）但 DNS 指向內網 IP，會被擋下。',
                     '資料安全性：沒有任何資料庫或持久儲存用來保存上傳內容或轉換結果，透過/tmp 掛載 tmpfs 資料僅存在記憶體，轉換完成後立即刪除暫存檔，保障資料安全性。',
-                    '批次上傳/輸出：一次可以上傳多份檔案做轉換(每份單檔 50 MB，一次最多 20 個檔案)，多份檔案下載時可以選擇是否打包成 ZIP（同一資料夾）一次下載。',
+                    '批次上傳/輸出：一次可以上傳多份檔案做轉換(每份單檔 50 MB，一次最多 20 個檔案)，多份檔案下載時可以選擇下載 ZIP（壓縮檔）一次下載。',
                 ],
                 image: './assets/images/markitdown.png',
                 galleryImages: [
@@ -1373,7 +1373,7 @@
                 demoVideo: '',
                 categories: ['API', 'web'],
                 technologies: ['HTML', 'Python', 'FastAPI', 'Docker'],
-                github: 'https://github.com/Joy0130/markitdown_web'
+                github: '私有專案，暫不公開程式碼。'
             },
             {
                 id: 'DOC Transform',
@@ -1406,7 +1406,8 @@
                 demoVideo: '',
                 categories: ['AI','web'],
                 technologies: ['Python','pdf2zh','Ollama','Docker'],
-                github: 'https://github.com/Joy0130/markitdown_web'
+                github: '私有專案，暫不公開程式碼。'
+                
             },
             {
                 id: 'ai-prompt',
