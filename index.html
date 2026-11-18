@@ -1184,6 +1184,42 @@
                 demoVideo: '',
                 categories: ['AI','web'],
                 technologies: ['Python','pdf2zh','Ollama','Docker'],
+                techStack: [
+                    { category: '程式語言', items: [
+                        { name: 'Python', desc: '後端主要的程式語言。' },
+                        { name: 'JavaScript', desc: '讓網頁會動、會回應的程式語言。' },
+                        { name: 'HTML / CSS', desc: '網頁的骨架和外觀。' },
+                    ]},
+                    { category: '後端框架', items: [
+                        { name: 'FastAPI', desc: '用 Python 做網站和 API 的工具。API 就是讓程式互相溝通的窗口。' },
+                        { name: 'Uvicorn', desc: '讓 FastAPI 網站跑起來的伺服器，也負責 HTTPS 加密連線。' },
+                        { name: 'Jinja2', desc: '把網頁樣板填好內容再送給瀏覽器。' },
+                        { name: 'python-multipart', desc: '讓網站收得到使用者上傳的檔案。' },
+                    ]},
+                    { category: '翻譯技術', items: [
+                        { name: 'PDFMathTranslate 2.x（pdf2zh_next）', desc: '翻譯 PDF，翻完排版幾乎不變，表格裡的字也會翻。' },
+                        { name: 'BabelDOC', desc: 'PDFMathTranslate 背後的核心，負責看懂 PDF 的版面。' },
+                    ]},
+                    { category: '模型/翻譯引擎', items: [
+                        { name: 'Ollama:gemma4 / llama3 / qwen', desc: '負責翻譯的 AI 語言模型，網頁上可以隨時切換。在公司自己的電腦上跑 AI 模型，文件不會傳到外面。' },
+                        { name: 'Ollama 雲端模型', desc: 'Ollama雲端版，需要金鑰，適合不機密的文件。' },
+                        { name: 'Google 翻譯', desc: '可選的翻譯引擎，速度快，適合不機密的文件。' },
+                    ]},
+                    { category: 'Python 套件', items: [
+                        { name: 'python-docx', desc: '讀寫 Word 檔。只換掉文字，樣式、表格、圖片都不動。' },
+                        { name: 'pdf2docx', desc: '把 PDF 轉成 Word 檔。' },
+                        { name: 'pty', desc: '假裝成終端機，這樣才抓得到翻譯進度，做出進度條。' },
+                        { name: 'ThreadPoolExecutor', desc: '同時翻好幾段文字，速度比較快。' },
+                    ]},
+                    { category: '翻譯品質', items: [
+                        { name: '術語表（CSV）', desc: '背後已有上傳既有的公司名稱、合約用詞以及台灣常用的翻譯術語表。' },
+                        { name: '提示詞工程', desc: '依照目標語言給 AI 不同的規則，例如翻成繁體中文時不能出現簡體字。' },
+                    ]},
+                    { category: '部署', items: [
+                        { name: 'Docker', desc: '把程式和它需要的東西一起打包，到哪台電腦都能跑。' },
+                        { name: 'Docker Compose', desc: '用一個設定檔就能啟動容器，還會設定憑證、資料夾和健康檢查。' },
+                    ]},
+                ],
                 github: '私有專案，暫不公開程式碼。'
                 
             },
