@@ -1513,33 +1513,6 @@
                 automate: 'https://drive.google.com/file/d/1DWzHsa7PrDYopaq8RoBmx-enYK3kEiAO/view?usp=sharing'
             },
             {
-                id: 'power-apps',
-                title: 'Power apps-手機打卡',
-                description: '運用 Power apps Low Code 打造手機打卡APP。',
-                longDescription: '本專案透過 Power apps 快速開發手機打卡應用程式。使用者可透過手機打卡，並將資料自動同步至 SharePoint 清單。此方案能免除人工記錄打卡資料的作業，大幅提升打卡效率與正確性。',
-                reason: '傳統打卡方式必須一定要到公司特定樓層打卡。',
-                problem: 'Power apps 可以在特定距離內進行打卡，此功能為試用版本。',
-                results: [
-                    '透過 Power apps 建立手機打卡APP。',
-                    '透過手機定位功能，可以即時顯示打卡位置。',
-                    '透過 SharePoint 清單，可以記錄打卡資料，此清單只有HR同仁可以查看(無編輯權限)。',
-                    '另外製作HR同仁可以查看全公司同人的打卡紀錄畫面。'
-                ],
-                image: './assets/images/app.png',
-                galleryImages: [
-                    { src: './assets/images/app.png', caption: 'Power apps手機打卡畫面' },
-                    { src: './assets/images/app2.png', caption: '一天針對同一上班時間只能打一次' },
-                    { src: './assets/images/app3.png', caption: '下班打卡畫面' },
-                    { src: './assets/images/app1.png', caption: '查看自己的打卡紀錄' },
-                    { src: './assets/images/app4.png', caption: 'sharepoint打卡紀錄清單' },
-                    { src: './assets/images/app5.png', caption: 'HR同仁查看全公司打卡紀錄' },
-                ],
-                demoVideo: '',
-                categories: ['LowCode'],
-                technologies: ['Microsoft Power Apps', 'SharePoint'],
-                //automate: 'https://drive.google.com/file/d/1XqJNdJ80nm6lgUCW3M_wD0EzJxUpESCi/view?usp=sharing'
-            },
-            {
                 id: 'web-ai-assistant',
                 title: 'Web AI Assistant',
                 description: '瀏覽器擴充工具，選取網頁文字或圖片即可獲得 AI 即時解釋。',
@@ -1575,13 +1548,13 @@
                 id: 'my-chatbot',
                 title: 'ChatBot',
                 description: '支援多模型切換（Gemini／Ollama）的多對話聊天機器人。',
-                longDescription: '以 React 前端、Flask 後端打造的聊天機器人，同時支援雲端 Google Gemini 與本機 Ollama 模型即時切換，具備多對話管理、localStorage 對話紀錄保存、TXT/PDF/DOCX 文件上傳分析，以及淺色/深色主題。',
+                longDescription: '個人練習專案以 React 前端、Flask 後端打造的聊天機器人，同時支援雲端 Google Gemini 與本機 Ollama 模型即時切換，具備多對話管理、localStorage 對話紀錄保存、TXT/PDF/DOCX 文件上傳分析，以及淺色/深色主題。',
                 reason: '可自由切換雲端與本機模型、且能保存對話紀錄的聊天介面。',
                 problem: '此專案為個人專案，主要為練習前後端串接API以及本地端模型與保存對話紀錄的聊天介面。',
                 results: [
                     '可自由切換雲端(gemini API)與本機模型(Ollama)、且能保存對話紀錄。',
                     '文件上傳採 tempfile 隨機命名與 magic bytes 內容驗證，杜絕路徑遍歷風險。',
-                    'PDF 優先以 PyMuPDF 擷取中文內容，失敗自動退回 PyPDF2。',
+                    'PDF 優先以 PyMuPDF 擷取中文內容，失敗自動退回 pypdf。',
                     'localStorage 容量不足時提供刪除舊對話提示，避免資料遺失或崩潰。'
                 ],
                 image: './assets/images/chatbot.png',
@@ -1593,7 +1566,47 @@
                 ],
                 demoVideo: '',
                 categories: ['AI', 'web', 'API'],
-                technologies: ['Gemini API', 'Ollama', 'Python', 'FastAPI', 'JavaScript', 'React', 'TailwindCSS'],
+                technologies: ['Python', 'Flask', 'JavaScript', 'React', 'Vite', 'TailwindCSS','Ollama','Gemini API'],
+                techStack: [
+                        { category: '程式語言', items: [
+                            { name: 'Python', desc: '後端主要使用的程式語言，負責 API、模型串接與文件處理。' },
+                            { name: 'JavaScript / JSX', desc: '建立前端介面與互動功能；JSX 讓 React 元件可以用類似 HTML 的方式描述畫面。' },
+                            { name: 'HTML / CSS', desc: 'HTML 負責網頁結構，CSS 負責版面、顏色與外觀。' },
+                        ]},
+                        { category: '前端框架與建置工具', items: [
+                            { name: 'React 19', desc: '建立聊天介面，並管理訊息、對話、模型選擇與主題等畫面狀態。' },
+                            { name: 'Vite', desc: '新一代前端建置工具，提供快速啟動的開發伺服器，並負責打包前端程式。' },
+                            { name: 'Node.js / npm', desc: '安裝與管理前端套件，並執行前端開發和建置指令。' },
+                        ]},
+                        { category: '前端樣式與介面套件', items: [
+                            { name: 'Tailwind CSS', desc: '以工具類別快速設定網頁樣式。' },
+                            { name: 'PostCSS / Autoprefixer', desc: '處理 CSS，並自動補上部分瀏覽器需要的相容性前綴。' },
+                            { name: 'lucide-react', desc: '提供前端介面使用的圖示元件。' },
+                            { name: 'react-syntax-highlighter', desc: '將 AI 回覆中的程式碼區塊顯示成有語法色彩的格式。' },
+                        ]},
+                        { category: '後端框架與 API', items: [
+                            { name: 'Flask', desc: '使用 Python 建立後端服務，提供聊天、模型清單、健康檢查及清除對話等 API。' },
+                            { name: 'Flask-CORS', desc: '設定允許前端跨來源呼叫後端 API。' },
+                            { name: 'HTTP / JSON / multipart/form-data', desc: '前端與後端交換資料的方式；一般訊息使用 JSON，附加文件時使用 multipart/form-data。' },
+                        ]},
+                        { category: 'AI 模型與串接', items: [
+                            { name: 'Google Gemini API / google-genai', desc: '透過 Google 官方新版 Gen AI Python SDK 呼叫 Gemini 雲端 AI 模型產生回答。' },
+                            { name: 'Ollama API', desc: '透過本機 HTTP API 呼叫已安裝的 Ollama 模型；屬於可選功能。' },
+                            { name: 'requests', desc: 'Python 的 HTTP 請求套件，用來與 Ollama API 通訊。' },
+                        ]},
+                        { category: '文件處理與環境設定', items: [
+                            { name: 'PyMuPDF (fitz) / pypdf', desc: '讀取 PDF 文字；程式優先使用 PyMuPDF，必要時改用 pypdf。' },
+                            { name: 'python-docx', desc: '讀取 DOCX 文件中的段落文字。' },
+                            { name: 'python-dotenv', desc: '從 .env 檔載入環境設定，例如 Gemini API 金鑰。' },
+                            { name: 'Werkzeug / tempfile', desc: '協助安全處理上傳檔案名稱及建立暫存檔案。' },
+                        ]},
+                        { category: '瀏覽器功能與測試', items: [
+                            { name: 'Fetch API', desc: '由瀏覽器向 Flask 後端發送 HTTP 請求。' },
+                            { name: 'localStorage', desc: '在使用者的瀏覽器保存對話紀錄、目前選取的對話及主題偏好。' },
+                            { name: 'Vitest', desc: '與 Vite 搭配的測試框架，用來執行前端自動化測試。' },
+                            { name: 'React Testing Library', desc: '提供測試 React 元件與使用者互動的工具。' },
+                        ]},
+                    ],
                 github: 'https://github.com/Joy0130/My-ChatBot'
             },
             {
@@ -1901,6 +1914,33 @@
                 categories: ['web'],
                 technologies: ['Python', 'Flask', 'JavaScript'],
                 github: 'https://github.com/Joy0130/Registration-website'
+            },
+            {
+                id: 'power-apps',
+                title: 'Power apps-手機打卡',
+                description: '運用 Power apps Low Code 打造手機打卡APP。',
+                longDescription: '此為練習專案 Power apps 快速開發手機打卡應用程式。使用者可透過手機打卡，並將資料自動同步至 SharePoint 清單。此方案能免除人工記錄打卡資料的作業，大幅提升打卡效率與正確性。',
+                reason: '傳統打卡方式必須一定要到公司特定樓層打卡。',
+                problem: 'Power apps 可以在特定距離內進行打卡，此功能為試用版本。',
+                results: [
+                    '透過 Power apps 建立手機打卡APP。',
+                    '透過手機定位功能，可以即時顯示打卡位置。',
+                    '透過 SharePoint 清單，可以記錄打卡資料，此清單只有HR同仁可以查看(無編輯權限)。',
+                    '另外製作HR同仁可以查看全公司同人的打卡紀錄畫面。'
+                ],
+                image: './assets/images/app.png',
+                galleryImages: [
+                    { src: './assets/images/app.png', caption: 'Power apps手機打卡畫面' },
+                    { src: './assets/images/app2.png', caption: '一天針對同一上班時間只能打一次' },
+                    { src: './assets/images/app3.png', caption: '下班打卡畫面' },
+                    { src: './assets/images/app1.png', caption: '查看自己的打卡紀錄' },
+                    { src: './assets/images/app4.png', caption: 'sharepoint打卡紀錄清單' },
+                    { src: './assets/images/app5.png', caption: 'HR同仁查看全公司打卡紀錄' },
+                ],
+                demoVideo: '',
+                categories: ['LowCode'],
+                technologies: ['Microsoft Power Apps', 'SharePoint'],
+                //automate: 'https://drive.google.com/file/d/1XqJNdJ80nm6lgUCW3M_wD0EzJxUpESCi/view?usp=sharing'
             },
         ];
 
