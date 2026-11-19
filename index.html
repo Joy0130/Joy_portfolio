@@ -1384,12 +1384,60 @@
                     { src: "./assets/images/report6.png", caption: "後台-新增週報：新增週報內容，基本資料、標籤、發佈狀態、上傳附件、報告內容(支援Markdown、chart.js、HTML、心智圖)" },
                     { src: "./assets/images/report7.png", caption: "後台-新增週報：報告內容格式限制" },
                     { src: "./assets/images/report8.png", caption: "後台-Keycloak登入" },
-
-
                 ],
                 demoVideo: '',
                 categories: ['web'],
-                technologies: ['Python', 'FastAPI', 'JavaScript', 'TailwindCSS'],
+                technologies: ['Python', 'JavaScript', 'FastAPI', 'SQLite', 'Docker'],
+                techStack: [
+                        { category: '程式語言', items: [
+                            { name: 'Python 3.12', desc: '後端主要程式語言。' },
+                            { name: 'JavaScript', desc: '處理網頁互動、資料載入與預覽。' },
+                            { name: 'HTML / CSS', desc: '建立網頁結構與外觀。' },
+                            { name: 'SQL', desc: '查詢資料及建立全文搜尋索引。' },
+                            { name: 'Bash', desc: '執行備份與還原腳本。' },
+                        ]},
+                        { category: '後端與 API', items: [
+                            { name: 'FastAPI', desc: '提供網站 API、檔案上傳及權限檢查。' },
+                            { name: 'Uvicorn', desc: '執行 FastAPI 的應用伺服器。' },
+                            { name: 'Pydantic', desc: '驗證 API 輸入與輸出資料。' },
+                            { name: 'pydantic-settings', desc: '讀取環境變數中的系統設定。' },
+                            { name: 'python-multipart', desc: '處理表單與上傳檔案。' },
+                            { name: 'HTTPX', desc: '讓後端連線至 Keycloak 驗證服務。' },
+                        ]},
+                        { category: '資料庫與搜尋', items: [
+                            { name: 'SQLite', desc: '儲存報告、標籤及附件資料。' },
+                            { name: 'SQLAlchemy', desc: '操作資料庫與定義資料表。' },
+                            { name: 'SQLite FTS5', desc: '建立報告全文索引，提升搜尋效率。' },
+                        ]},
+                        { category: '前端介面', items: [
+                            { name: 'Bootstrap 5', desc: '提供版面、表單與互動元件。' },
+                            { name: 'Bootstrap Icons', desc: '提供介面圖示。' },
+                            { name: 'Tailwind CSS 4', desc: '提供前端樣式工具類別。' },
+                            { name: 'Fetch API', desc: '讓瀏覽器向後端 API 讀取及提交資料。' },
+                            { name: 'Web App Manifest', desc: '設定網站名稱、圖示與加入主畫面的顯示方式。' },
+                        ]},
+                        { category: '內容編輯與預覽', items: [
+                            { name: 'EasyMDE', desc: '提供 Markdown 報告編輯器。' },
+                            { name: 'Marked', desc: '將 Markdown 轉成網頁內容。' },
+                            { name: 'DOMPurify', desc: '清理顯示的 HTML，降低惡意內容風險。' },
+                            { name: 'highlight.js', desc: '為程式碼區塊加上語法色彩。' },
+                            { name: 'GitHub Markdown CSS', desc: '設定 Markdown 內容的顯示樣式。' },
+                            { name: 'Chart.js', desc: '在報告中繪製圖表。' },
+                            { name: 'Markmap', desc: '顯示匯入報告的心智圖 HTML。' },
+                            { name: 'Mammoth.js', desc: '在瀏覽器預覽 DOCX 檔案。' },
+                            { name: 'PDF.js', desc: '在瀏覽器預覽 PDF 檔案。' },
+                        ]},
+                        { category: '身分驗證', items: [
+                            { name: 'Keycloak', desc: '提供帳號登入、權杖驗證及群組權限資料。' },
+                            { name: 'OAuth 2.0 / OpenID Connect', desc: '後端與 Keycloak 使用的登入及身分資訊協定。' },
+                        ]},
+                        { category: '部署與維運', items: [
+                            { name: 'Docker', desc: '將後端與 Nginx 分別封裝成容器。' },
+                            { name: 'Docker Compose', desc: '設定並啟動服務、儲存空間與網路。' },
+                            { name: 'Nginx', desc: '提供靜態網頁、反向代理及 HTTPS 加密連線。' },
+                            { name: 'GitHub Actions', desc: '設定資料庫定期備份工作。' },
+                        ]},
+                        ],
                 github: 'https://github.com/Joy0130/weekly-report'
             },
             {
@@ -1575,8 +1623,8 @@
                 github: 'https://github.com/Joy0130/Python_FPNS'
             },
             {
-                id: 'tftcoin',
-                title: 'tFTCoin',
+                id: 'ftcoin',
+                title: 'FTCoin',
                 description: '賽博龐克風格的員工點數累積與獎品兌換系統。',
                 longDescription: '以 Django 開發的員工點數平台，支援 Keycloak SSO 與本地帳密雙重登入，員工可透過任務代碼兌換點數並於商城兌換獎品，具備排行榜、年度重置與帳號鎖定防暴力破解機制。',
                 reason: '企業內部活動與福利獎勵缺乏統一、有創意的平台。',
@@ -1608,7 +1656,7 @@
                 demoVideo: '',
                 categories: ['web'],
                 technologies: ['Python', 'Django', 'Keycloak OAuth', 'PostgreSQL'],
-                github: 'https://github.com/Joy0130/tFTCoin'
+                github: '公司專案，暫不公開程式碼。'
             },
             {
                 id: 'pdf-spiltter',
