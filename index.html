@@ -7,6 +7,9 @@
     <title>Joy's Portfolio | 個人作品集</title>
     <link rel="icon" type="image/png" href="./assets/images/favicon.png">
     <link rel="apple-touch-icon" href="./assets/images/favicon.png">
+    <link rel="preload" as="image" type="image/webp" href="./assets/images/avatar-512.webp"
+        imagesrcset="./assets/images/avatar-320.webp 320w, ./assets/images/avatar-512.webp 512w"
+        imagesizes="(min-width: 768px) 256px, 160px" fetchpriority="high">
     <!-- 佈景主題：於載入前先套用，避免畫面閃爍 (FOUC) -->
     <script>
         (function () {
@@ -17,40 +20,11 @@
             document.documentElement.setAttribute('lang', language);
         })();
     </script>
-    <!-- Tailwind CSS via CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        primary: 'rgb(var(--color-primary) / <alpha-value>)',
-                        secondary: 'rgb(var(--color-secondary) / <alpha-value>)',
-                        'primary-hover': 'rgb(var(--color-primary-hover) / <alpha-value>)',
-                        'secondary-hover': 'rgb(var(--color-secondary-hover) / <alpha-value>)',
-                        'primary-soft': 'rgb(var(--color-primary-soft) / <alpha-value>)',
-                        canvas: 'rgb(var(--color-canvas) / <alpha-value>)',
-                        'canvas-soft': 'rgb(var(--color-canvas-soft) / <alpha-value>)',
-                        ink: 'rgb(var(--color-ink) / <alpha-value>)',
-                        'ink-secondary': 'rgb(var(--color-ink-secondary) / <alpha-value>)',
-                        'ink-mute': 'rgb(var(--color-ink-mute) / <alpha-value>)',
-                        hairline: 'rgb(var(--color-hairline) / <alpha-value>)',
-                        'semantic-success': 'rgb(var(--color-semantic-success) / <alpha-value>)',
-                    },
-                    fontFamily: {
-                        sans: ['Inter', 'SF Pro Display', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Helvetica', 'Arial', 'sans-serif'],
-                    },
-                    letterSpacing: {
-                        tightest: '-.05em',
-                        tighter: '-.02em',
-                    }
-                }
-            }
-        }
-    </script>
+    <link rel="stylesheet" href="./assets/css/tailwind.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
-
         /* ===== 佈景主題 (Themes) ===== */
         /* 預設佈景：現有樣式 (帶動態極光背景) */
         :root,
@@ -136,6 +110,8 @@
             min-width: 9.5rem;
             z-index: 60;
         }
+
+        .theme-menu.hidden { display: none; }
 
         .theme-menu-item {
             display: flex;
@@ -253,15 +229,16 @@
         }
 
         .modal {
-            display: none;
             position: fixed;
             z-index: 100;
-            left: 0;
-            top: 0;
+            inset: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(8px);
+            max-width: none;
+            max-height: none;
+            margin: 0;
+            border: 0;
+            background: transparent;
             justify-content: center;
             align-items: center;
             /* 讓 Modal 在外層也有捲動空間，如果內容真的太長 */
@@ -269,6 +246,11 @@
             padding: 2rem 0;
             /* 上下留白，避免貼齊邊緣 */
         }
+
+        .modal[open] { display: flex; }
+        .modal::backdrop { background: rgba(0, 0, 0, 0.5); backdrop-filter: blur(8px); }
+        dialog:modal { overscroll-behavior: contain; }
+        dialog::backdrop { overflow: hidden; overscroll-behavior: contain; }
 
         .modal-content {
             background-color: rgb(var(--color-canvas));
@@ -337,6 +319,14 @@
             background: rgb(var(--color-ink) / 0.08);
         }
 
+        .project-card-button:focus-visible,
+        .gallery-button:focus-visible,
+        .close-button:focus-visible,
+        .lightbox-close:focus-visible {
+            outline: 3px solid rgb(var(--color-primary));
+            outline-offset: -3px;
+        }
+
         .pill-button {
             border-radius: 9999px;
             padding: 0.5rem 1.25rem;
@@ -359,15 +349,20 @@
 
         /* Lightbox 基礎設定 */
         .lightbox {
-            display: none;
             position: fixed;
             z-index: 101;
-            left: 0;
-            top: 0;
+            inset: 0;
             width: 100%;
             height: 100%;
+            max-width: none;
+            max-height: none;
+            margin: 0;
+            padding: 0;
+            border: 0;
             background-color: rgba(0, 0, 0, 0.92);
         }
+
+        .lightbox[open] { display: flex; }
 
         /* 旋轉容器 */
         .lightbox-rotator {
@@ -861,8 +856,13 @@
         <div class="max-w-4xl mx-auto flex flex-col md:flex-row items-center gap-12">
             <div
                 class="w-40 h-40 md:w-64 md:h-64 rounded-full overflow-hidden shadow-xl flex-shrink-0 border-4 border-canvas">
-                <img src="./assets/images/avatar.png" alt="Joy's Avatar" class="w-full h-full object-cover"
-                    onerror="this.onerror=null;this.src='https://avatars.githubusercontent.com/u/64908025?v=4'">
+                <picture class="block w-full h-full">
+                    <source type="image/webp"
+                        srcset="./assets/images/avatar-320.webp 320w, ./assets/images/avatar-512.webp 512w"
+                        sizes="(min-width: 768px) 256px, 160px">
+                    <img src="./assets/images/avatar.png" alt="Joy 的頭像" width="1280" height="800"
+                        fetchpriority="high" class="w-full h-full object-cover">
+                </picture>
             </div>
             <div class="text-center md:text-left">
                 <h1
@@ -979,11 +979,11 @@
     </footer>
 
     <!-- 專案詳細資訊彈跳視窗 -->
-    <div id="project-modal" class="modal">
+    <dialog id="project-modal" class="modal" aria-labelledby="modal-title">
         <div class="modal-content">
             <!-- 關閉按鈕改放 header 層級，確保永遠可見且位置固定 -->
-            <span class="close-button shadow-sm" id="close-modal" aria-label="關閉"
-                data-i18n-aria-label="close">&times;</span>
+            <button type="button" class="close-button shadow-sm" id="close-modal" aria-label="關閉"
+                data-i18n-aria-label="close" autofocus>&times;</button>
 
             <!-- 固定在頂部的區域 (Title, Tags, etc.) -->
             <div class="modal-header">
@@ -1047,23 +1047,23 @@
                 </div>
             </div>
         </div>
-    </div>
+    </dialog>
 
     <!-- Lightbox -->
-    <div id="lightbox" class="lightbox">
+    <dialog id="lightbox" class="lightbox" aria-label="圖片檢視">
         <!-- 旋轉用外層容器 -->
         <div id="lightbox-rotator" class="lightbox-rotator">
-            <span class="lightbox-close" id="lightbox-close">&times;</span>
+            <button type="button" class="lightbox-close" id="lightbox-close" aria-label="關閉圖片檢視" autofocus>&times;</button>
             <div class="lightbox-counter" id="lightbox-counter" style="display:none;"></div>
             <button class="lightbox-nav" id="lightbox-prev" aria-label="上一張">&#8249;</button>
             <div class="lightbox-inner">
-                <img class="lightbox-content" id="lightbox-img" style="display: none;">
+                <img class="lightbox-content" id="lightbox-img" alt="" style="display: none;">
                 <video class="lightbox-content" id="lightbox-video" controls style="display: none;"></video>
                 <div class="lightbox-caption" id="lightbox-caption" style="display:none;"></div>
             </div>
             <button class="lightbox-nav" id="lightbox-next" aria-label="下一張">&#8250;</button>
         </div>
-    </div>
+    </dialog>
 
     <script>
         function imgFallback(el, title) {
@@ -2092,20 +2092,19 @@
             if (typeof renderProjects === 'function') renderProjects(getFilteredProjects());
             if (currentProjectId) {
                 const activeProject = projects.find(project => project.id === currentProjectId);
-                if (activeProject && projectModal.style.display === 'flex') openModal(activeProject, false);
+                if (activeProject && projectModal.open) openModal(activeProject, false);
             }
         }
 
         function renderProjects(filteredProjects) {
             const countEl = document.getElementById('project-count');
             if (countEl) countEl.textContent = filteredProjects.length;
-            portfolioGrid.innerHTML = '';
-            filteredProjects.forEach(project => {
+            portfolioGrid.innerHTML = filteredProjects.map(project => {
                 const localizedProject = localizeProject(project);
                 const card = `
-                    <div class="bg-canvas rounded-xl card-shadow overflow-hidden group cursor-pointer" data-project-id="${project.id}">
+                    <article class="relative bg-canvas rounded-xl card-shadow overflow-hidden group">
                         <div class="h-48 overflow-hidden relative bg-canvas-soft flex items-center justify-center">
-                            <img src="${project.image}" alt="${localizedProject.title}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" onerror="imgFallback(this, '${localizedProject.title.replace(/'/g, "")}')">
+                            <img src="${project.image}" alt="${localizedProject.title}" width="400" height="250" loading="lazy" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" onerror="imgFallback(this, '${localizedProject.title.replace(/'/g, "")}')">
                             <div class="absolute inset-0 bg-primary opacity-0 group-hover:opacity-5 transition-opacity"></div>
                             <div class="absolute bottom-3 left-3 flex flex-wrap gap-2 z-10">
                                 ${project.categories.map(cat => `<span class="bg-black/60 text-white text-xs px-2.5 py-1 rounded-full backdrop-blur-sm font-medium">${cat}</span>`).join('')}
@@ -2113,17 +2112,18 @@
                         </div>
                         <hr class="border-t border-hairline">
                         <div class="p-6">
-                            <h3 class="text-lg font-bold mb-2 text-ink group-hover:text-primary transition-colors">${localizedProject.title}</h3>
+                            <h3 id="project-title-${project.id}" class="text-lg font-bold mb-2 text-ink group-hover:text-primary transition-colors">${localizedProject.title}</h3>
                             <p class="text-ink-mute text-xs leading-relaxed mb-4 font-light line-clamp-2">${localizedProject.description}</p>
                             <div class="flex flex-wrap gap-2">
                                 ${project.technologies.slice(0, 3).map(tech => `<span class="tech-tag">${tech}</span>`).join('')}
                                 ${project.technologies.length > 3 ? `<span class="tech-tag">+${project.technologies.length - 3}</span>` : ''}
                             </div>
                         </div>
-                    </div>
+                        <button type="button" class="project-card-button absolute inset-0 z-20 w-full h-full rounded-xl" data-project-id="${project.id}" aria-labelledby="project-title-${project.id}"></button>
+                    </article>
                 `;
-                portfolioGrid.innerHTML += card;
-            });
+                return card;
+            }).join('');
 
         }
 
@@ -2235,14 +2235,17 @@
                 );
                 galleryElement.innerHTML = gallery.map((item, idx) => `
                     <div class="flex flex-col gap-2">
-                        <div class="rounded-lg overflow-hidden border border-hairline cursor-pointer hover:shadow-sm transition-shadow aspect-video">
-                            <img src="${item.src}" class="w-full h-full object-cover"
-                                onclick="openLightbox(${idx}, ${JSON.stringify(gallery).replace(/"/g, '&quot;')})"
+                        <button type="button" class="gallery-button rounded-lg overflow-hidden border border-hairline cursor-pointer hover:shadow-sm transition-shadow aspect-video" data-gallery-index="${idx}" aria-label="${item.caption || localizedProject.title}">
+                            <img src="${item.src}" alt="" width="400" height="225" loading="lazy" class="w-full h-full object-cover"
                                 onerror="imgFallback(this, 'Gallery Image')">
-                        </div>
+                        </button>
                         ${item.caption ? `<p class="text-sm text-center text-gray-500 px-1">${item.caption}</p>` : ''}
                     </div>`
                 ).join('');
+                galleryElement.onclick = (event) => {
+                    const button = event.target.closest('[data-gallery-index]');
+                    if (button) openLightbox(Number(button.dataset.galleryIndex), gallery);
+                };
                 galleryContainer.style.display = 'block';
             } else {
                 galleryContainer.style.display = 'none';
@@ -2254,8 +2257,7 @@
                 modalBody.scrollTop = 0;
             }
 
-            projectModal.style.display = 'flex';
-            document.body.style.overflow = 'hidden';
+            if (!projectModal.open) projectModal.showModal();
         }
 
         function openLightbox(indexOrSrc, galleryOrType) {
@@ -2273,12 +2275,12 @@
 
                 lightboxVideo.src = indexOrSrc;
                 lightboxVideo.style.display = 'block';
-                lightboxVideo.play();
                 lightboxPrev.style.display = 'none';
                 lightboxNext.style.display = 'none';
                 lightboxCaption.style.display = 'none';
                 lightboxCounter.style.display = 'none';
-                lightbox.style.display = 'flex';
+                lightbox.showModal();
+                lightboxVideo.play();
                 return;
             }
 
@@ -2288,13 +2290,14 @@
             currentGallery = gallery;
             currentGalleryIndex = indexOrSrc;
             showLightboxImage(currentGalleryIndex);
-            lightbox.style.display = 'flex';
+            lightbox.showModal();
         }
 
         function showLightboxImage(idx) {
             const item = currentGallery[idx];
             lightboxVideo.style.display = 'none';
             lightboxImg.src = item.src;
+            lightboxImg.alt = item.caption || '';
             lightboxImg.style.display = 'block';
 
             if (window._lightboxResetZoom) window._lightboxResetZoom(false);
@@ -2335,10 +2338,9 @@
         };
 
         document.addEventListener('keydown', (e) => {
-            if (lightbox.style.display !== 'flex') return;
+            if (!lightbox.open) return;
             if (e.key === 'ArrowLeft') lightboxPrev.click();
             if (e.key === 'ArrowRight') lightboxNext.click();
-            if (e.key === 'Escape') lightboxClose.click();
         });
 
         // ── Lightbox 觸控縮放（Pinch Zoom）、雙擊放大、拖曳平移 ────────────
@@ -2463,28 +2465,16 @@
             });
         })();
 
-        closeModal.onclick = () => {
-            projectModal.style.display = 'none';
-            document.body.style.overflow = 'auto';
-            document.getElementById('modal-video').pause();
-        };
-
-        lightboxClose.onclick = () => {
-            lightbox.style.display = 'none';
-            lightboxVideo.pause();
-        };
-
-        window.onclick = (e) => {
-            if (e.target == projectModal) {
-                projectModal.style.display = 'none';
-                document.body.style.overflow = 'auto';
-                document.getElementById('modal-video').pause();
-            }
-            if (e.target == lightbox) {
-                lightbox.style.display = 'none';
-                lightboxVideo.pause();
-            }
-        };
+        closeModal.onclick = () => projectModal.close();
+        lightboxClose.onclick = () => lightbox.close();
+        projectModal.addEventListener('close', () => document.getElementById('modal-video').pause());
+        lightbox.addEventListener('close', () => lightboxVideo.pause());
+        projectModal.addEventListener('click', (event) => {
+            if (event.target === projectModal) projectModal.close();
+        });
+        lightbox.addEventListener('click', (event) => {
+            if (event.target === lightbox || event.target === document.getElementById('lightbox-rotator')) lightbox.close();
+        });
 
         searchInput.addEventListener('input', () => {
             renderProjects(getFilteredProjects());
@@ -2692,13 +2682,14 @@
         }
 
         function closeLanguageMenu() {
-            languageMenu.classList.add('hidden');
+            languageMenu?.classList.add('hidden');
             languageToggleBtn.setAttribute('aria-expanded', 'false');
         }
 
         languageToggleBtn.addEventListener('click', (e) => {
             e.stopPropagation();
             closeThemeMenu();
+            if (!languageMenu) return;
             const isOpen = !languageMenu.classList.contains('hidden');
             languageMenu.classList.toggle('hidden', isOpen);
             languageToggleBtn.setAttribute('aria-expanded', String(!isOpen));
@@ -2729,7 +2720,7 @@
             if (!themeMenu.contains(e.target) && e.target !== themeToggleBtn) {
                 closeThemeMenu();
             }
-            if (!languageMenu.contains(e.target) && e.target !== languageToggleBtn) {
+            if (languageMenu && !languageMenu.contains(e.target) && e.target !== languageToggleBtn) {
                 closeLanguageMenu();
             }
         });

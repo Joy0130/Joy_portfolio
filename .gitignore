@@ -5,3 +5,4 @@ automate.mp4
 assets/videos/automate_compressed.mp4
 .env
 .DS_Store
+node_modules/

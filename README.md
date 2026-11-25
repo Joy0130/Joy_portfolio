@@ -20,9 +20,10 @@
 1. **添加素材**：將您的專案圖片放入 `assets/images/`，影片放入 `assets/videos/`。
 2. **更新路徑**：編輯 `index.html` 中的 `projects` 陣列，將 `image`, `galleryImages` 與 `demoVideo` 的路徑更新為您實際的檔案路徑。
 3. **查看效果**：雙擊 `index.html` 即可在瀏覽器中開啟。
+4. **修改樣式後**：執行 `npm ci` 與 `npm run build:css`，更新提交用的 `assets/css/tailwind.css`。
 
 ## 技術細節
-- **前端**: Tailwind CSS (CDN)。
+- **前端**: Tailwind CSS 3（預先產生靜態 CSS）。
 - **互動**: Vanilla JavaScript。
 - **數據來源**: GitHub Public Repositories (Joy0130)。
 
