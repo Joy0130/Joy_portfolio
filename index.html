@@ -21,6 +21,7 @@
         })();
     </script>
     <link rel="stylesheet" href="./assets/css/tailwind.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.2/font/bootstrap-icons.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
@@ -78,6 +79,10 @@
         [data-theme="white"] .aurora-bg,
         [data-theme="dark"] .aurora-bg {
             display: none;
+        }
+
+        [data-theme="default"] #ai-workflows {
+            background-color: transparent;
         }
 
         [data-theme="dark"] .card-shadow,
@@ -213,6 +218,63 @@
             transform: translateY(-5px);
             box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
             border-color: rgb(var(--color-primary));
+        }
+
+        html { scroll-behavior: smooth; }
+
+        section[id] { scroll-margin-top: 4rem; }
+
+        .skill-card { display: flex; flex-direction: column; }
+
+        .skill-card-icon {
+            display: grid;
+            place-items: center;
+            position: relative;
+            height: 12rem;
+            background: rgb(var(--color-canvas));
+            border-bottom: 1px solid rgb(var(--color-hairline));
+            color: rgb(var(--color-primary));
+            font-size: 2.25rem;
+        }
+
+        .workflow-track { display: grid; gap: 1.5rem; }
+
+        .workflow-track li {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .workflow-track li:not(:last-child)::after {
+            content: "↓";
+            position: absolute;
+            left: 50%;
+            bottom: -1.55rem;
+            transform: translateX(-50%);
+            color: rgb(var(--color-primary));
+            font-size: 1.25rem;
+            line-height: 1.5rem;
+        }
+
+        @media (min-width: 1024px) {
+            .workflow-track-horizontal { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+            .workflow-track-six { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+
+            .workflow-track-horizontal li:not(:last-child)::after {
+                content: "→";
+                left: auto;
+                right: -1.15rem;
+                bottom: auto;
+                top: 50%;
+                transform: translateY(-50%);
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            html { scroll-behavior: auto; }
+            .skill-card { transition: none; }
         }
 
         .search-input {
@@ -753,13 +815,16 @@
         <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
             <div class="text-base md:text-xl font-bold tracking-tighter text-primary whitespace-nowrap">JOY'S PORTFOLIO
             </div>
-            <div class="hidden md:flex space-x-8 text-sm font-medium text-ink-mute">
+            <div class="hidden lg:flex items-center gap-5 text-sm font-medium text-ink-mute">
                 <a href="#about" data-i18n="nav.about"
                     class="desktop-nav-link pb-1 border-b-[3px] border-secondary text-secondary hover:text-secondary hover:border-secondary transition-all"
                     data-color="border-secondary" data-text="text-secondary">關於我</a>
                 <a href="#portfolio" data-i18n="nav.portfolio"
                     class="desktop-nav-link pb-1 border-b-[3px] border-transparent hover:text-primary hover:border-primary transition-all"
                     data-color="border-primary" data-text="text-primary">作品集</a>
+                <a href="#ai-workflows" data-i18n="nav.aiWorkflows"
+                    class="desktop-nav-link pb-1 border-b-[3px] border-transparent hover:text-primary hover:border-primary transition-all whitespace-nowrap"
+                    data-color="border-primary" data-text="text-primary">AI Skills & Workflows</a>
                 <a href="#contact" data-i18n="nav.contact"
                     class="desktop-nav-link pb-1 border-b-[3px] border-transparent hover:text-secondary hover:border-secondary transition-all"
                     data-color="border-secondary" data-text="text-secondary">聯絡我</a>
@@ -819,7 +884,7 @@
                     </div>
                 </div>
                 <button id="hamburger-btn"
-                    class="md:hidden flex items-center justify-center p-2 rounded-lg hover:bg-canvas-soft transition-colors"
+                    class="lg:hidden flex items-center justify-center p-2 rounded-lg hover:bg-canvas-soft transition-colors"
                     aria-label="開啟選單">
                     <svg id="icon-hamburger" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-ink-secondary"
                         fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -836,7 +901,7 @@
                 </a>
             </div>
         </div>
-        <div id="mobile-menu" class="md:hidden hidden border-t border-hairline bg-canvas/95 backdrop-blur-sm">
+        <div id="mobile-menu" class="lg:hidden hidden border-t border-hairline bg-canvas/95 backdrop-blur-sm">
             <div class="flex flex-col py-3 px-6">
                 <a href="#about"
                     class="mobile-nav-link py-3 text-sm font-medium text-ink-secondary hover:text-secondary transition-colors border-b border-hairline"
@@ -844,6 +909,9 @@
                 <a href="#portfolio"
                     class="mobile-nav-link py-3 text-sm font-medium text-ink-secondary hover:text-primary transition-colors border-b border-hairline"
                     data-i18n="nav.portfolio">作品集</a>
+                <a href="#ai-workflows"
+                    class="mobile-nav-link py-3 text-sm font-medium text-ink-secondary hover:text-primary transition-colors border-b border-hairline"
+                    data-i18n="nav.aiWorkflows">AI Skills & Workflows</a>
                 <a href="#contact"
                     class="mobile-nav-link py-3 text-sm font-medium text-ink-secondary hover:text-secondary transition-colors"
                     data-i18n="nav.contact">聯絡我</a>
@@ -945,6 +1013,199 @@
             </div>
             <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-8" id="portfolio-grid">
                 <!-- 由 JavaScript 動態生成 -->
+            </div>
+        </div>
+    </section>
+
+    <!-- AI Skills 與工作流程 -->
+    <section id="ai-workflows" class="py-24 px-6 bg-canvas border-t border-hairline">
+        <div class="max-w-7xl mx-auto">
+            <header class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold tracking-tight mb-4 text-ink relative inline-block">
+                    <span data-i18n="skills.title">AI 技能整合與工作流程自動化</span>
+                </h2>
+                <p class="text-ink-mute font-light">AI Skills &amp; Workflows</p>
+                <div class="h-1 w-16 bg-primary mx-auto mt-4 rounded-full"></div>
+                <p class="max-w-3xl mx-auto text-ink-secondary leading-relaxed mt-8" data-i18n="skills.intro">我將 AI Skills 用於軟體開發、文件整理與資料分析。依任務選擇需要的技能，先確認需求與原始資料，再執行、核對並驗證成果。</p>
+            </header>
+
+            <div class="mb-16">
+                <div class="mb-8">
+                    <h3 class="text-2xl font-bold text-ink mb-2" data-i18n="skills.ownTitle">自建 Skills</h3>
+                    <p class="text-ink-mute" data-i18n="skills.ownIntro">把常用的工作方法整理成可重複使用的執行規範。</p>
+                </div>
+                <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-8">
+                    <article class="skill-card bg-canvas rounded-xl card-shadow overflow-hidden group">
+                        <div class="skill-card-icon">
+                            <i class="bi bi-code-slash" aria-hidden="true"></i>
+                        </div>
+                        <div class="p-6 flex-1">
+                            <h4 class="text-lg font-bold text-ink mb-2 group-hover:text-primary transition-colors">Easy Code</h4>
+                            <p class="text-ink-mute text-sm leading-relaxed" data-i18n="skills.easyCode">優先重用現有程式碼與原生功能，以最小必要改動完成需求。</p>
+                        </div>
+                    </article>
+                    <article class="skill-card bg-canvas rounded-xl card-shadow overflow-hidden group">
+                        <div class="skill-card-icon">
+                            <i class="bi bi-journal-text" aria-hidden="true"></i>
+                        </div>
+                        <div class="p-6 flex-1">
+                            <h4 class="text-lg font-bold text-ink mb-2 group-hover:text-primary transition-colors">Meeting Minutes</h4>
+                            <p class="text-ink-mute text-sm leading-relaxed" data-i18n="skills.meetingMinutes">將逐字稿整理為結構化會議記錄，產出 Word 文件與 Markmap 心智圖。</p>
+                        </div>
+                    </article>
+                    <article class="skill-card bg-canvas rounded-xl card-shadow overflow-hidden group">
+                        <div class="skill-card-icon">
+                            <i class="bi bi-bar-chart" aria-hidden="true"></i>
+                        </div>
+                        <div class="p-6 flex-1">
+                            <h4 class="text-lg font-bold text-ink mb-2 group-hover:text-primary transition-colors">Analytics JSON Bar Chart</h4>
+                            <p class="text-ink-mute text-sm leading-relaxed" data-i18n="skills.analytics">將 JSON 資料製成長條圖或堆疊長條圖，呈現多組資料差異。</p>
+                        </div>
+                    </article>
+                </div>
+            </div>
+<!-- border border-hairline p-6 md:-->
+            <div class="bg-canvas rounded-xl mb-16">
+                <h3 id="easy-code-flow-title" class="text-2xl font-bold text-ink mb-3" data-i18n="skills.easyFlowTitle">Easy Code Workflow</h3>
+                <p class="text-ink-secondary leading-relaxed mb-7" data-i18n="skills.easyFlowIntro">AI 產生的程式碼可能加入多餘依賴或複雜邏輯。優先評估需求與風險，再檢查現有程式碼，選擇最小可行方案並驗證結果。</p>
+                <ol class="workflow-track workflow-track-horizontal" aria-labelledby="easy-code-flow-title">
+                    <li class="bg-canvas border border-hairline rounded-lg p-4 text-ink font-semibold" data-i18n="skills.easyStep1">需求與風險評估</li>
+                    <li class="bg-canvas border border-hairline rounded-lg p-4 text-ink font-semibold" data-i18n="skills.easyStep2">檢查現有程式碼與依賴</li>
+                    <li class="bg-canvas border border-hairline rounded-lg p-4 text-ink font-semibold" data-i18n="skills.easyStep3">選擇最小可行方案</li>
+                    <li class="bg-canvas border border-hairline rounded-lg p-4 text-ink font-semibold" data-i18n="skills.easyStep4">程式實作</li>
+                    <li class="bg-canvas border border-hairline rounded-lg p-4 text-ink font-semibold" data-i18n="skills.easyStep5">驗證與修正結果</li>
+                </ol>
+            </div>
+
+            <div class="mb-16">
+                <div class="mb-8">
+                    <h3 class="text-2xl font-bold text-ink mb-2" data-i18n="skills.supportTitle">協作 Skills</h3>
+                    <p class="text-ink-mute" data-i18n="skills.supportIntro">依工作性質選用現有工具，讓每項技能有清楚的用途。</p>
+                </div>
+                <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-8">
+                    <article class="skill-card bg-canvas rounded-xl card-shadow overflow-hidden group">
+                        <div class="skill-card-icon">
+                            <i class="bi bi-file-text" aria-hidden="true"></i>
+                            <span class="absolute bottom-3 left-3 bg-black/60 text-white text-xs px-2.5 py-1 rounded-full backdrop-blur-sm font-medium" data-i18n="skills.writingTag">文字處理</span>
+                        </div>
+                        <div class="p-6 flex-1">
+                            <h4 class="text-lg font-bold text-ink mb-2 group-hover:text-primary transition-colors">humanizer</h4>
+                            <p class="text-ink-mute text-sm leading-relaxed" data-i18n="skills.humanizer">優化文字內容與語句結構，減少 AI 生成文字的生硬語氣及冗餘描述，使文件、報告與專業文章更自然流暢。</p>
+                        </div>
+                    </article>
+                    <article class="skill-card bg-canvas rounded-xl card-shadow overflow-hidden group">
+                        <div class="skill-card-icon">
+                            <i class="bi bi-window" aria-hidden="true"></i>
+                            <span class="absolute bottom-3 left-3 bg-black/60 text-white text-xs px-2.5 py-1 rounded-full backdrop-blur-sm font-medium" data-i18n="skills.uiTag">介面品質</span>
+                        </div>
+                        <div class="p-6 flex-1">
+                            <h4 class="text-lg font-bold text-ink mb-2 group-hover:text-primary transition-colors break-words">web-design-guidelines</h4>
+                            <p class="text-ink-mute text-sm leading-relaxed" data-i18n="skills.webGuidelines">依據網頁介面設計規範，檢查 UI/UX、無障礙設計、響應式版面及操作一致性，提升網頁介面品質。</p>
+                        </div>
+                    </article>
+                    <article class="skill-card bg-canvas rounded-xl card-shadow overflow-hidden group">
+                        <div class="skill-card-icon">
+                            <i class="bi bi-palette" aria-hidden="true"></i>
+                            <span class="absolute bottom-3 left-3 bg-black/60 text-white text-xs px-2.5 py-1 rounded-full backdrop-blur-sm font-medium" data-i18n="skills.designTag">介面設計</span>
+                        </div>
+                        <div class="p-6 flex-1">
+                            <h4 class="text-lg font-bold text-ink mb-2 group-hover:text-primary transition-colors">frontend-design</h4>
+                            <p class="text-ink-mute text-sm leading-relaxed" data-i18n="skills.frontendDesign">協助前端介面視覺設計與實作，包含版面配置、色彩搭配、字體層級、元件設計及互動效果，避免制式化的 AI 生成介面。</p>
+                        </div>
+                    </article>
+                    <article class="skill-card bg-canvas rounded-xl card-shadow overflow-hidden group">
+                        <div class="skill-card-icon">
+                            <i class="bi bi-diagram-3" aria-hidden="true"></i>
+                            <span class="absolute bottom-3 left-3 bg-black/60 text-white text-xs px-2.5 py-1 rounded-full backdrop-blur-sm font-medium" data-i18n="skills.devTag">開發流程</span>
+                        </div>
+                        <div class="p-6 flex-1">
+                            <h4 class="text-lg font-bold text-ink mb-2 group-hover:text-primary transition-colors">Superpowers</h4>
+                            <p class="text-ink-mute text-sm leading-relaxed" data-i18n="skills.superpowers">依任務需要選用規劃、測試、除錯、審查與完成前驗證流程。</p>
+                        </div>
+                    </article>
+                    <article class="skill-card bg-canvas rounded-xl card-shadow overflow-hidden group">
+                        <div class="skill-card-icon">
+                            <i class="bi bi-chat-left-text" aria-hidden="true"></i>
+                            <span class="absolute bottom-3 left-3 bg-black/60 text-white text-xs px-2.5 py-1 rounded-full backdrop-blur-sm font-medium" data-i18n="skills.promptTag">提示詞</span>
+                        </div>
+                        <div class="p-6 flex-1">
+                            <h4 class="text-lg font-bold text-ink mb-2 group-hover:text-primary transition-colors">prompt-master</h4>
+                            <p class="text-ink-mute text-sm leading-relaxed" data-i18n="skills.promptMaster">把需求整理成適合特定 AI 工具的提示詞，讓指令更清楚，並讓 AI 更準確理解你要做什麼。</p>
+                        </div>
+                    </article>
+                </div>
+            </div>
+
+             <div class="bg-canvas rounded-xl mb-16">
+                <h3 id="ai-lifecycle-title" class="text-2xl font-bold text-ink mb-3" data-i18n="skills.lifecycleTitle">AI 協作開發流程</h3>
+                <p class="text-ink-secondary leading-relaxed mb-7" data-i18n="skills.lifecycleIntro">整體AI協作開發流程主要利用Superpowers和Easy Code；任務較複雜或風險較高時，使用合適的Skills進行規劃、測試與審查，可以提升開發效率並控管AI產出的品質。</p>
+                <ol class="workflow-track workflow-track-horizontal workflow-track-six max-w-3xl lg:max-w-none mx-auto text-center" aria-labelledby="ai-lifecycle-title">
+                    <li class="bg-canvas border border-hairline rounded-lg px-5 py-4">
+                        <strong class="block text-ink" data-i18n="skills.lifecycle1">需求分析</strong>
+                        <span class="text-sm text-ink-mute">Brainstorming</span>
+                    </li>
+                    <li class="bg-canvas border border-hairline rounded-lg px-5 py-4">
+                        <strong class="block text-ink" data-i18n="skills.lifecycle2">技術規劃</strong>
+                        <span class="text-sm text-ink-mute">Writing Plans</span>
+                    </li>
+                    <li class="bg-canvas border border-hairline rounded-lg px-5 py-4">
+                        <strong class="block text-ink" data-i18n="skills.lifecycle3">精簡實作</strong>
+                        <span class="text-sm text-ink-mute">Easy Code</span>
+                    </li>
+                    <li class="bg-canvas border border-hairline rounded-lg px-5 py-4">
+                        <strong class="block text-ink" data-i18n="skills.lifecycle4">測試與除錯</strong>
+                        <span class="text-sm text-ink-mute">Systematic Debugging</span>
+                    </li>
+                    <li class="bg-canvas border border-hairline rounded-lg px-5 py-4">
+                        <strong class="block text-ink" data-i18n="skills.lifecycle5">程式碼審查</strong>
+                        <span class="text-sm text-ink-mute">Code Review</span>
+                    </li>
+                    <li class="bg-canvas border border-hairline rounded-lg px-5 py-4">
+                        <strong class="block text-ink" data-i18n="skills.lifecycle6">品質驗證</strong>
+                        <span class="text-sm text-ink-mute">Verification Before Completion</span>
+                    </li>
+                </ol>
+                <!-- <p class="text-sm text-ink-mute mt-7" data-i18n="skills.lifecycleNote">以上為主要開發任務的流程，可隨時依照任務調整。</p> -->
+            </div>
+
+            <div>
+                <div class="mb-8">
+                    <h3 class="text-2xl font-bold text-ink mb-2" data-i18n="skills.casesTitle">實際應用</h3>
+                    <p class="text-ink-mute" data-i18n="skills.casesIntro">從原始資料到可使用的成果，展示技能如何進入日常工作。</p>
+                </div>
+                <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-8">
+                    <article class="skill-card bg-canvas rounded-xl card-shadow overflow-hidden">
+                        <div class="skill-card-icon">
+                            <i class="bi bi-journal-text" aria-hidden="true"></i>
+                            <span class="absolute bottom-3 left-3 bg-black/60 text-white text-xs px-2.5 py-1 rounded-full backdrop-blur-sm font-medium">Meeting Minutes</span>
+                        </div>
+                        <div class="p-6">
+                            <h4 class="text-lg font-bold text-ink mb-2" data-i18n="skills.case1Title">會議記錄整理</h4>
+                            <p class="text-ink-mute text-sm leading-relaxed" data-i18n="skills.case1">將會議錄音或逐字稿轉換為結構化會議記錄，自動移除口語贅詞、整理討論重點與決議事項，並產出標準會議記錄文件及 Markmap 心智圖md檔。</p>
+                        </div>
+                    </article>
+                    <article class="skill-card bg-canvas rounded-xl card-shadow overflow-hidden">
+                        <div class="skill-card-icon">
+                            <i class="bi bi-bar-chart" aria-hidden="true"></i>
+                            <span class="absolute bottom-3 left-3 bg-black/60 text-white text-xs px-2.5 py-1 rounded-full backdrop-blur-sm font-medium">Analytics JSON Bar Chart</span>
+                        </div>
+                        <div class="p-6">
+                            <h4 class="text-lg font-bold text-ink mb-2" data-i18n="skills.case2Title">資料分析圖表</h4>
+                            <p class="text-ink-mute text-sm leading-relaxed" data-i18n="skills.case2">將 JSON 格式的結構化資料轉換為長條圖及堆疊長條圖，支援多組資料比較、數據彙整及視覺化分析，減少人工整理與製作圖表的時間。</p>
+                        </div>
+                    </article>
+                    <article class="skill-card bg-canvas rounded-xl card-shadow overflow-hidden">
+                        <div class="skill-card-icon">
+                            <i class="bi bi-code-slash" aria-hidden="true"></i>
+                            <span class="absolute bottom-3 left-3 bg-black/60 text-white text-xs px-2.5 py-1 rounded-full backdrop-blur-sm font-medium">Easy Code + Superpowers</span>
+                        </div>
+                        <div class="p-6">
+                            <h4 class="text-lg font-bold text-ink mb-2" data-i18n="skills.case3Title">AI 協作開發</h4>
+                            <p class="text-ink-mute text-sm leading-relaxed" data-i18n="skills.case3">先確認需求與風險，再重用現有程式碼完成改動，依任務需要測試、審查與驗證。</p>
+                        </div>
+                    </article>
+                </div>
+                <p class="text-ink-secondary leading-relaxed mt-8" data-i18n="skills.closing">依據任務複雜度與風險程度，精準選擇適用的 AI Skills，並避免配置過多、功能重疊或不必要的技能。過多的 Skills 可能增加 AI 在技能選擇、指令解析及上下文處理上的負擔，導致額外的 Token 消耗、執行效率下降，甚至因規則衝突而影響產出品質。透過明確的技能分工、觸發條件與執行規範，在兼顧開發效率與 Token 使用成本的同時，維持 AI 產出品質的穩定性與一致性。</p>
             </div>
         </div>
     </section>
@@ -2028,6 +2289,156 @@
             }
         };
 
+        const skillTranslations = {
+            'zh-TW': {
+                'nav.aiWorkflows': 'AI Skills & Workflows'
+            },
+            en: {
+                'nav.aiWorkflows': 'AI Skills & Workflows',
+                'skills.title': 'AI Skills & Workflow Automation',
+                'skills.intro': 'I use AI Skills in software development, document work, and data analysis. I select what each task needs, check requirements and source data, then review and verify the result.',
+                'skills.ownTitle': 'Skills I Built',
+                'skills.ownIntro': 'Reusable instructions built from my everyday working methods.',
+                'skills.selfMade': 'Built by me',
+                'skills.easyCode': 'Reuse existing code and native features first, making only the changes needed.',
+                'skills.meetingMinutes': 'Turn transcripts into structured minutes, Word documents, and Markmap mind maps.',
+                'skills.analytics': 'Turn JSON data into bar and stacked bar charts for comparing datasets.',
+                'skills.easyFlowTitle': 'How Easy Code Works',
+                'skills.easyFlowIntro': 'AI-generated code can add needless dependencies or complexity. I assess the task and risks, inspect the codebase, choose the smallest workable change, and verify the result.',
+                'skills.easyStep1': 'Assess needs and risks',
+                'skills.easyStep2': 'Inspect code and dependencies',
+                'skills.easyStep3': 'Choose the smallest solution',
+                'skills.easyStep4': 'Implement',
+                'skills.easyStep5': 'Verify and revise',
+                'skills.supportTitle': 'Supporting Skills',
+                'skills.supportIntro': 'Use existing tools for specific jobs, with a clear role for each one.',
+                'skills.writingTag': 'Writing',
+                'skills.humanizer': 'Improve wording and structure so documents and reports read naturally.',
+                'skills.uiTag': 'UI quality',
+                'skills.webGuidelines': 'Check usability, accessibility, responsive layouts, and consistency.',
+                'skills.designTag': 'UI design',
+                'skills.frontendDesign': 'Plan layouts, colors, type hierarchy, components, and interactions.',
+                'skills.devTag': 'Development',
+                'skills.superpowers': 'Choose planning, testing, debugging, review, and verification when needed.',
+                'skills.promptTag': 'Prompts',
+                'skills.promptMaster': 'Shape requirements into clear prompts for a specific AI tool.',
+                'skills.lifecycleTitle': 'AI-Assisted Development Workflow',
+                'skills.lifecycleIntro': 'Easy Code guides implementation. For complex or higher-risk work, I add the planning, testing, and review steps that fit the task.',
+                'skills.lifecycle1': 'Requirements analysis',
+                'skills.lifecycle2': 'Technical planning',
+                'skills.lifecycle3': 'Focused implementation',
+                'skills.lifecycle4': 'Testing and debugging',
+                'skills.lifecycle5': 'Code review',
+                'skills.lifecycle6': 'Quality verification',
+                'skills.lifecycleNote': 'The workflow adapts to the task: test observable behavior, debug unclear failures, and review major changes.',
+                'skills.casesTitle': 'Practical Applications',
+                'skills.casesIntro': 'How source material becomes a useful deliverable.',
+                'skills.case1Title': 'Meeting minutes',
+                'skills.case1': 'Organize a transcript into key points, decisions, and action items, then produce a Word document and mind map.',
+                'skills.case2Title': 'Data comparison charts',
+                'skills.case2': 'Check JSON fields and values, then chart the differences between datasets.',
+                'skills.case3Title': 'AI-assisted development',
+                'skills.case3': 'Assess needs and risks, reuse existing code, then test, review, and verify where appropriate.',
+                'skills.closing': 'Select skills by complexity and risk. Give each step a clear purpose and avoid overlapping rules and unnecessary execution cost.'
+            },
+            ko: {
+                'nav.aiWorkflows': 'AI Skills & Workflows',
+                'skills.title': 'AI 스킬 통합과 워크플로 자동화',
+                'skills.intro': 'AI 스킬을 소프트웨어 개발, 문서 정리, 데이터 분석에 활용합니다. 작업에 필요한 스킬을 선택하고 요구 사항과 원본 데이터를 확인한 뒤 결과를 검토하고 검증합니다.',
+                'skills.ownTitle': '직접 만든 스킬',
+                'skills.ownIntro': '일상적인 작업 방식을 재사용 가능한 실행 규칙으로 정리했습니다.',
+                'skills.selfMade': '직접 제작',
+                'skills.easyCode': '기존 코드와 기본 기능을 우선 활용하고 필요한 부분만 수정합니다.',
+                'skills.meetingMinutes': '회의 녹취록을 구조화된 회의록, Word 문서, Markmap 마인드맵으로 정리합니다.',
+                'skills.analytics': 'JSON 데이터를 막대그래프와 누적 막대그래프로 만들어 여러 자료를 비교합니다.',
+                'skills.easyFlowTitle': 'Easy Code 작업 방식',
+                'skills.easyFlowIntro': 'AI가 생성한 코드에는 불필요한 의존성이나 복잡한 로직이 들어갈 수 있습니다. 요구 사항과 위험을 평가하고 기존 코드를 확인한 후 최소한의 해결책을 선택해 검증합니다.',
+                'skills.easyStep1': '요구 사항과 위험 평가',
+                'skills.easyStep2': '기존 코드와 의존성 확인',
+                'skills.easyStep3': '최소 해결책 선택',
+                'skills.easyStep4': '코드 구현',
+                'skills.easyStep5': '결과 검증과 수정',
+                'skills.supportTitle': '협업 스킬',
+                'skills.supportIntro': '작업 성격에 따라 목적이 분명한 도구를 선택합니다.',
+                'skills.writingTag': '글쓰기',
+                'skills.humanizer': '문장과 구조를 다듬어 문서와 보고서를 자연스럽게 만듭니다.',
+                'skills.uiTag': 'UI 품질',
+                'skills.webGuidelines': '사용성, 접근성, 반응형 화면, 일관성을 점검합니다.',
+                'skills.designTag': 'UI 디자인',
+                'skills.frontendDesign': '레이아웃, 색상, 글자 체계, 구성 요소와 상호작용을 설계합니다.',
+                'skills.devTag': '개발 과정',
+                'skills.superpowers': '필요할 때 계획, 테스트, 디버깅, 검토, 검증 절차를 선택합니다.',
+                'skills.promptTag': '프롬프트',
+                'skills.promptMaster': '요구 사항을 특정 AI 도구에 적합한 명확한 프롬프트로 정리합니다.',
+                'skills.lifecycleTitle': 'AI 협업 개발 과정',
+                'skills.lifecycleIntro': 'Easy Code를 구현의 기본 원칙으로 삼고, 복잡하거나 위험도가 높은 작업에는 적절한 계획, 테스트, 검토 절차를 추가합니다.',
+                'skills.lifecycle1': '요구 사항 분석',
+                'skills.lifecycle2': '기술 계획',
+                'skills.lifecycle3': '간결한 구현',
+                'skills.lifecycle4': '테스트와 디버깅',
+                'skills.lifecycle5': '코드 검토',
+                'skills.lifecycle6': '품질 검증',
+                'skills.lifecycleNote': '작업에 맞게 조정합니다. 검증 가능한 기능은 테스트하고, 원인이 불명확한 오류는 디버깅하며, 큰 변경은 코드를 검토합니다.',
+                'skills.casesTitle': '활용 사례',
+                'skills.casesIntro': '원본 자료를 실제로 사용할 수 있는 결과물로 바꾸는 방법입니다.',
+                'skills.case1Title': '회의록 정리',
+                'skills.case1': '녹취록의 핵심 논의, 결정 사항, 할 일을 정리해 Word 문서와 마인드맵으로 만듭니다.',
+                'skills.case2Title': '데이터 비교 차트',
+                'skills.case2': 'JSON 필드와 값을 확인한 뒤 여러 자료의 차이를 그래프로 나타냅니다.',
+                'skills.case3Title': 'AI 협업 개발',
+                'skills.case3': '요구 사항과 위험을 평가하고 기존 코드를 활용해 수정한 뒤 필요에 따라 테스트, 검토, 검증합니다.',
+                'skills.closing': '복잡도와 위험에 맞춰 스킬을 선택하고, 역할이 겹치는 규칙과 불필요한 실행 비용을 줄입니다.'
+            },
+            ja: {
+                'nav.aiWorkflows': 'AI Skills & Workflows',
+                'skills.title': 'AI スキルの統合とワークフローの自動化',
+                'skills.intro': 'AI スキルをソフトウェア開発、文書整理、データ分析に活用します。作業に必要なスキルを選び、要件と元データを確認してから結果を検証します。',
+                'skills.ownTitle': '自作スキル',
+                'skills.ownIntro': '日々の作業方法を再利用できる実行ルールにまとめました。',
+                'skills.selfMade': '自作',
+                'skills.easyCode': '既存コードと標準機能を優先し、必要な部分だけを変更します。',
+                'skills.meetingMinutes': '文字起こしを構造化した議事録、Word 文書、Markmap のマインドマップに整理します。',
+                'skills.analytics': 'JSON データから棒グラフと積み上げ棒グラフを作り、複数のデータを比較します。',
+                'skills.easyFlowTitle': 'Easy Code の進め方',
+                'skills.easyFlowIntro': 'AI が生成したコードには余分な依存関係や複雑な処理が含まれることがあります。要件とリスクを確認し、既存コードを調べて最小の方法を選び、結果を検証します。',
+                'skills.easyStep1': '要件とリスクの評価',
+                'skills.easyStep2': '既存コードと依存関係の確認',
+                'skills.easyStep3': '最小の方法を選択',
+                'skills.easyStep4': '実装',
+                'skills.easyStep5': '検証と修正',
+                'skills.supportTitle': '活用するスキル',
+                'skills.supportIntro': '作業に応じて、役割が明確なツールを選びます。',
+                'skills.writingTag': '文章',
+                'skills.humanizer': '文と構成を整え、文書や報告書を自然な表現にします。',
+                'skills.uiTag': 'UI 品質',
+                'skills.webGuidelines': '操作性、アクセシビリティ、レスポンシブ表示、一貫性を確認します。',
+                'skills.designTag': 'UI デザイン',
+                'skills.frontendDesign': 'レイアウト、色、文字の階層、部品、操作を設計します。',
+                'skills.devTag': '開発工程',
+                'skills.superpowers': '必要に応じて計画、テスト、デバッグ、レビュー、検証を選びます。',
+                'skills.promptTag': 'プロンプト',
+                'skills.promptMaster': '要件を特定の AI ツール向けの明確なプロンプトに整理します。',
+                'skills.lifecycleTitle': 'AI と協働する開発工程',
+                'skills.lifecycleIntro': 'Easy Code を実装の基本とし、複雑またはリスクの高い作業には適切な計画、テスト、レビューを加えます。',
+                'skills.lifecycle1': '要件分析',
+                'skills.lifecycle2': '技術計画',
+                'skills.lifecycle3': '簡潔な実装',
+                'skills.lifecycle4': 'テストとデバッグ',
+                'skills.lifecycle5': 'コードレビュー',
+                'skills.lifecycle6': '品質検証',
+                'skills.lifecycleNote': '工程は作業に合わせて調整します。検証できる機能はテストし、原因不明の不具合は調査し、大きな変更はレビューします。',
+                'skills.casesTitle': '活用例',
+                'skills.casesIntro': '元データを実際に使える成果物に変える方法です。',
+                'skills.case1Title': '議事録の整理',
+                'skills.case1': '文字起こしから論点、決定事項、タスクを整理し、Word 文書とマインドマップを作ります。',
+                'skills.case2Title': 'データ比較グラフ',
+                'skills.case2': 'JSON の項目と値を確認してから、複数データの違いをグラフで示します。',
+                'skills.case3Title': 'AI と協働する開発',
+                'skills.case3': '要件とリスクを評価し、既存コードを活用して変更した後、必要なテスト、レビュー、検証を行います。',
+                'skills.closing': '複雑さとリスクに応じてスキルを選び、役割の重複と不要な実行コストを減らします。'
+            }
+        };
+
         const projectLabels = {
             en: {
                 'python-bank-linebot': 'Taiwan Bank Rates & Gold Price LINE Bot', 'line-notify': 'LineNotify Reminder Notebook', 'pay-notify': 'Pay Notify', 'smart-commit': 'Smart Commit', 'aireview': 'AI Code Review', 'argo-cd-notifications': 'Argo CD Notifications', 'argocd-backup': 'Argo CD Backup', helm: 'Helm Chart Repository', 'pdf-compressor': 'PDF & Image Compressor', 'pdf-spiltter': 'PDF Splitter', 'markitdown web': 'MarkItDown Web Service', 'ai-prompt': 'AI-Prompt Assistant', 'web-ai-assistant': 'Web AI Assistant', 'python-fpns': 'Notification System', 'Korean-daily': 'Korean Learning Tool', 'my-chatbot': 'ChatBot', tftcoin: 'tFTCoin', inv: 'Inventory Management System', 'registration-website': 'Registration Website', 'data-desensitization': 'Sensitive Document De-identification', 'power-automate': 'Power Automate Utility Bill RPA', 'power-apps': 'Power Apps Attendance App'
@@ -2076,7 +2487,7 @@
             document.title = currentLanguage === 'zh-TW' ? "Joy's Portfolio | 個人作品集" : currentLanguage === 'ko' ? "Joy's Portfolio | 개인 포트폴리오" : currentLanguage === 'ja' ? "Joy's Portfolio | ポートフォリオ" : "Joy's Portfolio | Personal Portfolio";
             const languageLabel = document.getElementById('language-current-label');
             if (languageLabel) languageLabel.textContent = languageLabels[currentLanguage];
-            const dictionary = translations[currentLanguage];
+            const dictionary = { ...translations[currentLanguage], ...skillTranslations[currentLanguage] };
             document.querySelectorAll('[data-i18n]').forEach(el => {
                 const value = dictionary[el.dataset.i18n];
                 if (value) el.textContent = value;
@@ -2573,15 +2984,6 @@
 
             requestAnimationFrame(loop);
         })();
-
-        document.querySelectorAll('nav a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
-                });
-            });
-        });
 
         // Navigation Scroll Spy for Top Menu
         const sections = document.querySelectorAll('section[id]');
